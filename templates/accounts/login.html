@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+
+{% block content %}
+
+
+<div class = "registration-section top-section">
+    <div class="login-container">
+        <div class="login-form">
+            <h1 class="text-center">Login</h1>
+
+            {% if request.session.uid %}
+                <h2 class="text-center"> Login successful </h2>
+            
+            {% else %}
+                <h2 class="text-center"> Please login to use the app</h2>
+
+                <form action="/accounts/postsignIn/" method="post">
+                    {% csrf_token %}
+                    <br/>
+
+                    <input
+                        type="email"
+                        id="Email"
+                        name="email"
+                        size="30%"><br><br>
+
+                    <input
+                        type="password"
+                        id="Password"
+                        name="pass"
+                        size="30%"><br><br>
+                    
+                    <input
+                        type="submit"
+                        value="SignIn"
+                        class="btn btn-success btn-block btn-lg gradient-custom-4"
+                        size="30%"><br><br>
+                    
+                    <label>
+                      <input
+                        type="checkbox" 
+                        checked="checked"
+                        name="remember"> Remember me
+                    </label>
+                    
+                </form>
+
+                <p class="text-center">
+                    Don't have an account? ,
+                    <a href="/accounts/signup">signup </a>first.
+                </p>
+                
+            {% endif %}
+
+            <!-- <form method="POST">
+                {% if user.is_authenticated %}
+                    <h2 class="text-center"> You are logged in now </h2>
+                
+                {% else %}
+                {% csrf_token %}
+                {bootstrap_form form}
+                    <br>
+                    <div class="col text-center">
+                        <input type="submit"
+                                value="Login"
+                                class="btn btn-primary btn-lg active"
+                                id = 'login-button'>
+                    </div>
+                    <br>
+                    <p class="text-center">If you don't have an account,
+                        <a href="/accounts/signup">signup </a>
+                        first.
+                    </p>
+                {% endif %}
+            </form> -->
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

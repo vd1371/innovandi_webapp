@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+<!--Register-->
+<div class = "data-collection-section top-section">
+    <div class="data-collection-container">
+        <div class = "data-collection-form">
+            
+            {% if request.session.uid %}
+                <h1>Construction Machinary Information</h1>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                        <br/>
+                        <div class="col">
+                            <button class="btn btn-primary btn-lg active"
+                                    type="submit">Submit
+                            </button>
+                        </div>
+                </form>
+
+            {% else %}
+                <p class="text-center">
+                    You don't have permission to submit data, 
+                    <a href="/accounts/login">login </a>first.
+                </p>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

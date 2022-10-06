@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+{% load static %}
+
+{% block content %}
+
+<!--Register-->
+<div class = "registration-section top-section">
+    <div class="registration-container">
+        <div class = "registration-form text-center">
+
+            <h1 class="text-center">Sign Up</h1>
+
+            {% if request.session.uid %}
+                <h2 class="text-center"> Registration successful </h2>
+            
+            {% else %}
+                <form action="/accounts/postsignUp/" method="post">
+                {% csrf_token %}
+                <br/>
+        
+                    <input type="name"
+                            id="Username"
+                            name="name"
+                            placeholder="Your Name"
+                            size = "50%"><br><br>
+                    
+                    <input type="email"
+                            id="Email"
+                            name="email"
+                            placeholder="Your Email Address"
+                            size = "50%"><br><br>
+                    
+                    <input type="password"
+                            id="Password"
+                            name="pass"
+                            placeholder="Password"
+                            size = "50%"><br><br>
+                    
+                    <input type="password"
+                            id="confirm_password"
+                            name="pass-repeat"
+                            placeholder=" Repeat Password"
+                            size = "50%"><br><br>
+                    
+                    <label>
+                        <input type="checkbox"
+                                checked="checked"
+                                name="remember"
+                                style="margin-bottom:15px">Remember me
+                    </label><br><br>
+                    
+                    <input
+                        type="submit"
+                        value="SignUp"
+                        class="btn btn-success btn-block btn-lg gradient-custom-4"
+                        size="50%">
+                        <br><br>
+                
+                </form>
+
+            {% endif %}
+
+            <p class="text-center">
+                If you already have an account,
+                <a href="/accounts/login">login </a>instead.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
