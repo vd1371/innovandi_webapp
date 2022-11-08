@@ -7,16 +7,17 @@ body, html {
     font-size: medium;
   }
 
-footer{
+#footer{
     padding-top: 2vh;
     padding-bottom: 2vh;
     margin-bottom: 0px !important;
+    background-color:  #f1f1f1 !important;
 }
 
 .section{
     height: auto;
-    padding-top: 3%;
-    padding-bottom: 3%;
+    padding-top: 3% !important;
+    padding-bottom: 3% !important;
 }
 
 
