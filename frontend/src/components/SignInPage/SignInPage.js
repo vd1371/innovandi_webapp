@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   MDBContainer,
   MDBTabs,
@@ -12,12 +13,15 @@ import {
   MDBCheckbox
 }
 from 'mdb-react-ui-kit';
+import { Link } from 'react-router-dom';
 
 import Footer from "../Footer";
 import auth from './firebaseAuth';
 import isUserLoggedIn from "../SignInPage/IsUserLoggedIn";
 import google_provider from './auth_google_provider_create';
 import IsRecpatchaChecked from './IsRecaptchaChecked';
+
+import handleSignout from './handleSignout';
 
 import {createUserWithEmailAndPassword } from "firebase/auth";
 import {signInWithEmailAndPassword } from "firebase/auth";
@@ -26,29 +30,18 @@ import { GoogleAuthProvider, getRedirectResult } from "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 import recaptcha_site_key from './recaptcha_site_key';
 
+import UserContext from './UserContext';
+
 export default function SignInPage(){
     
     const [justifyActive, setJustifyActive] = useState('tab1');
     const [message, setMessage] = useState('So Happy to See You Here');
-    const [isHuman, setIsHuman] = useState(false)
-
-    useEffect(() => {
-
-        auth.onAuthStateChanged(async (user) => {
-            if (user) {
-            // User is signed in, see docs for a list of available properties
-            // https://firebase.google.com/docs/reference/js/firebase.User
-            const uid = user.uid;
-            window.localStorage.setItem("isLoggedIn", true)
-            // ...
-            } else {
-            // User is signed out
-            // ...
-            window.localStorage.setItem("isLoggedIn", false)
-            }
-        });
+    const {loggedIn, setLoggedIn} = useContext(UserContext);
+    const navigate = useNavigate()
     
-    });
+    useEffect(() => {
+        setLoggedIn(isUserLoggedIn())
+    }, [loggedIn]);
 
     const handleJustifyClick = (value) => {
         if (value === justifyActive) {
@@ -68,7 +61,7 @@ export default function SignInPage(){
     
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            window.location.href = "../"
+            navigate("/")
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -96,7 +89,7 @@ export default function SignInPage(){
         } else {
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    window.location.href = "../"
+                    navigate("/")
                 })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -120,7 +113,7 @@ export default function SignInPage(){
                 // The signed-in user info.
                 const user = result.user;
                 console.log("Here")
-                window.location.href = "../"
+                navigate("/")
             }).catch((error) => {
                 // Handle Errors here.
                 const errorCode = error.code;
@@ -132,13 +125,12 @@ export default function SignInPage(){
                 setMessage(errorMessage)
                 // ...
             })
-        }
+        }   
     }
 
-    const handleSignout = () => {
-        auth.signOut()
-        window.localStorage.setItem("isLoggedIn", false)
-        window.location.href = "../signin"
+    const handleSignoutSigninPage = () => {
+        setLoggedIn(false)
+        handleSignout()
     }
 
     if (isUserLoggedIn()) {
@@ -147,8 +139,10 @@ export default function SignInPage(){
         <div className = 'full-page'>
             <div id='signin-container'>
                 <h3>You are already singed in.</h3>
-                <a href="../" className="btn btn-primary reg-button">Main Page</a>
-                <button type="button" className="btn btn-primary reg-button" onClick={handleSignout}>Sign Out</button>
+                <Link to="/" className="btn btn-primary reg-button">
+                    Main Page
+                </Link>
+                <button type="button" className="btn btn-primary reg-button" onClick={handleSignoutSigninPage}>Sign Out</button>
             </div>
         </div>
         )
@@ -198,7 +192,6 @@ export default function SignInPage(){
                             <MDBCheckbox name='flexCheckSignin' value='' id='flexCheckDefault' label='Remember me' />
                             <a href="./change_password">Forgot password?</a>
                             </div>
-
                             <button type="submit" className="btn btn-primary reg-button">Sign in</button>
                         </form>
 
