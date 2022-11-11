@@ -1,0 +1,43 @@
+#mainapp-container{
+    height: 95vh;
+    display: flex;
+    flex-direction: row;
+}
+
+#btn-run-analysis{
+    background-color: darkblue;
+    border: none;
+    width: 50%;
+}
+
+#left-sidebar{
+    position: relative;
+    display: flex;
+    flex-direction: column !important;
+    height: 95vh;
+    width: 30vh;
+    background-color: rgb(240, 255, 255);
+    /* border: 1px solid black; */
+
+}
+
+#run-btn-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center !important;
+
+    margin: auto !important;
+    margin-top: 5% !important;
+    height: 5vh;
+
+}
+
+#machines-section{
+    height: 45vh;
+}
+
+#machines-settings-section{
+    height: 45vh;
+    background-color: rgb(189, 228, 235);
+}

@@ -132,5 +132,9 @@ dmypy.json
 
 *.jpg
 *.png
-frontend/firebase/firebase_config.js
-frontend/firebase/recaptcha_site_key.js
+*.jpeg
+*.pkl
+
+frontend/node_modules/
+firebase_config.js
+recaptcha_site_key.js

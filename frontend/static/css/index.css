@@ -1,5 +1,6 @@
 @import "registration_page.css";
 @import "landing_page.css";
+@import "mainapp.css";
 
 html, body{
     height: 100%;
