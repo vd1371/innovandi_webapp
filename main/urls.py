@@ -2,15 +2,18 @@ from re import template
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
-from .Views import sample_views
+
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from . import views
 
 app_name = "main"
 
+# Create a router and register our viewsets with it.
+router = DefaultRouter()
+
+router.register(r'plants', views.PlantsViewSet, basename='plants')
+
 urlpatterns = [
-    path("", TemplateView.as_view(template_name = 'home.html'), name="home"),
-    
-    path("machines_data_collection/",
-            sample_views.MachinesView.as_view(), name="machines_data_collection"),
-    path("energy_source_collection/",
-            sample_views.EnergySourcesView.as_view(), name="energy_source_collection"),
+    path('', include(router.urls)),
 ]

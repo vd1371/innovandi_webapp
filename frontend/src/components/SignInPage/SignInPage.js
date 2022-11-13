@@ -153,8 +153,8 @@ export default function SignInPage(){
         <div className = 'full-page'>
             <div id = "signin-container">
                 <MDBContainer className="p-3 my-5 d-flex flex-column w-75">
-
-                    <div className='d-flex justify-content-between mx-auto' style={{width: '50%'}}>
+                    
+                    <div className='d-flex justify-content-center mx-auto text-center' style={{width: '50%'}}>
 
                     <button type="button" className="login-with-google-btn" onClick={handleGoogleSignin} >
                     Sign in with Google

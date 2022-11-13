@@ -11,12 +11,4 @@ class EnergySourceTypes(models.Model):
     name = models.CharField(unique = True, max_length = 50)
     country = models.ForeignKey(Countries, on_delete = models.CASCADE)
     co2_per_unit = models.FloatField(validators=[MinValueValidator(0.0)])
-    nh3_per_unit = models.FloatField(validators=[MinValueValidator(0.0)])
-    co_per_unit = models.FloatField(validators=[MinValueValidator(0.0)])
-    no_per_unit = models.FloatField(validators=[MinValueValidator(0.0)])
-    no2_per_unit = models.FloatField(validators=[MinValueValidator(0.0)])
-    o3_per_unit = models.FloatField(validators=[MinValueValidator(0.0)])
-    pm_per_unit = models.FloatField(validators=[MinValueValidator(0.0)])
-    so2_per_unit = models.FloatField(validators=[MinValueValidator(0.0)])
-    price_per_unit = models.FloatField(validators=[MinValueValidator(0.0)])
 

@@ -8,7 +8,7 @@ from .Countries import Countries
 # Create your models here.
 class Plants(models.Model):
 
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    user = models.CharField(max_length = 200)
     country = models.ForeignKey(Countries, on_delete = models.CASCADE)
     name = models.CharField(max_length = 40, unique = True)
     operating_hours = models.PositiveSmallIntegerField(

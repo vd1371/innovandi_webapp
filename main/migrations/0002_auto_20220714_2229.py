@@ -4,9 +4,11 @@ from django.db import migrations
 
 import os
 import pandas as pd
+import numpy as np
 
 from ..models import EnergySourceTypes
 from ..models import Countries
+from ..models import Plants
 
 def populate(*ags, **kwargs):
 
@@ -14,6 +16,15 @@ def populate(*ags, **kwargs):
     for val in df['Country']:
         Countries.objects.get_or_create(country = val)
 
+    all_countries = list(Countries.objects.all())
+    for i in range(10):
+        Plants.objects.get_or_create(
+            user = str(np.random.rand()*np.random.rand()),
+            country = np.random.choice(all_countries),
+            name = f"test_plant_{i}",
+            operating_hours = np.random.randint(4, 9),
+            json_address = f"/test_address_{i}"
+        )
 
 class Migration(migrations.Migration):
 
