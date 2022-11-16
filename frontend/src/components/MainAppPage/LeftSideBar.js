@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext} from "react";
-import MachinesSection from "./MachinesSection";
+import ProjectSettingsSection from "./ProjectSettingsSection";
 import MachinesSettingsSection from "./MachinesSettingsSection";
 
-export default function LeftSidebar(){
+export default function LeftSidebar(props){
     
     return (
         <div id='left-sidebar'>
-            <MachinesSection />
-            <MachinesSettingsSection />
+            <ProjectSettingsSection {...props}/>
+            <MachinesSettingsSection {...props}/>
         </div>
     )
 }

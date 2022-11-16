@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext} from "react";
 
-export default function MachinesSection(){
+export default function ProjectSettingsSection(){
 
     const [machines, setMachines] = useState("")
     const [loading, setLoading] = useState(true)
@@ -28,7 +28,7 @@ export default function MachinesSection(){
     return (
         <div id='machines-section'>
             <h4>Machine Section</h4>
-            <p>{machines}</p>
+            <p>Some infor of the machines should be shown here</p>
         </div>
     )
 }

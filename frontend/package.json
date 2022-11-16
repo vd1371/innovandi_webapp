@@ -27,10 +27,12 @@
     "@material-ui/icons": "^4.11.3",
     "firebase": "^9.13.0",
     "grecaptcha": "^1.0.0",
+    "loadash": "^1.0.0",
     "mdb-react-ui-kit": "^5.0.0",
     "mdb-ui-kit": "^6.0.0",
     "react-icons": "^4.6.0",
     "react-router-dom": "^6.4.2",
+    "react-uuid": "^2.0.0",
     "styled-components": "^5.3.6"
   }
 }
