@@ -1,6 +1,8 @@
 @import "registration_page.css";
 @import "landing_page.css";
 @import "mainapp.css";
+@import "leftsidebar.css";
+@import "app_toppane.css";
 
 html, body{
     height: 100%;
@@ -19,6 +21,10 @@ html, body{
 
 #app {
     width: 100%;
+}
+
+h6, p{
+    margin-bottom: 0 !important;
 }
 
 .full-page{

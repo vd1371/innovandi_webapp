@@ -1,0 +1,97 @@
+
+#left-sidebar{
+    position: relative;
+    display: flex;
+    flex-direction: column !important;
+    height: 95vh;
+    width: 20vw;
+    background-color: rgb(245,245,245);
+    border: 1px gray solid;
+}
+
+.top-pane-settings{
+    display: flex;
+    flex-direction: row;
+    align-items: center !important;
+    height: 3vh;
+}
+
+.top-pane-settings .filler{
+    flex-grow: 1 !important;
+}
+
+table{
+    width: 100%;
+    font-size: small;
+}
+
+th, td {
+    border: 1px solid lightgrey !important;
+}
+
+input {
+    border: none;
+    height: 100%;
+    width: 100% !important;
+}
+
+.left-column{
+    width: 40% !important;
+}
+
+.settings-section{
+    border-bottom: 1px gray solid;
+}
+
+#project-settings-section{
+    width: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    padding: 5px !important;
+    background-color: rgb(245,245,245);
+    border-bottom: 1px gray solid;
+}
+
+#process-settings-section{
+    background-color: rgb(245,245,245);
+    padding: 5px;
+    border-bottom: 1px gray solid;
+    flex-grow: 1;
+}
+
+#construction-waste-section{
+    padding: 5px;
+    background-color: rgb(245,245,245);
+    border-bottom: 1px gray solid;
+}
+
+.inactive-section{
+    color: gray;
+}
+
+.edit-button{
+    flex-direction: row;
+    justify-content: flex-end;
+    border: none;
+    background-color: transparent;
+    margin-left: 2px;
+}
+
+.add-button{
+    background-color: transparent;
+    border: none;
+    color: black !important;
+    margin-left: 2px;
+}
+
+.add-button:hover, .edit-button:hover{
+    background-color: lightgray;
+}
+
+
+.table-info{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid gray !important;
+}

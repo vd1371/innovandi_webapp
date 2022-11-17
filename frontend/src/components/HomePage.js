@@ -14,7 +14,7 @@ import PageNotFound from "./PageNotFound";
 import LandingPage from "./LandingPage/LandingPage";
 import SignInPage from "./SignInPage/SignInPage";
 import ChangePasswordPage from "./SignInPage/ChangePasswordPage";
-import MainAppPage from "./MainAppPage/MainAppPage";
+import MainAppPage from "./MainAppPage/AppSection/MainAppPage";
 import PrivateRoute from "./PrivateRoute";
 import Navbar from "./Navbar/Navbar";
 import auth from "./SignInPage/firebaseAuth";
