@@ -1,10 +1,17 @@
 import React from "react";
 import HomePage from "./HomePage";
 import { createRoot } from "react-dom/client";
-import Footer from "./Footer";
+import { Provider } from "react-redux";
+import store from "../store";
 
 export default function App(){
-    return (<HomePage />)
+    return (
+        <Provider store = {store}>
+            <React.StrictMode>
+                <HomePage />
+            </React.StrictMode>
+        </Provider>
+    )
 }
 
 const appDiv = document.getElementById("app");

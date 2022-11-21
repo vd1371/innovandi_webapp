@@ -1,8 +1,11 @@
 import React from "react";
-import isUserLoggedIn from "./SignInPage/IsUserLoggedIn";
+import {useSelector, useDispatch} from "react-redux";
 
 const PrivateRoute = ({ children}) => {
-    if (isUserLoggedIn()) {
+
+  const isLoggedIn = useSelector (state => state.auth.isLoggedIn)
+    
+  if (isLoggedIn) {
       return children
     }
     window.location.href = "../"

@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import ReCAPTCHA from "react-google-recaptcha";
+
 import { useNavigate } from 'react-router-dom';
 import {
   MDBContainer,
@@ -15,33 +17,31 @@ import {
 from 'mdb-react-ui-kit';
 import { Link } from 'react-router-dom';
 
-import Footer from "../Footer";
 import auth from './firebaseAuth';
-import isUserLoggedIn from "../SignInPage/IsUserLoggedIn";
 import google_provider from './auth_google_provider_create';
 import IsRecpatchaChecked from './IsRecaptchaChecked';
 
 import handleSignout from './handleSignout';
 
-import {createUserWithEmailAndPassword } from "firebase/auth";
-import {signInWithEmailAndPassword } from "firebase/auth";
-import { signInWithPopup, signInWithRedirect } from 'firebase/auth';
+import { signInWithRedirect } from 'firebase/auth';
 import { GoogleAuthProvider, getRedirectResult } from "firebase/auth";
-import { onAuthStateChanged } from "firebase/auth";
 import recaptcha_site_key from './recaptcha_site_key';
 
-import UserContext from './UserContext';
+import {useSelector, useDispatch} from "react-redux";
+import { authActions } from '../../store/auth-slice';
+import handleSignin from './handleSignin';
+import handleRegister from './handleRegister';
 
 export default function SignInPage(){
+
+    const isLoggedIn = useSelector (state => state.auth.isLoggedIn)
+    const dispatch = useDispatch()
     
     const [justifyActive, setJustifyActive] = useState('tab1');
     const [message, setMessage] = useState('So Happy to See You Here');
-    const {loggedIn, setLoggedIn} = useContext(UserContext);
     const navigate = useNavigate()
-    
-    useEffect(() => {
-        setLoggedIn(isUserLoggedIn())
-    }, [loggedIn]);
+
+    const recaptchaRef = useRef();
 
     const handleJustifyClick = (value) => {
         if (value === justifyActive) {
@@ -50,53 +50,16 @@ export default function SignInPage(){
         setJustifyActive(value);
         };
 
-    const handleSignin = () => {
-
-        const data = document.getElementById("registration-form")
-        const form_data = new FormData(event.target);
-        event.preventDefault()
-    
-        const email = form_data.get("email")
-        const password = form_data.get("password")
-    
-        signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            navigate("/")
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            setMessage(errorMessage);
-        });
+    const handleSigninClick = () => {
+        handleSignin(setMessage)
+        dispatch(authActions.signin())
+        navigate("/")
     }
 
-    const handleRegister = () => {
-        
-        const data = document.getElementById("registration-form")
-        const form_data = new FormData(event.target);
-        event.preventDefault()
-    
-        const email = form_data.get("email")
-        const password = form_data.get("password")
-        const terms_checked = form_data.get("flexCheckRegister")
-
-        console.log(IsRecpatchaChecked())
-        
-        if (!IsRecpatchaChecked()){
-            setMessage("Please check the ReCaptcha")
-        } else if (!terms_checked) {
-            setMessage("Terms and Conditions are not accepted!")
-        } else {
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    navigate("/")
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    setMessage(errorMessage);
-                });
-        }
+    const handleRegisterClick = () => {
+        handleRegister(setMessage)
+        dispatch(authActions.signin())
+        navigate("/")
     }
 
     const handleGoogleSignin = () => {
@@ -112,7 +75,7 @@ export default function SignInPage(){
                 const token = credential.accessToken;
                 // The signed-in user info.
                 const user = result.user;
-                console.log("Here")
+                dispatch(authActions.signin())
                 navigate("/")
             }).catch((error) => {
                 // Handle Errors here.
@@ -129,11 +92,11 @@ export default function SignInPage(){
     }
 
     const handleSignoutSigninPage = () => {
-        setLoggedIn(false)
         handleSignout()
+        navigate("/")
     }
 
-    if (isUserLoggedIn()) {
+    if (isLoggedIn) {
         return (
         
         <div className = 'full-page'>
@@ -182,13 +145,12 @@ export default function SignInPage(){
                     <MDBTabsPane show={justifyActive === 'tab1'}>
 
                         <div className="text-center mb-3">
-                        <p>Sign in with:</p>
                         </div>
-                        <form onSubmit={handleSignin} id = 'registration-form'>
+                        <form onSubmit={handleSigninClick} id = 'registration-form'>
                             <MDBInput wrapperClass='mb-4' label='Email' id='form1' name='email' type='email'/>
                             <MDBInput wrapperClass='mb-4' label='Password' id='form2' name='password' type='password'/>
 
-                            <div className="d-flex justify-content-between mx-4 mb-4">
+                            <div className="d-flex justify-content-between mx-1 mb-4">
                             <MDBCheckbox name='flexCheckSignin' value='' id='flexCheckDefault' label='Remember me' />
                             <a href="./change_password">Forgot password?</a>
                             </div>
@@ -203,11 +165,11 @@ export default function SignInPage(){
                         <p>Sign up with:</p>
                         </div>
 
-                        <form onSubmit={handleRegister} id = 'registration-form'>
+                        <form onSubmit={handleRegisterClick} id = 'registration-form'>
                             <MDBInput wrapperClass='mb-4' label='Email' name='email' id='email_for_reg' type='email'/>
                             <MDBInput wrapperClass='mb-4' label='Password' name='password' id='pass_for_reg' type='password'/>
 
-                            <div className='d-flex justify-content-center mb-4'>
+                            <div className='justify-content-center mb-4'>
                             <MDBCheckbox name='flexCheckRegister' id='flexCheckDefault' label='I have read and agree to the terms' />
                             </div>
 
@@ -222,9 +184,11 @@ export default function SignInPage(){
                     <br></br>
                     <div className='d-flex justify-content-between mx-auto'>
                         <form action="?" method="POST">
-                            <div className="g-recaptcha"
-                                data-sitekey={recaptcha_site_key}
-                            ></div>
+                        <ReCAPTCHA
+                            sitekey={recaptcha_site_key}
+                            ref={recaptchaRef}
+                            // onChange={onChange}
+                        />
                         </form>
                     </div>
 

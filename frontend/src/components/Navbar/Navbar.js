@@ -8,10 +8,7 @@ import {
   NavBtnLink,
 } from './NavbarElements';
 
-import UserContext from "../SignInPage/UserContext";
-
 import NavbarSigninButton from "./NavbarSigninButton";
-import isUserLoggedIn from "../SignInPage/IsUserLoggedIn";
 
 export default function Navbar(){
 

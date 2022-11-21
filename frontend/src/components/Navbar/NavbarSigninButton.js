@@ -1,28 +1,28 @@
-import React, { useEffect, useState, useContext} from "react";
+import React from "react";
+import { Navigate, useNavigate } from 'react-router-dom';
+
+import {useSelector, useDispatch} from "react-redux";
+import { authActions } from "../../store/auth-slice";
+
 import {
   NavBtn,
   NavBtnLink,
 } from './NavbarElements';
 
-import isUserLoggedIn from "../SignInPage/IsUserLoggedIn";
 import handleSignout from "../SignInPage/handleSignout";
-
-import UserContext from "../SignInPage/UserContext";
 
 export default function NavbarSigninButton(){
 
-  const {loggedIn, setLoggedIn} = useContext(UserContext)
+  const isLoggedIn = useSelector (state => state.auth.isLoggedIn)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleSignoutNavbarButton = () => {
-    setLoggedIn(false)
+    dispatch(authActions.signout())
     handleSignout()
   }
 
-  useEffect(() => {
-    setLoggedIn(isUserLoggedIn())
-  }, [loggedIn]);
-
-  if (!loggedIn){
+  if (!isLoggedIn){
     return (
       <NavBtn>
         <NavBtnLink to='/signin'>Sign In</NavBtnLink>
@@ -35,6 +35,4 @@ export default function NavbarSigninButton(){
       </NavBtn>
     )
   }
-
-  
 }

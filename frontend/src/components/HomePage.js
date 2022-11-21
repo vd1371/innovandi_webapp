@@ -18,12 +18,14 @@ import MainAppPage from "./MainAppPage/AppSection/MainAppPage";
 import PrivateRoute from "./PrivateRoute";
 import Navbar from "./Navbar/Navbar";
 import auth from "./SignInPage/firebaseAuth";
-import isUserLoggedIn from "./SignInPage/IsUserLoggedIn";
-import UserContext from "./SignInPage/UserContext"
+
+import {useSelector, useDispatch} from "react-redux";
 
 export default function HomePage() {
     const { height, width } = useWindowDimensions();
-    const [loggedIn, setLoggedIn] = useState(isUserLoggedIn());
+
+    const isLoggedIn = useSelector (state => state.auth.isLoggedIn)
+    const dispatch = useDispatch()
 
     useEffect(() => {
 
@@ -47,21 +49,18 @@ export default function HomePage() {
         return (<ScreenIsSmallPage />);
     } else {
         return (
-            <UserContext.Provider value = {{loggedIn, setLoggedIn}}>
-                <Router>
-                <Navbar />
-                <Routes>
-                    <Route exact path = '/' element={<LandingPage />}/>
-                    <Route path = "/signin" element = {<SignInPage />} />
-                    <Route path = "/change_password" element = {<ChangePasswordPage />} />
-                    <Route path = "/app" element = {<PrivateRoute>
-                                                        <MainAppPage />
-                                                    </PrivateRoute>} />
-                    <Route path = "/*" element = {<PageNotFound />} />
-                </Routes>
-                </Router>
-            </UserContext.Provider>
-            
+            <Router>
+            <Navbar />
+            <Routes>
+                <Route exact path = '/' element={<LandingPage />}/>
+                <Route path = "/signin" element = {<SignInPage />} />
+                <Route path = "/change_password" element = {<ChangePasswordPage />} />
+                <Route path = "/app" element = {<PrivateRoute>
+                                                    <MainAppPage />
+                                                </PrivateRoute>} />
+                {/* <Route path = "/*" element = {<PageNotFound />} /> */}
+            </Routes>
+            </Router>
         );
     }
 }

@@ -23,10 +23,9 @@ export default function MainAppPage(){
         workingHours: 0,
         workingDaysPerYear: 0
     })
-
     const constructionWasteComposition = useRef({})
-
     const processes = useRef([])
+
 
     const handleJustifyClick = (value) => {
         if (value === justifyActive.current) {
