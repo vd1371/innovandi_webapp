@@ -5,107 +5,29 @@ import AddProcessButton from "./AddProcessButton";
 import uuid from 'react-uuid';
 import Processes from "../AppSection/Processes";
 import AppTopPane from "./AppTopPane";
+import AppNotification from "./AppNotification";
+
+import {useSelector, useDispatch} from "react-redux";
+import { appActions } from "../../../store/app-slice";
+
+import projectObject from "../../../projectObject/projectObject";
 
 export default function MainAppPage(){
 
-    const [analysisDone, setAnalysisDone] = useState(false)
-    const [results, setResults] = useState("")
-    const [activeComponent, setActiveComponent] = useState()
-    const [activeSection, setActiveSection] = useState("project")
-    const [nProcesses, setNProcesses] = useState(0)
-    const [nEditions, setNEditions] = useState(0)
-    const [appEditable, setAppEditable] = useState(false)
-    
-    
-    var justifyActive = useRef();
-    const projectInfo = useRef({
-        projectName: "MyAwesomeProject",
-        workingHours: 0,
-        workingDaysPerYear: 0
-    })
-    const constructionWasteComposition = useRef({})
-    const processes = useRef([])
-
-
-    const handleJustifyClick = (value) => {
-        if (value === justifyActive.current) {
-            justifyActive.current = null;
-        } else{
-            justifyActive.current = value;
-        }
-        setActiveSection("process")
-        setActiveComponent(justifyActive.current)
-    }
-
-    const updateNEditions = () => {setNEditions(nEditions + 1)}
-
-    const addProcess = () => {
-
-        const processInfo = {
-            id_ : uuid(),
-            processName: "MyAwesomeProcess",
-            outboundFlows: [],
-            inboundFlows: [],
-            inputs: {},
-            emissions: {
-                1 : {"name": "N/A", "basedOn": "N/A", "rate": 0}
-            }
-        }
-        processes.current = [...processes.current, processInfo]
-        setNProcesses(processes.current.length)
-    }
-
-    const removeProcess = (id) => {
-        let new_processes = []
-        for (var [index, process] of processes.current.entries()){
-            if (process.props.id_ === id){
-                new_processes = [...processes.current.slice(0, index),
-                                    ...processes.current.slice(index+1)]
-            }
-        }
-        processes.current = [...new_processes]
-        setNProcesses(processes.current.length)
-    }
-
-    const handleResults = () => {
-        if (!analysisDone){
-            setResults(<p>Waiting to be filled</p>)
-        } else {
-            setResults(<p>The results to be shown</p>)
-        }
-    }
-
-    const handleRunBtnClick = () => {
-        setAnalysisDone(true)
-        handleResults()
-    }
+    const nProcesses = useSelector(state=>state.app.nProcesses)
+    const dispatch = useDispatch()
     
     return (
         <div>
-            
+            <AppNotification />
+
             <div id="mainapp-container">
-                <LeftSidebar 
-                    processes = {processes.current}
-                    constructionWasteComposition = {constructionWasteComposition.current}
-                    activeComponent = {activeComponent}
-                    activeSection = {activeSection}
-                    setActiveSection = {setActiveSection}
-                    projectInfo = {projectInfo.current}
-                    updateNEditions = {updateNEditions}/>
-            
+                <LeftSidebar />
+
                 <div id = "the-app">
-                    <AppTopPane 
-                        appEditable = {appEditable}
-                        setAppEditable = {setAppEditable}/>
-                    <Processes 
-                        processes = {processes.current}
-                        nProcesses = {nProcesses}
-                        nEditions = {nEditions}
-                        removeProcess = {removeProcess}
-                        handleJustifyClick = {handleJustifyClick}
-                        appEditable = {appEditable}/>
-                    <AddProcessButton addProcess = {addProcess}/>
-                    <RunAnalysisButton handler = {handleRunBtnClick} />
+                    <AppTopPane />
+                    <Processes />
+                    <AddProcessButton />
                 </div>
 
             </div>

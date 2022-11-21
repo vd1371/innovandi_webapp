@@ -1,19 +1,24 @@
 import React, { useState, useEffect, useContext} from "react";
 
-export default function EditButton({editable, handleEditable}){
+import {useSelector, useDispatch} from "react-redux";
+import { clickActions } from "../../store/click-slice";
 
-    if (editable) {
+export default function EditButton({targetComponent, handleClick}){
+
+    const editableComponent = useSelector(state=>state.click.editableComponent)
+    
+    if (editableComponent === targetComponent){
         return (
             <button 
-                className="fa-solid fa-save edit-button fa-fade"
-                onClick={handleEditable}>
+                className="fa-solid fa-save toppane-button fa-fade"
+                onClick={handleClick}>
             </button>
         )
     } else {
         return (
             <button 
-                className="fa-solid fa-pen-to-square edit-button"
-                onClick={handleEditable}>
+                className="fa-solid fa-pen-to-square toppane-button"
+                onClick={handleClick}>
             </button>
         )
     }

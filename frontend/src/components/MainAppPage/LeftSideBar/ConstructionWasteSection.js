@@ -3,21 +3,29 @@ import EditableCellTwoKeys from "./EditableCellTwoKeys";
 import EditButton from "../EditButton";
 import AddButton from "./AddButton";
 
+import {useSelector, useDispatch} from "react-redux";
+import { clickActions } from "../../../store/click-slice";
+import uuid from "react-uuid";
+
+import projectObject from "../../../projectObject/projectObject";
+
 export default function ConstructionWasteSection(props){
 
-    const [editable, setEditable] = useState(false)
+    const activeComponent = useSelector(state=>state.click.activeComponent)
+    const editableComponent = useSelector(state=>state.click.editableComponent)
+    const activeSection = useSelector(state=>state.click.activeSection)
+    const dispatch = useDispatch()
+
     const [nWastes, setNWastes] = useState(0)
     const [contents, setContents] = useState()
 
     useEffect (() => {
         handleContents()
-    }, [editable, nWastes, props.activeSection])
-
-    const handleEditable = () => {setEditable(!editable)}
+    }, [editableComponent, nWastes, activeSection])
 
     const handleAddWaste = () => {
 
-        let obj = props.constructionWasteComposition
+        let obj = projectObject.constructionWasteComposition
 
         if (Object.keys(obj).length < 10) {
             obj[Object.keys(obj).length + 1] = {
@@ -31,23 +39,23 @@ export default function ConstructionWasteSection(props){
     }
 
     const setWasteInfo = (key_1, key_2, newValue) => {
-        props.constructionWasteComposition[key_1][key_2] = newValue
+        projectObject.constructionWasteComposition[key_1][key_2] = newValue
     }
 
     const handleContents = () => {
         setContents(
             <>
                 <div className="top-pane-settings"
-                    onClick={() => props.setActiveSection("waste")}>
-                    <h6 className={(props.activeSection === "waste") ? null: 'inactive-section'}>Waste Components</h6>
+                    onClick={()=>dispatch(clickActions.setActiveSection("waste"))}>
+                    <h6 className={(activeSection === "waste") ? null: 'inactive-section'}>Waste Components</h6>
                     <div className="filler"></div>
                     <AddButton handler={handleAddWaste}/>
                     <EditButton
-                        editable={editable}
-                        handleEditable={handleEditable}/>
+                        targetComponent={'waste'}
+                        handleClick = {()=>dispatch(clickActions.setEditableComponent("waste"))}/>
                 </div>
 
-                {(props.activeSection === "waste") &&
+                {(activeSection === "waste") &&
                 <div className="table-container">
                     <table>
                         <thead>
@@ -58,23 +66,25 @@ export default function ConstructionWasteSection(props){
                         </thead>
                         <tbody>
                             {
-                            Object.entries(props.constructionWasteComposition).map(([key, item]) => {
+                            Object.entries(projectObject.constructionWasteComposition).map(([key, item]) => {
                             
                                 return (
                                     <tr>
                                     <EditableCellTwoKeys
+                                        key = {uuid()}
                                         valueRef = {item.name}
                                         handleNewValue = {setWasteInfo}
                                         key_1 = {key}
-                                        key_2 = {"name"}
-                                        className = {"left-column"}
-                                        editable = {editable} />
+                                        key_2 = "name"
+                                        className = "left-column"
+                                        belongsTo = "waste"/>
                                     <EditableCellTwoKeys
+                                        key = {uuid()}
                                         valueRef = {item.value}
                                         handleNewValue = {setWasteInfo}
                                         key_1 = {key}
                                         key_2 = {"value"}
-                                        editable = {editable} />
+                                        belongsTo = "waste" />
                                     </tr>
                                 )
                             })

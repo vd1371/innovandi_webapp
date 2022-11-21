@@ -3,6 +3,8 @@
 @import "mainapp.css";
 @import "leftsidebar.css";
 @import "app_toppane.css";
+@import "notification_pane.css";
+@import "process-component.css";
 
 html, body{
     height: 100%;

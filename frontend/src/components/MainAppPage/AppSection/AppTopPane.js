@@ -1,31 +1,32 @@
 import React, { useState, useEffect, useRef} from "react";
 import EditButton from "../EditButton";
 import {useSelector, useDispatch} from "react-redux";
-import { actions } from "../../../store";
+import { clickActions } from "../../../store/click-slice";
+import RunAnalysisButton from "../RunAnalysisButton";
 
 export default function AppTopPane(props){
 
-    const clickedElement = useSelector((state) => state.clickedElement)
+    const activeComponent = useSelector(state=>state.click.activeComponent)
+    const editableComponent = useSelector(state=>state.click.editableComponent)
+    const activeSection = useSelector(state=>state.click.activeSection)
+
     const dispatch = useDispatch()
     const [contents, setContents] = useState()
 
     useEffect (() => {
         setContents(handleContents())
-    }, [props.appEditable])
-
-    const handleEditable = () => {
-        dispatch (actions.handleClickedElement("TopPane"))
-        props.setAppEditable(!props.appEditable)
-    }
+    }, [editableComponent])
 
     const handleContents = () => {
         return (
             <>  
+                <button type="button" className="fa-play fa-solid toppane-button"></button>
+                <button type="button" className="fa-stop fa-solid toppane-button"></button>
+                <button type="button" className="fa-search-plus fa-solid toppane-button"></button>
+                <button type="button" className="fa-search-minus fa-solid toppane-button"></button>
                 <EditButton
-                    editable={props.appEditable}
-                    handleEditable={handleEditable}/>
-                <button className="fa-plus fa-solid toppane-button"></button>
-                <p>{clickedElement}</p>
+                    targetComponent={'app'}
+                    handleClick = {()=>dispatch(clickActions.setEditableComponent("app"))}/>
             </>
         )
     }

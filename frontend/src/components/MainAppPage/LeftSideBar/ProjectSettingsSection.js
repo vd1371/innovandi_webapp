@@ -1,20 +1,26 @@
 import React, { useState, useEffect, useContext} from "react";
-import EditableTableCell from "./EditableCellOneKey";
+import EditableCellOneKey from "./EditableCellOneKey";
 import EditButton from "../EditButton";
+
+import {useSelector, useDispatch} from "react-redux";
+import { clickActions } from "../../../store/click-slice";
+
+import projectObject from "../../../projectObject/projectObject";
 
 export default function ProjectSettingsSection(props){
 
-    const [editable, setEditable] = useState(false)
+    const activeComponent = useSelector(state=>state.click.activeComponent)
+    const editableComponent = useSelector(state=>state.click.editableComponent)
+    const activeSection = useSelector(state=>state.click.activeSection)
+    const dispatch = useDispatch()
     const [contents, setContents] = useState()
 
     useEffect (() => {
         handleContents()
-    }, [editable, props.activeSection])
-
-    const handleEditable = () => {setEditable(!editable)}
+    }, [activeComponent, activeSection, editableComponent])
 
     const setProjectInfo = (key, newValue) => {
-        props.projectInfo[key] = newValue
+        projectObject.projectInfo[key] = newValue
     }
 
     const handleContents = () => {
@@ -22,45 +28,46 @@ export default function ProjectSettingsSection(props){
             <>
                 <div
                     className="top-pane-settings"
-                    onClick={() => props.setActiveSection("project")}>
+                    onClick={()=>dispatch(clickActions.setActiveSection("project"))}>
                     
-                    <h6 className={(props.activeSection === "project") ? null: 'inactive-section'}>Project Settings</h6>
+                    <h6 className={(activeSection === "project") ? null: 'inactive-section'}>Project Settings</h6>
                     <div className="filler"></div>
                     <EditButton
-                        editable={editable}
-                        handleEditable={handleEditable}/>
+                        targetComponent={'project'}
+                        handleClick = {()=>dispatch(clickActions.setEditableComponent("project"))}/>
                 </div>
 
 
-                { (props.activeSection === "project") &&
-                <div className="table-container">
+                { (activeSection === "project") &&
+                <div 
+                    className="table-container">
                     <table>
                         <tbody>
                             <tr>
                                 <td className="left-column">Project Name</td>
-                                <EditableTableCell
-                                    valueRef = {props.projectInfo.projectName}
+                                <EditableCellOneKey
+                                    valueRef = {projectObject.projectInfo.projectName}
                                     handleNewValue = {setProjectInfo}
                                     key_ = 'projectName'
-                                    editable = {editable} />
+                                    belongsTo = "project"/>
                             </tr>
 
                             <tr>
                                 <td className="left-column">Working Hours</td>
-                                <EditableTableCell
-                                    valueRef = {props.projectInfo.workingHours}
+                                <EditableCellOneKey
+                                    valueRef = {projectObject.projectInfo.workingHours}
                                     handleNewValue = {setProjectInfo}
                                     key_ = 'workingHours'
-                                    editable = {editable}/>
+                                    belongsTo = "project"/>
                             </tr>
 
                             <tr>
                                 <td className="left-column">Days Per Year</td>
-                                <EditableTableCell
-                                    valueRef = {props.projectInfo.workingDaysPerYear}
+                                <EditableCellOneKey
+                                    valueRef = {projectObject.projectInfo.workingDaysPerYear}
                                     handleNewValue = {setProjectInfo}
                                     key_ = 'workingDaysPerYear'
-                                    editable = {editable} />
+                                    belongsTo = "project"/>
                             </tr>
 
                         </tbody>

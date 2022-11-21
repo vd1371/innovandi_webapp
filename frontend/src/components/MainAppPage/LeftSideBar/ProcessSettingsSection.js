@@ -5,32 +5,33 @@ import EditButton from "../EditButton";
 import AddButton from "./AddButton";
 import uuid from "react-uuid";
 
+import {useSelector, useDispatch} from "react-redux";
+import { clickActions } from "../../../store/click-slice";
+import projectObject from "../../../projectObject/projectObject";
+
 export default function ProcessSettingsSection(props){
 
-    const [editable, setEditable] = useState(false)
+    const activeComponent = useSelector(state=>state.click.activeComponent)
+    const editableComponent = useSelector(state=>state.click.editableComponent)
+    const activeSection = useSelector(state=>state.click.activeSection)
+    const dispatch = useDispatch()
+
     const [contents, setContents] = useState()
     const [nInputs, setNInputs] = useState(0)
     const [nEmissions, setNEmissions] = useState(0)
     
     useEffect (() => {
         setContents(handleContents())
-    }, [props.activeComponent,
-        editable,
-        props.activeSection,
+    }, [activeComponent,
+        activeSection,
+        editableComponent,
         nInputs,
         nEmissions])
 
-    const handleEditable = () => {
-        if (editable){
-            props.updateNEditions()
-        }
-        setEditable(!editable)
-    }
-
     const getActiveProcessInfo = () => {
-        if (props.activeComponent){
-            for (var process of props.processes){
-                if (process.id_ === props.activeComponent){
+        if (activeComponent){
+            for (var process of projectObject.processes){
+                if (process.id_ === activeComponent){
                     return process
                 }
             }
@@ -81,18 +82,17 @@ export default function ProcessSettingsSection(props){
         return (
             <>
                 <div className="top-pane-settings"
-                    onClick={() => props.setActiveSection("process")}>
+                    onClick={()=>dispatch(clickActions.setActiveSection("process"))}>
 
-                    <h6 className={(props.activeSection === "process") ? null: 'inactive-section'}>Process Settings</h6>
+                    <h6 className={(activeSection === "process") ? null: 'inactive-section'}>Process Settings</h6>
                     <div className="filler"></div>
                     {processInfo &&
                         <EditButton
-                        editable={editable}
-                        handleEditable={handleEditable}
-                        updateNEditions = {props.updateNEditions}/>}
+                        targetComponent={'process'}
+                        handleClick = {()=>dispatch(clickActions.setEditableComponent("process"))}/>}
                 </div>
 
-                {(props.activeSection === "process") && processInfo &&
+                {(activeSection === "process") && processInfo &&
                 <>
                 <table>
                     <tbody>
@@ -102,8 +102,7 @@ export default function ProcessSettingsSection(props){
                                 valueRef = {processInfo.processName}
                                 handleNewValue = {setProcessInfo}
                                 key_ = 'processName'
-                                editable = {editable}
-                                updateNEditions = {props.updateNEditions}/>
+                                belongsTo = "process"/>
                         </tr>
                     </tbody>
                 </table>
@@ -127,16 +126,16 @@ export default function ProcessSettingsSection(props){
                                     valueRef = {item.name}
                                     handleNewValue = {setInputsInfo}
                                     key_1 = {key}
-                                    key_2 = {"name"}
-                                    className = {"left-column"}
-                                    editable = {editable} />
+                                    key_2 = "name"
+                                    className = "left-column"
+                                    belongsTo = "process" />
                                 <EditableCellTwoKeys
                                     key = {uuid()}
                                     valueRef = {item.rate}
                                     handleNewValue = {setInputsInfo}
                                     key_1 = {key}
-                                    key_2 = {"rate"}
-                                    editable = {editable} />
+                                    key_2 = "rate"
+                                    belongsTo = "process" />
                                 </tr>
                             )
                         })
@@ -163,23 +162,23 @@ export default function ProcessSettingsSection(props){
                                     valueRef = {item.name}
                                     handleNewValue = {setOutputInfo}
                                     key_1 = {key}
-                                    key_2 = {"name"}
-                                    className = {"left-column"}
-                                    editable = {editable} />
+                                    key_2 = "name"
+                                    className = "left-column"
+                                    belongsTo = "process" />
                                 <EditableCellTwoKeys
                                     key = {uuid()}
                                     valueRef = {item.basedOn}
                                     handleNewValue = {setOutputInfo}
                                     key_1 = {key}
-                                    key_2 = {"basedOn"}
-                                    editable = {editable} />
+                                    key_2 = "basedOn"
+                                    belongsTo = "process" />
                                 <EditableCellTwoKeys
                                     key = {uuid()}
                                     valueRef = {item.rate}
                                     handleNewValue = {setOutputInfo}
                                     key_1 = {key}
-                                    key_2 = {"rate"}
-                                    editable = {editable} />
+                                    key_2 = "rate"
+                                    belongsTo = "process" />
                                 </tr>
                             )
                         })
@@ -193,7 +192,7 @@ export default function ProcessSettingsSection(props){
                 }
 
                 {!processInfo &&
-                <p className={(props.activeSection === "process") ? null: 'inactive-section'}>No process is selected yet</p>
+                <p className={(activeSection === "process") ? null: 'inactive-section'}>No process is selected yet</p>
                 }
             </>
         )

@@ -6,21 +6,9 @@
 }
 
 #btn-run-analysis{
-    background-color: rgb(169,169,169);
     border: none;
-    width: 50%;
     color: black;
-}
-
-#run-btn-container{
-    width: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center !important;
-    margin: auto !important;
-    margin-top: 5% !important;
-    height: 5vh;
-
+    font-weight: bolder;
 }
 
 #the-app{
@@ -31,6 +19,8 @@
     text-align: center;
     background-color: rgb(105,105,105);
     border-top: 1px gray solid;
+
+    overflow-y: scroll;
 }
 
 

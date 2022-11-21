@@ -2,29 +2,35 @@ import React, { useState, useEffect, useContext, useRef} from "react";
 import uuid from "react-uuid";
 import ProcessComponent from "./ProcessComponent";
 
+import {useSelector, useDispatch} from "react-redux";
+import { clickActions } from "../../../store/click-slice";
+import projectObject from "../../../projectObject/projectObject";
+
 export default function Processes(props){
+
+    const activeComponent = useSelector(state=>state.click.activeComponent)
+    const editableComponent = useSelector(state=>state.click.editableComponent)
+    const activeSection = useSelector(state=>state.click.activeSection)
+    const nProcesses = useSelector(state=>state.app.nProcesses)
 
     const [contents, setContents] = useState()
 
     useEffect(() => {
-        console.log(props.appEditable)
         setContents(
             <>
-                {
-                    props.processes.map(item => {
-                        return (
-                            <ProcessComponent
-                                key = {uuid()}
-                                processInfo = {item}
-                                removeProcess = {props.removeProcess}
-                                handleJustifyClick = {props.handleJustifyClick}
-                                appEditable = {props.appEditable}/>
-                        )
-                    })
-                }
+            {
+                projectObject.processes.map(item => {
+                    return (
+                        <ProcessComponent
+                            key = {uuid()}
+                            id_ = {item.id_}
+                            processName = {item.processName}/>
+                    )
+                })
+            }
             </>
         )
-    }, [props.nEditions, props.nProcesses, props.appEditable])
+    }, [activeComponent, nProcesses, editableComponent])
     
     return (
         <>
