@@ -8,76 +8,56 @@ import uuid from "react-uuid";
 import {useSelector, useDispatch} from "react-redux";
 import { clickActions } from "../../../store/click-slice";
 import projectObject from "../../../projectObject/projectObject";
+import { appActions } from "../../../store/app-slice";
+import DropdownBasedOnCell from "./DropdownBasedOnCell";
 
 export default function ProcessSettingsSection(props){
 
     const activeComponent = useSelector(state=>state.click.activeComponent)
     const editableComponent = useSelector(state=>state.click.editableComponent)
     const activeSection = useSelector(state=>state.click.activeSection)
+    const nEditions = useSelector(state=>state.app.nEditions)
     const dispatch = useDispatch()
 
     const [contents, setContents] = useState()
-    const [nInputs, setNInputs] = useState(0)
-    const [nEmissions, setNEmissions] = useState(0)
     
     useEffect (() => {
         setContents(handleContents())
     }, [activeComponent,
         activeSection,
         editableComponent,
-        nInputs,
-        nEmissions])
+        nEditions])
 
-    const getActiveProcessInfo = () => {
-        if (activeComponent){
-            for (var process of projectObject.processes){
-                if (process.id_ === activeComponent){
-                    return process
-                }
-            }
-        }
-        return null
-    }
-
-    const setProcessInfo = (key, newValue) => {
-        let processInfo = getActiveProcessInfo()
-        processInfo[key] = newValue
-    }
-
-    const setInputsInfo = (key_1, key_2, newValue) => {
-        let processInfo = getActiveProcessInfo()
-        processInfo.inputs[key_1][key_2] = newValue
+    const handleClickEditButton = () => {
+        dispatch(clickActions.setEditableComponent("process"))
+        dispatch(appActions.addNEditions())
     }
 
     const handleAddInputs = () => {
-        let obj = getActiveProcessInfo().inputs
-        if (Object.keys(obj).length < 5) {
-            obj[Object.keys(obj).length+1] = {"name": "Inputs N/A", "rate": 0}
-            setNInputs(Object.keys(obj).length)
-        } else {
-            alert("Currently, maximum number of types of wastes is 5")
-        }
-    }
-
-    const setOutputInfo = (key_1, key_2, newValue) => {
-        let processInfo = getActiveProcessInfo()
-        processInfo.emissions[key_1][key_2] = newValue
+        projectObject.addInput(activeComponent)
+        dispatch(appActions.addNEditions())
     }
 
     const handleAddEmissions = () => {
-        let obj = getActiveProcessInfo().emissions
-        if (Object.keys(obj).length < 20) {
-            obj[Object.keys(obj).length+1] = {
-                "name": "N/A", "basedOn": "N/A", "rate": 0}
-            setNEmissions(Object.keys(obj).length)
-        } else {
-            alert("Currently, maximum number of types of wastes is 20")
-        }
+        projectObject.addEmission(activeComponent)
+        dispatch(appActions.addNEditions())
+    }
+
+    const setProcessInfo = (key, newValue) => {
+        projectObject.setProcessInfo(activeComponent, key, newValue)
+    }
+
+    const setInputsInfo = (key_1, key_2, newValue) => {
+        projectObject.setInputsInfo(activeComponent, key_1, key_2, newValue)
+    }
+
+    const setEmissionInfo = (key_1, key_2, newValue) => {
+        projectObject.setEmissionInfo(activeComponent, key_1, key_2, newValue)
     }
 
     const handleContents = () => {
         
-        let processInfo = getActiveProcessInfo()
+        let processInfo = projectObject.getProcessInfoOf(activeComponent)
 
         return (
             <>
@@ -87,9 +67,9 @@ export default function ProcessSettingsSection(props){
                     <h6 className={(activeSection === "process") ? null: 'inactive-section'}>Process Settings</h6>
                     <div className="filler"></div>
                     {processInfo &&
-                        <EditButton
-                        targetComponent={'process'}
-                        handleClick = {()=>dispatch(clickActions.setEditableComponent("process"))}/>}
+                    <EditButton
+                    targetComponent={'process'}
+                    handleClick = {handleClickEditButton}/>}
                 </div>
 
                 {(activeSection === "process") && processInfo &&
@@ -111,6 +91,7 @@ export default function ProcessSettingsSection(props){
                 <div className="top-pane-settings table-info">
                     <p>Inputs</p>
                     <div className="filler"></div>
+                    {/* <AddButton handler={handleAddInputs}/> */}
                     <AddButton handler={handleAddInputs}/>
                 </div>
 
@@ -151,6 +132,13 @@ export default function ProcessSettingsSection(props){
                 </div>
 
                 <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Based on</th>
+                            <th>Coeff.</th>
+                        </tr>
+                    </thead>
                     <tbody>
                     {
                         Object.entries(processInfo.emissions).map(([key, item]) => {
@@ -160,22 +148,24 @@ export default function ProcessSettingsSection(props){
                                 <EditableCellTwoKeys
                                     key = {uuid()}
                                     valueRef = {item.name}
-                                    handleNewValue = {setOutputInfo}
+                                    handleNewValue = {setEmissionInfo}
                                     key_1 = {key}
                                     key_2 = "name"
                                     className = "left-column"
                                     belongsTo = "process" />
-                                <EditableCellTwoKeys
+                                <DropdownBasedOnCell
                                     key = {uuid()}
                                     valueRef = {item.basedOn}
-                                    handleNewValue = {setOutputInfo}
+                                    handleNewValue = {setEmissionInfo}
                                     key_1 = {key}
                                     key_2 = "basedOn"
-                                    belongsTo = "process" />
+                                    belongsTo = "process"
+                                    id_ = {processInfo.id_}
+                                    />
                                 <EditableCellTwoKeys
                                     key = {uuid()}
                                     valueRef = {item.rate}
-                                    handleNewValue = {setOutputInfo}
+                                    handleNewValue = {setEmissionInfo}
                                     key_1 = {key}
                                     key_2 = "rate"
                                     belongsTo = "process" />
@@ -190,9 +180,10 @@ export default function ProcessSettingsSection(props){
 
                 </>
                 }
-
                 {!processInfo &&
-                <p className={(activeSection === "process") ? null: 'inactive-section'}>No process is selected yet</p>
+                <p className={(activeSection === "process") ? null: 'inactive-section'}>
+                    No process is selected yet
+                </p>
                 }
             </>
         )

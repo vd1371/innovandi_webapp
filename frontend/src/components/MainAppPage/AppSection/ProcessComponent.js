@@ -78,7 +78,6 @@ export default function ProcessComponent(props){
 
                     {
                     coordinationsOfDots.map(item => {
-                        console.log(item[0], item[1])
                          return (
                              <span
                                  key = {uuid()}

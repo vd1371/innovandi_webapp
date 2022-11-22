@@ -92,6 +92,12 @@ export default function ConstructionWasteSection(props){
                         
                     </tbody>
                 </table>
+                {(activeSection === "waste") &&
+                <p className={'inactive-section'}>
+                    If sum of the percentages is not 100,
+                    they will be normalized automatically.
+                </p>
+                }
             </div>
             }
             
