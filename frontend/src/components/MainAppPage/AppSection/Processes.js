@@ -16,6 +16,7 @@ export default function Processes(props){
     const [contents, setContents] = useState()
 
     useEffect(() => {
+        console.log("Rendering again")
         setContents(
             <>
             {
@@ -23,18 +24,17 @@ export default function Processes(props){
                     return (
                         <ProcessComponent
                             key = {uuid()}
-                            id_ = {item.id_}
-                            processName = {item.processName}/>
+                            processInfo = {item}/>
                     )
                 })
             }
             </>
         )
-    }, [activeComponent, nProcesses, editableComponent])
+    }, [nProcesses])
     
     return (
-        <>
+        <div id="all-processes-container">
             {contents}
-        </>
+        </div>
     )
 }

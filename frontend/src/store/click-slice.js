@@ -8,6 +8,7 @@ const clickSlice = createSlice({
         activeSection: "project",
         editableComponent: null,
         clickNotification: null,
+        newComponentAdded: false,
     },
     reducers: {
         setActiveSection(state, action){
@@ -37,9 +38,14 @@ const clickSlice = createSlice({
         setActiveComponent(state, action){
             state.activeComponent = action.payload
         },
-
-
-        
+        setNewComponentAdded(state, action){
+            if (state.newComponentAdded && action.payload){
+                state.clickNotification = "An unused process is already added.\
+                                            Please use that first"
+            } else {
+                state.newComponentAdded = action.payload
+            }
+        }
     }
 
 })

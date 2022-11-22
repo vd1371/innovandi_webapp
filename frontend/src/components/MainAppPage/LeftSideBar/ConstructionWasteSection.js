@@ -45,56 +45,56 @@ export default function ConstructionWasteSection(props){
     const handleContents = () => {
         setContents(
             <>
-                <div className="top-pane-settings"
-                    onClick={()=>dispatch(clickActions.setActiveSection("waste"))}>
-                    <h6 className={(activeSection === "waste") ? null: 'inactive-section'}>Waste Components</h6>
-                    <div className="filler"></div>
-                    <AddButton handler={handleAddWaste}/>
-                    <EditButton
-                        targetComponent={'waste'}
-                        handleClick = {()=>dispatch(clickActions.setEditableComponent("waste"))}/>
-                </div>
+            <div className="top-pane-settings"
+                onClick={()=>dispatch(clickActions.setActiveSection("waste"))}>
+                <h6 className={(activeSection === "waste") ? null: 'inactive-section'}>Waste Composition</h6>
+                <div className="filler"></div>
+                <AddButton handler={handleAddWaste}/>
+                <EditButton
+                    targetComponent={'waste'}
+                    handleClick = {()=>dispatch(clickActions.setEditableComponent("waste"))}/>
+            </div>
 
-                {(activeSection === "waste") &&
-                <div className="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Amount/Hour</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                            Object.entries(projectObject.constructionWasteComposition).map(([key, item]) => {
-                            
-                                return (
-                                    <tr>
-                                    <EditableCellTwoKeys
-                                        key = {uuid()}
-                                        valueRef = {item.name}
-                                        handleNewValue = {setWasteInfo}
-                                        key_1 = {key}
-                                        key_2 = "name"
-                                        className = "left-column"
-                                        belongsTo = "waste"/>
-                                    <EditableCellTwoKeys
-                                        key = {uuid()}
-                                        valueRef = {item.value}
-                                        handleNewValue = {setWasteInfo}
-                                        key_1 = {key}
-                                        key_2 = {"value"}
-                                        belongsTo = "waste" />
-                                    </tr>
-                                )
-                            })
-                            }
-                            
-                        </tbody>
-                    </table>
-                </div>
-                }
-                
+            {(activeSection === "waste") &&
+            <div className="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Percentage (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                        Object.entries(projectObject.constructionWasteComposition).map(([key, item]) => {
+                        
+                            return (
+                                <tr>
+                                <EditableCellTwoKeys
+                                    key = {uuid()}
+                                    valueRef = {item.name}
+                                    handleNewValue = {setWasteInfo}
+                                    key_1 = {key}
+                                    key_2 = "name"
+                                    className = "left-column"
+                                    belongsTo = "waste"/>
+                                <EditableCellTwoKeys
+                                    key = {uuid()}
+                                    valueRef = {item.value}
+                                    handleNewValue = {setWasteInfo}
+                                    key_1 = {key}
+                                    key_2 = {"value"}
+                                    belongsTo = "waste" />
+                                </tr>
+                            )
+                        })
+                        }
+                        
+                    </tbody>
+                </table>
+            </div>
+            }
+            
             </>
         )
     }

@@ -18,6 +18,8 @@ const projectObject = {
             outboundFlows: [],
             inboundFlows: [],
             inputs: {},
+            htmlInfo: {positionX : 10,
+                        positionY: 10},
             emissions: {
                 1 : {"name": "N/A", "basedOn": "N/A", "rate": 0}
             }
@@ -28,12 +30,21 @@ const projectObject = {
     removeProcess: function(id) {
         let new_processes = []
         for (var [index, process] of this.processes.entries()){
-            if (process.props.id_ === id){
+            if (process.id_ === id){
                 new_processes = [...this.processes.slice(0, index),
                                     ...this.processes.slice(index+1)]
             }
         }
-        this.processes.current = [...new_processes]
+        this.processes = [...new_processes]
+    },
+
+    getProcess: function(id) {
+        for (var [index, process] of this.processes.entries()){
+            if (process.id_ === id){
+                return process
+            }
+        }
+        return
     }
 }
 
