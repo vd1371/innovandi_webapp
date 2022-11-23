@@ -2,9 +2,9 @@ import React, {useState, useEffect, useRef} from "react";
 import LeftSidebar from "../LeftSideBar/LeftSideBar";
 import Processes from "../AppSection/Processes";
 import AppTopPane from "./AppTopPane";
-import AppNotification from "./AppNotification";
 
 import {useSelector, useDispatch} from "react-redux";
+import AppNotification from "./AppNotification";
 
 export default function MainAppPage(){
 

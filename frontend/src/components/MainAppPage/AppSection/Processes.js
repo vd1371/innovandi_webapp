@@ -23,7 +23,7 @@ export default function Processes(props){
                 projectObject.processes.map(item => {
                     return (
                         <ProcessComponent
-                            key = {uuid()}
+                            key = {item.id_}
                             processInfo = {item}/>
                     )
                 })

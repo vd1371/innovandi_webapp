@@ -1,18 +1,18 @@
 #all-processes-container{
+    /* position: absolute; */
     width: 100% !important;
     height: 100%;
     overflow-y: scroll;
 }
 
 .process-container{
-    position: relative;
+    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: fit-content !important;
+    width: 210px !important;
     height: fit-content !important;
 
-    margin-bottom: 3vh;
 }
 
 .process-button{

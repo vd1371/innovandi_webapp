@@ -64,27 +64,27 @@ export default function ConstructionWasteSection(props){
                             <th>Percentage (%)</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody key = {uuid()}>
                         {
                         Object.entries(projectObject.constructionWasteComposition).map(([key, item]) => {
                         
                             return (
-                                <tr>
-                                <EditableCellTwoKeys
-                                    key = {uuid()}
-                                    valueRef = {item.name}
-                                    handleNewValue = {setWasteInfo}
-                                    key_1 = {key}
-                                    key_2 = "name"
-                                    className = "left-column"
-                                    belongsTo = "waste"/>
-                                <EditableCellTwoKeys
-                                    key = {uuid()}
-                                    valueRef = {item.value}
-                                    handleNewValue = {setWasteInfo}
-                                    key_1 = {key}
-                                    key_2 = {"value"}
-                                    belongsTo = "waste" />
+                                <tr key = {uuid()}>
+                                    <EditableCellTwoKeys
+                                        key = {uuid()}
+                                        valueRef = {item.name}
+                                        handleNewValue = {setWasteInfo}
+                                        key_1 = {key}
+                                        key_2 = "name"
+                                        className = "left-column"
+                                        belongsTo = "waste"/>
+                                    <EditableCellTwoKeys
+                                        key = {uuid()}
+                                        valueRef = {item.value}
+                                        handleNewValue = {setWasteInfo}
+                                        key_1 = {key}
+                                        key_2 = {"value"}
+                                        belongsTo = "waste" />
                                 </tr>
                             )
                         })

@@ -7,6 +7,9 @@ import { appActions } from "../../../store/app-slice";
 import projectObject from "../../../projectObject/projectObject";
 import Draggable, {DraggableCore} from "react-draggable";
 import uuid from "react-uuid";
+import ArrowPoint from "./ArrowPoint";
+
+import { useToasts } from 'react-toast-notifications';
 
 const coordinationsOfDots = [
     [30, -5], [100, -5], [170, -5],
@@ -22,20 +25,24 @@ export default function ProcessComponent(props){
     const activeSection = useSelector(state=>state.click.activeSection)
     const nProcesses = useSelector(state=>state.app.nProcessess)
     const dispatch = useDispatch()
-
+    
     const nodeRef = useRef()
 
+    const [isClickedEver, setIsClickedEver] = useState(false)
     const [contents, setContents] = useState()
 
     useEffect (() => {
         setContents(handleContents())
-    }, [editableComponent])
+    }, [editableComponent, isClickedEver])
 
     const handleRemoveProcess = () => {
         projectObject.removeProcess(props.processInfo.id_)
         dispatch(appActions.updateNProcesses(projectObject.processes.length))
     }
     const handleClick = () => {
+        if (!isClickedEver){
+            setIsClickedEver(true)
+        }
         dispatch(clickActions.setActiveComponent(props.processInfo.id_))
         dispatch(clickActions.setActiveSection("process"))
         dispatch(clickActions.setNewComponentAdded(false))
@@ -71,20 +78,19 @@ export default function ProcessComponent(props){
                     </button>}
 
                     <button 
-                        className="process-button"
+                        className= {`process-button ${(!isClickedEver)? "fa-fade": null}`}
                         onClick={handleClick}>
                         {props.processInfo.processName}
                     </button>
 
                     {
-                    coordinationsOfDots.map(item => {
+                    coordinationsOfDots.map((coord, index) => {
                          return (
-                             <span
-                                 key = {uuid()}
-                                 className="dot"
-                                 style = {{left: item[0] + "px",
-                                            top: item[1] + "px"}}>
-                             </span>
+                            <ArrowPoint
+                                key = {props.processInfo.id_ + "-" + index}
+                                coord = {coord}
+                                index = {index}
+                                processId = {props.processInfo.id_}/>
                          )
                     })
                     }

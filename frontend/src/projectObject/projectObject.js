@@ -13,7 +13,7 @@ const projectObject = {
 
     addProcess: function() {
         const processInfo = {
-            id_ : uuid(),
+            id_ : "Process-" + this.processes.length,
             processName: "MyAwesomeProcess",
             outboundFlows: [],
             inboundFlows: [],
