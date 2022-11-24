@@ -11,8 +11,6 @@ const clickSlice = createSlice({
         newComponentAdded: false,
         arrowStartingProcess: null,
         arrowStartingPoint: null,
-        arrowEndProcess: null,
-        arrowEndPoint: null,
     },
     reducers: {
         setActiveSection(state, action){
@@ -39,6 +37,9 @@ const clickSlice = createSlice({
         clearClickNotification(state){
             state.clickNotification = null
         },
+        setClickNotification(state, action){
+            state.clickNotification = action.payload
+        },
         setActiveComponent(state, action){
             state.activeComponent = action.payload
         },
@@ -63,14 +64,14 @@ const clickSlice = createSlice({
                         (state.arrowStartingProcess === processParentOfPoint)){
                     state.clickNotification = "Both start and end of an arrow \
                                             cannot belong to the same process."
-                } else {
-                    state.clickNotification = null
                 }
                 
                 state.arrowStartingProcess = null
                 state.arrowStartingPoint = null
 
             } else {
+                console.log(state.arrowStartingPoint)
+                console.log(state.arrowStartingProcess)
                 console.log("setArrowInfo: Something's wrong")
             }
         },

@@ -7,7 +7,6 @@ import uuid from "react-uuid";
 
 import {useSelector, useDispatch} from "react-redux";
 import { clickActions } from "../../../store/click-slice";
-import projectObject from "../../../projectObject/projectObject";
 import { appActions } from "../../../store/app-slice";
 import DropdownBasedOnCell from "./DropdownBasedOnCell";
 
@@ -34,30 +33,30 @@ export default function ProcessSettingsSection(props){
     }
 
     const handleAddInputs = () => {
-        projectObject.addInput(activeComponent)
+        props.projectObject.addInput(activeComponent)
         dispatch(appActions.addNEditions())
     }
 
     const handleAddEmissions = () => {
-        projectObject.addEmission(activeComponent)
+        props.projectObject.addEmission(activeComponent)
         dispatch(appActions.addNEditions())
     }
 
     const setProcessInfo = (key, newValue) => {
-        projectObject.setProcessInfo(activeComponent, key, newValue)
+        props.projectObject.setProcessInfo(activeComponent, key, newValue)
     }
 
     const setInputsInfo = (key_1, key_2, newValue) => {
-        projectObject.setInputsInfo(activeComponent, key_1, key_2, newValue)
+        props.projectObject.setInputsInfo(activeComponent, key_1, key_2, newValue)
     }
 
     const setEmissionInfo = (key_1, key_2, newValue) => {
-        projectObject.setEmissionInfo(activeComponent, key_1, key_2, newValue)
+        props.projectObject.setEmissionInfo(activeComponent, key_1, key_2, newValue)
     }
 
     const handleContents = () => {
         
-        let processInfo = projectObject.getProcessInfoOf(activeComponent)
+        let processInfo = props.projectObject.getProcessInfoOf(activeComponent)
 
         return (
             <>
@@ -160,6 +159,7 @@ export default function ProcessSettingsSection(props){
                                     key_1 = {key}
                                     key_2 = "basedOn"
                                     belongsTo = "process"
+                                    projectObject = {props.projectObject}
                                     id_ = {processInfo.id_}
                                     />
                                 <EditableCellTwoKeys

@@ -5,8 +5,6 @@ import EditButton from "../EditButton";
 import {useSelector, useDispatch} from "react-redux";
 import { clickActions } from "../../../store/click-slice";
 
-import projectObject from "../../../projectObject/projectObject";
-
 export default function ProjectSettingsSection(props){
 
     const activeComponent = useSelector(state=>state.click.activeComponent)
@@ -20,7 +18,7 @@ export default function ProjectSettingsSection(props){
     }, [activeComponent, activeSection, editableComponent])
 
     const setProjectInfo = (key, newValue) => {
-        projectObject.projectInfo[key] = newValue
+        props.projectObject.projectInfo[key] = newValue
     }
 
     const handleContents = () => {
@@ -46,7 +44,7 @@ export default function ProjectSettingsSection(props){
                             <tr>
                                 <td className="left-column">Project Name</td>
                                 <EditableCellOneKey
-                                    valueRef = {projectObject.projectInfo.projectName}
+                                    valueRef = {props.projectObject.projectInfo.projectName}
                                     handleNewValue = {setProjectInfo}
                                     key_ = 'projectName'
                                     belongsTo = "project"/>
@@ -55,7 +53,7 @@ export default function ProjectSettingsSection(props){
                             <tr>
                                 <td className="left-column">Working Hours</td>
                                 <EditableCellOneKey
-                                    valueRef = {projectObject.projectInfo.workingHours}
+                                    valueRef = {props.projectObject.projectInfo.workingHours}
                                     handleNewValue = {setProjectInfo}
                                     key_ = 'workingHours'
                                     belongsTo = "project"/>
@@ -64,7 +62,7 @@ export default function ProjectSettingsSection(props){
                             <tr>
                                 <td className="left-column">Days Per Year</td>
                                 <EditableCellOneKey
-                                    valueRef = {projectObject.projectInfo.workingDaysPerYear}
+                                    valueRef = {props.projectObject.projectInfo.workingDaysPerYear}
                                     handleNewValue = {setProjectInfo}
                                     key_ = 'workingDaysPerYear'
                                     belongsTo = "project"/>

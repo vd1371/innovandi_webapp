@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
     BrowserRouter as Router,
     Routes,
-    Route,
-    Link,
-    Redirect,
+    Route
 } from "react-router-dom";
 
 import useWindowDimensions from "./UseWindowsDimensions";
@@ -14,21 +12,19 @@ import PageNotFound from "./PageNotFound";
 import LandingPage from "./LandingPage/LandingPage";
 import SignInPage from "./SignInPage/SignInPage";
 import ChangePasswordPage from "./SignInPage/ChangePasswordPage";
-import MainAppPage from "./MainAppPage/AppSection/MainAppPage";
+import LCAAppPage from "./MainAppPage/AppSection/LCAAppPage";
 import PrivateRoute from "./PrivateRoute";
 import Navbar from "./Navbar/Navbar";
 import auth from "./SignInPage/firebaseAuth";
+import { Toaster } from 'react-hot-toast';
 
 import {useSelector, useDispatch} from "react-redux";
 
-export default function HomePage() {
-    const { height, width } = useWindowDimensions();
-
+export default function HomePage(props) {
+    
     const isLoggedIn = useSelector (state => state.auth.isLoggedIn)
-    const dispatch = useDispatch()
 
     useEffect(() => {
-
         auth.onAuthStateChanged(async (user) => {
             if (user) {
             // User is signed in, see docs for a list of available properties
@@ -43,24 +39,21 @@ export default function HomePage() {
             }
         });
     
-    });
+    }, []);
 
-    if (width < 1200) {
-        return (<ScreenIsSmallPage />);
-    } else {
-        return (
-            <Router>
-            <Navbar />
-            <Routes>
-                <Route exact path = '/' element={<LandingPage />}/>
-                <Route path = "/signin" element = {<SignInPage />} />
-                <Route path = "/change_password" element = {<ChangePasswordPage />} />
-                <Route path = "/app" element = {<PrivateRoute>
-                                                    <MainAppPage />
-                                                </PrivateRoute>} />
-                {/* <Route path = "/*" element = {<PageNotFound />} /> */}
-            </Routes>
-            </Router>
-        );
-    }
+    return (
+        <Router>
+        <Navbar />
+        <Routes>
+            <Route exact path = '/' element={<LandingPage />}/>
+            <Route path = "/signin" element = {<SignInPage />} />
+            <Route path = "/change_password" element = {<ChangePasswordPage />} />
+            <Route path = "/app" element = {<PrivateRoute>
+                                                <LCAAppPage hidden = {props.hidden}/>
+                                            </PrivateRoute>} />
+            {/* <Route path = "/*" element = {<PageNotFound />} /> */}
+        </Routes>
+        <Toaster position="bottom-right"/>
+        </Router>
+    );
 }

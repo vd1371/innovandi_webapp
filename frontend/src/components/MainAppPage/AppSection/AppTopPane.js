@@ -3,7 +3,6 @@ import EditButton from "../EditButton";
 import {useSelector, useDispatch} from "react-redux";
 import { clickActions } from "../../../store/click-slice";
 import { appActions } from "../../../store/app-slice";
-import projectObject from "../../../projectObject/projectObject";
 
 export default function AppTopPane(props){
 
@@ -22,8 +21,8 @@ export default function AppTopPane(props){
     const handleAddProcess = () => {
         dispatch(clickActions.setNewComponentAdded(true))
         if (!newComponentAdded){
-            projectObject.addProcess()
-            dispatch(appActions.updateNProcesses(projectObject.processes.length))
+            props.projectObject.addProcess()
+            dispatch(appActions.updateNProcesses(props.projectObject.processes.length))
         }
     }
 

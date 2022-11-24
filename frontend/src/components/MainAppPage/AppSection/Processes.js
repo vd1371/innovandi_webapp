@@ -2,9 +2,11 @@ import React, { useState, useEffect, useContext, useRef} from "react";
 import uuid from "react-uuid";
 import ProcessComponent from "./ProcessComponent";
 
-import {useSelector, useDispatch} from "react-redux";
 import { clickActions } from "../../../store/click-slice";
-import projectObject from "../../../projectObject/projectObject";
+
+import {useSelector, useDispatch} from "react-redux";
+import Xarrow, {useXarrow, Xwrapper} from 'react-xarrows';
+import { appActions } from "../../../store/app-slice";
 
 export default function Processes(props){
 
@@ -12,25 +14,29 @@ export default function Processes(props){
     const editableComponent = useSelector(state=>state.click.editableComponent)
     const activeSection = useSelector(state=>state.click.activeSection)
     const nProcesses = useSelector(state=>state.app.nProcesses)
+    const nEditions = useSelector(state=>state.app.nEditions)
+
+    const dispatch = useDispatch()
 
     const [contents, setContents] = useState()
 
     useEffect(() => {
-        console.log("Rendering again")
         setContents(
             <>
             {
-                projectObject.processes.map(item => {
+                props.projectObject.processes.map(item => {
                     return (
                         <ProcessComponent
                             key = {item.id_}
-                            processInfo = {item}/>
+                            processInfo = {item}
+                            {...props}/>
                     )
                 })
             }
             </>
         )
-    }, [nProcesses])
+        dispatch(appActions.addNEditionsArrows())
+    }, [nProcesses, nEditions])
     
     return (
         <div id="all-processes-container">

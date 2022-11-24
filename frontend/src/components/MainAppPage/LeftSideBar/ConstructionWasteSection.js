@@ -7,8 +7,6 @@ import {useSelector, useDispatch} from "react-redux";
 import { clickActions } from "../../../store/click-slice";
 import uuid from "react-uuid";
 
-import projectObject from "../../../projectObject/projectObject";
-
 export default function ConstructionWasteSection(props){
 
     const activeComponent = useSelector(state=>state.click.activeComponent)
@@ -25,7 +23,7 @@ export default function ConstructionWasteSection(props){
 
     const handleAddWaste = () => {
 
-        let obj = projectObject.constructionWasteComposition
+        let obj = props.projectObject.constructionWasteComposition
 
         if (Object.keys(obj).length < 10) {
             obj[Object.keys(obj).length + 1] = {
@@ -39,7 +37,7 @@ export default function ConstructionWasteSection(props){
     }
 
     const setWasteInfo = (key_1, key_2, newValue) => {
-        projectObject.constructionWasteComposition[key_1][key_2] = newValue
+        props.projectObject.constructionWasteComposition[key_1][key_2] = newValue
     }
 
     const handleContents = () => {
@@ -66,7 +64,10 @@ export default function ConstructionWasteSection(props){
                     </thead>
                     <tbody key = {uuid()}>
                         {
-                        Object.entries(projectObject.constructionWasteComposition).map(([key, item]) => {
+                        Object.entries(props
+                                        .projectObject
+                                        .constructionWasteComposition)
+                                        .map(([key, item]) => {
                         
                             return (
                                 <tr key = {uuid()}>

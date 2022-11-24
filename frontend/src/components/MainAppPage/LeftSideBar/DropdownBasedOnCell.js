@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useContext} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
-import projectObject from "../../../projectObject/projectObject";
-
 export default function DropdownBasedOnCell(props){
 
     const nEditions = useSelector(state=>state.app.nEditions)
     const nEditionsForDropDownSelector = useSelector(state=>state.app.nEditionsForDropDownSelector)
     const editableComponent = useSelector(state=>state.click.editableComponent)
-    const inputNames = projectObject.getInputNames(props.id_)
+    const inputNames = props.projectObject.getInputNames(props.id_)
     const [value, setValue] = useState(props.valueRef)
 
     const changeStatus = (e) => {
