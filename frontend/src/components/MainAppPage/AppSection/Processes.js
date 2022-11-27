@@ -7,6 +7,7 @@ import { clickActions } from "../../../store/click-slice";
 import {useSelector, useDispatch} from "react-redux";
 import Xarrow, {useXarrow, Xwrapper} from 'react-xarrows';
 import { appActions } from "../../../store/app-slice";
+import WasteComponent from "./WasteComponent";
 
 export default function Processes(props){
 
@@ -23,8 +24,12 @@ export default function Processes(props){
     useEffect(() => {
         setContents(
             <>
+            <WasteComponent
+                key = "wasteComponent"
+                processInfo = {props.projectObject.processes[0]}
+                {...props}/>
             {
-                props.projectObject.processes.map(item => {
+                props.projectObject.processes.slice(1).map(item => {
                     return (
                         <ProcessComponent
                             key = {item.id_}

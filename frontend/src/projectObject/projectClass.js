@@ -9,8 +9,18 @@ class projectClass {
             workingDaysPerYear: 0
         }
         this.constructionWasteComposition = {}
-        this.processes = []
+        this.processes = [this._defaultWasteProcess()]
         this.arrows= {}
+    }
+
+    _defaultWasteProcess() {
+        const wasteProcessInfo = {
+            id_ : "wasteComponent",
+            processName: "wasteComponent",
+            isNew: false,
+            outboundFlows: [],
+        }
+        return wasteProcessInfo
     }
 
     addProcess() {

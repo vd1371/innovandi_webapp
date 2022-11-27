@@ -9,10 +9,18 @@
     position: absolute;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    width: 210px !important;
+    justify-content: center !important;
+    width: 210px;
     height: fit-content !important;
+}
 
+.waste-container{
+    display: flex !important;
+    justify-content: center !important;
+    block-size: fit-content;
+    margin-top: 1vh;
+    background-color: red;
+    width: 100% !important;
 }
 
 .process-button{
@@ -23,23 +31,14 @@
     flex-direction: column;
     align-items: center !important;
     justify-content: center !important;
-
     
     width: 210px;
     height: 100px;
 }
 
-.add-process-container{
-    justify-content: center;
-    width: fit-content;
-    margin: auto;
-}
-
-#empty-process-button{
-    width: 200px;
-    height: 50px;
-    margin: auto;
-    font-size: xx-large;
+.waste-button{
+    display: flex;
+    align-items: center !important;
 }
 
 .delete-button{

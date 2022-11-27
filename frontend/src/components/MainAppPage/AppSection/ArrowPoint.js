@@ -35,7 +35,7 @@ export default function ArrowPoint(props){
         arrowStartingProcess])
 
     const handleClick = () => {
-        if (!props.processInfo.isNew){
+        if (!props.processInfo.isNew || props.pointId.includes("wasteComponent")){
             let successful = null
             if ((arrowStartingProcess !== props.processInfo.id_) &&
                 (arrowStartingPoint !== props.pointId) &&
