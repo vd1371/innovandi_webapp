@@ -22,17 +22,13 @@ export default function ConstructionWasteSection(props){
     }, [editableComponent, nWastes, activeSection])
 
     const handleAddWaste = () => {
-
         let obj = props.projectObject.constructionWasteComposition
-
         if (Object.keys(obj).length < 10) {
-            obj[Object.keys(obj).length + 1] = {
-                'name': 'N/A',
-                'value': 0
-            } 
+            props.projectObject.addWaste()
             setNWastes(Object.keys(obj).length)
         } else {
-            alert("Currently, maximum number of types of wastes is 10")
+            dispatch(clickActions.setClickNotification(
+                    "Currently, maximum number of types of wastes is 10"))
         }
     }
 

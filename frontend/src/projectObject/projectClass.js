@@ -10,9 +10,9 @@ class projectClass {
         }
         this.constructionWasteComposition = {}
         this.processes = [this._defaultWasteProcess()]
-        this.arrows= {}
+        this.flows= {}
     }
-
+    // --------------------------------- Waste -----------------------------//
     _defaultWasteProcess() {
         const wasteProcessInfo = {
             id_ : "wasteComponent",
@@ -23,6 +23,24 @@ class projectClass {
         return wasteProcessInfo
     }
 
+    addWaste () {
+        let obj = this.constructionWasteComposition
+        obj[Object.keys(obj).length + 1] = {
+            'name': 'N/A',
+            'value': 0
+        }
+    }
+
+    getWasteNames(){
+        const wasteNames = []
+        let obj = this.constructionWasteComposition
+        for (const k in obj){
+            wasteNames.push(obj[k]['name'])
+        }
+        return wasteNames
+    }
+
+    // --------------------------------- Waste -----------------------------//
     addProcess() {
         const processInfo = {
             id_ : "process" + this.processes.length,
@@ -57,17 +75,6 @@ class projectClass {
                 process.isNew = false
             }
         }
-    }
-
-    addArrows (id_start, id_end, processStart, processEnd){
-        for (const k in this.arrows){
-            if (k.split("-").includes(processStart) &&
-                k.split("-").includes(processEnd)){
-                return false
-            }
-        }
-        this.arrows[id_start + "-" + id_end] = [id_start, id_end]
-        return true
     }
 
     getProcessInfoOf(id) {
@@ -120,6 +127,41 @@ class projectClass {
             inputNames.push(processInfo.inputs[k]['name'])
         }
         return inputNames
+    }
+
+    //--------------------------- Flows ---------------------------------//
+    addFlow (id_start, id_end, processStart, processEnd){
+        if (processEnd.includes("wasteComponent")){
+            return false
+        }
+        for (const k in this.flows){
+            if ((k.includes(processStart) && k.includes(processEnd))){
+                return false
+            }
+        }
+
+        const newFlow = {
+            start: id_start,
+            end: id_end,
+            outputs: {}
+        }
+        this.flows[id_start + "->" + id_end] = newFlow
+        return true
+    }
+
+    addFlowOutput (flowId){
+        let obj = this.flows[flowId].outputs
+        console.log(obj)
+        obj[Object.keys(obj).length] = {"material": "N/A",
+                                        "ratio": 0}
+    }
+
+    setFlowOutputs (flowId, key_1, key_2, value){
+        this.flows[flowId][key_1][key_2] = value
+    }
+
+    deleteFlow (flowId){
+        delete this.flows[flowId]
     }
 
 }

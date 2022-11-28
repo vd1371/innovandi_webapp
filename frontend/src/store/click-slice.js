@@ -64,6 +64,8 @@ const clickSlice = createSlice({
                         (state.arrowStartingProcess === processParentOfPoint)){
                     state.clickNotification = "Both start and end of an arrow \
                                             cannot belong to the same process."
+                } else if (processParentOfPoint.includes("wasteComponent")){
+                    state.clickNotification = "A flow cannot end at the waste component"
                 }
                 
                 state.arrowStartingProcess = null

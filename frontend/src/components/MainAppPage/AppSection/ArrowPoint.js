@@ -35,12 +35,12 @@ export default function ArrowPoint(props){
         arrowStartingProcess])
 
     const handleClick = () => {
-        if (!props.processInfo.isNew || props.pointId.includes("wasteComponent")){
+        if (!props.processInfo.isNew){
             let successful = null
             if ((arrowStartingProcess !== props.processInfo.id_) &&
                 (arrowStartingPoint !== props.pointId) &&
                 arrowStartingPoint){
-                    successful = props.projectObject.addArrows(arrowStartingPoint,
+                    successful = props.projectObject.addFlow(arrowStartingPoint,
                                                         props.pointId,
                                                         arrowStartingProcess,
                                                         props.processInfo.id_)

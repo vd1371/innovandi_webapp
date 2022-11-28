@@ -8,7 +8,7 @@ import uuid from "react-uuid";
 import {useSelector, useDispatch} from "react-redux";
 import { clickActions } from "../../../store/click-slice";
 import { appActions } from "../../../store/app-slice";
-import DropdownBasedOnCell from "./DropdownBasedOnCell";
+import DropdownBasedOnInputs from "./DropdownBasedOnInputs";
 
 export default function ProcessSettingsSection(props){
 
@@ -152,7 +152,7 @@ export default function ProcessSettingsSection(props){
                                     key_2 = "name"
                                     className = "left-column"
                                     belongsTo = "process" />
-                                <DropdownBasedOnCell
+                                <DropdownBasedOnInputs
                                     key = {uuid()}
                                     valueRef = {item.basedOn}
                                     handleNewValue = {setEmissionInfo}

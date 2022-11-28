@@ -57,6 +57,12 @@ input {
     background-color: rgb(245,245,245);
     padding: 5px;
     border-bottom: 1px gray solid;
+}
+
+#flow-settings-section{
+    background-color: rgb(245,245,245);
+    padding: 5px;
+    border-bottom: 1px gray solid;
     flex-grow: 1;
 }
 

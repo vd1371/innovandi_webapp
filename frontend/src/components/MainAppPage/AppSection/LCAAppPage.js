@@ -16,6 +16,7 @@ export default function LCAAppPage(props){
     const nEditions = useSelector(state=>state.app.nEditions)
     const nEditionsArrows = useSelector(state=>state.app.nEditionsArrows)
     const scaleLevel = useSelector(state=>state.app.scaleLevel)
+    const [hidden, setHidden] = useState(props.hidden)
     const dispatch = useDispatch()
 
     const projectObject = useRef()
@@ -31,7 +32,7 @@ export default function LCAAppPage(props){
         setContents(
             <>
                 <AppNotification />
-                <div id="mainapp-container" className= {props.hidden? "hidden": null}>
+                <div id="mainapp-container">
                     <LeftSidebar projectObject = {projectObject.current}/>
                     <div id = "the-app">
                         <AppTopPane projectObject = {projectObject.current}/>
