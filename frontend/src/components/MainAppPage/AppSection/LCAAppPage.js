@@ -9,15 +9,15 @@ import Arrows from "./Arrows"
 import AppNotification from "./AppNotification";
 import projectClass from "../../../projectObject/projectClass";
 import { appActions } from "../../../store/app-slice";
+import {useXarrow} from 'react-xarrows';
 
 export default function LCAAppPage(props){
 
     const nProcesses = useSelector(state=>state.app.nProcesses)
     const nEditions = useSelector(state=>state.app.nEditions)
     const nEditionsArrows = useSelector(state=>state.app.nEditionsArrows)
-    const scaleLevel = useSelector(state=>state.app.scaleLevel)
-    const [hidden, setHidden] = useState(props.hidden)
     const dispatch = useDispatch()
+    const updateXarrow = useXarrow()
 
     const projectObject = useRef()
     const allArrowPointsRefs = useRef({})
@@ -25,6 +25,10 @@ export default function LCAAppPage(props){
 
     useEffect(() => {
         projectObject.current = new projectClass()
+        if (localStorage.getItem("tmpProject")){
+            projectObject.current.loadFromLocalStorage()
+            dispatch(appActions.updateNProcesses(Object.keys(projectObject.current).length))
+        }
     }, [])
 
     useEffect(() => {
@@ -44,7 +48,8 @@ export default function LCAAppPage(props){
                 </div>
             </>
         )
-    }, [nProcesses, nEditions, scaleLevel])
+        updateXarrow()
+    }, [nProcesses, nEditions])
     
     return (
         <>

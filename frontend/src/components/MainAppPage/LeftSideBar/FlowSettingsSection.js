@@ -8,6 +8,7 @@ import {useSelector, useDispatch} from "react-redux";
 import { clickActions } from "../../../store/click-slice";
 import { appActions } from "../../../store/app-slice";
 import DropdownBasedOnMaterials from "./DropdownBasedOnMaterials";
+import DeleteRowButton from "./DeleteRowButton"
 
 export default function FlowSettingsSection(props){
 
@@ -40,6 +41,11 @@ export default function FlowSettingsSection(props){
         props.projectObject.setFlowOutputs(activeComponent, key_1, key_2, newValue)
     }
 
+    const handleDeleteRow = (key_1) => {
+        props.projectObject.deleteFlowOutputs(activeComponent, key_1)
+        dispatch(appActions.addNEditions())
+    }
+
     const handleContents = () => {
         
         let flowInfo = props.projectObject.flows[activeComponent]
@@ -68,12 +74,12 @@ export default function FlowSettingsSection(props){
                         <tr>
                             <th>Material</th>
                             <th>Output/Input ratio</th>
+                            {(editableComponent == "flow") && <th>Del.</th>}
                         </tr>
                     </thead>
                     <tbody>
                     {
                         Object.entries(flowInfo.outputs).map(([key, item]) => {
-                        
                             return (
                                 <tr key = {"flowSettingsRow" + key}>
                                 
@@ -92,7 +98,14 @@ export default function FlowSettingsSection(props){
                                     handleNewValue = {setOutputInfo}
                                     key_1 = {key}
                                     key_2 = "ratio"
-                                    belongsTo = "flow" />
+                                    belongsTo = "flow"/>
+
+                                <DeleteRowButton
+                                    key = {"flowSettingsDeleteKey" + key}
+                                    key_1 = {key}
+                                    handleDelete = {handleDeleteRow}
+                                    belongsTo = "flow"
+                                    />
                                 </tr>
                             )
                         })

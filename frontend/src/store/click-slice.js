@@ -60,21 +60,8 @@ const clickSlice = createSlice({
                 state.arrowStartingPoint = pointId
 
             } else if (state.arrowStartingPoint && state.arrowStartingProcess){
-                if ((state.arrowStartingPoint !== pointId) &&
-                        (state.arrowStartingProcess === processParentOfPoint)){
-                    state.clickNotification = "Both start and end of an arrow \
-                                            cannot belong to the same process."
-                } else if (processParentOfPoint.includes("wasteComponent")){
-                    state.clickNotification = "A flow cannot end at the waste component"
-                }
-                
                 state.arrowStartingProcess = null
                 state.arrowStartingPoint = null
-
-            } else {
-                console.log(state.arrowStartingPoint)
-                console.log(state.arrowStartingProcess)
-                console.log("setArrowInfo: Something's wrong")
             }
         },
     }

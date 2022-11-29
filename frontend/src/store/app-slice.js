@@ -4,14 +4,12 @@ const appSlice = createSlice({
     name: 'app',
     initialState: {
         nProcesses: 0,
-        scaleLevel: 1.2,
         nEditions: 0,
         nEditionsForDropDownSelector: 0,
         nEditionsArrows: 0,
     },
     reducers: {
         updateNProcesses(state, action){ state.nProcesses = action.payload },
-        modifyScalelevel(state, action){ state.scaleLevel += action.payload },
         addNEditions (state) {state.nEditions += 1},
         addNEditionsDDS (state) {state.nEditionsForDropDownSelector += 1},
         addNEditionsArrows (state) {state.nEditionsArrows += 1},

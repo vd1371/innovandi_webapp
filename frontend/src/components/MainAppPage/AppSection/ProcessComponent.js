@@ -35,7 +35,7 @@ export default function ProcessComponent(props){
 
     const handleRemoveProcess = () => {
         props.projectObject.removeProcess(props.processInfo.id_)
-        dispatch(appActions.updateNProcesses(props.projectObject.processes.length))
+        dispatch(appActions.updateNProcesses(Object.keys(props.projectObject.processes).length))
     }
     const handleClick = () => {
         if (props.processInfo.isNew){
@@ -68,40 +68,44 @@ export default function ProcessComponent(props){
                 onDrag = {updateXarrow}
                 onStop = {handleStop}
                 >
+
                 <div
                     className="process-container"
                     id = {props.processInfo.id_}
                     ref = {nodeRef}>
 
-                    {(editableComponent === 'app') && 
-                    <button 
-                        className="fa-minus fa-solid delete-button fa-beat-fade"
-                        onClick={handleRemoveProcess}>
-                    </button>}
+                    <div
+                        className="process-wrapper" 
+                        style = {{"transform": "scale(" + props.projectObject.renderSettings.scaleLevel + ")"}}>
 
-                    <button 
-                        className= {`process-button ${(props.processInfo.isNew)? "fa-fade": null}`}
-                        onClick={handleClick}>
-                        {props.processInfo.processName}
-                    </button>
+                        {(editableComponent === 'app') && 
+                        <button 
+                            className="fa-minus fa-solid delete-button fa-beat-fade"
+                            onClick={handleRemoveProcess}>
+                        </button>}
 
-                    {
-                    coordinationsOfDots.map((coord, index) => {
-                        let tmpId = props.processInfo.id_ + "-dot" + index
-                         return (
-                            <ArrowPoint
-                                key = {tmpId}
-                                pointId = {tmpId}
-                                coord = {coord}
-                                processInfo = {props.processInfo}
-                                {...props}/>
-                         )
-                    })
-                    }
-                    
+                        <button 
+                            className= {`process-button ${(props.processInfo.isNew)? "fa-fade": null}`}
+                            onClick={handleClick}>
+                            {props.processInfo.processName}
+                        </button>
+
+                        {
+                        coordinationsOfDots.map((coord, index) => {
+                            let tmpId = props.processInfo.id_ + "-dot" + index
+                            return (
+                                <ArrowPoint
+                                    key = {tmpId}
+                                    pointId = {tmpId}
+                                    coord = {coord}
+                                    processInfo = {props.processInfo}
+                                    {...props}/>
+                            )
+                        })
+                        }
+                    </div>
 
                 </div>
-
             </Draggable>
         )
     }

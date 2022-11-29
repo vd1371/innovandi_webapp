@@ -24,20 +24,23 @@ export default function Processes(props){
     useEffect(() => {
         setContents(
             <>
-            <WasteComponent
-                key = "wasteComponent"
-                processInfo = {props.projectObject.processes[0]}
-                {...props}/>
-            {
-                props.projectObject.processes.slice(1).map(item => {
+            {Object.entries(props.projectObject.processes).map(([key, item]) => {
+                if (key.includes("wasteComponent")){
+                    return (
+                        <WasteComponent
+                            key = "wasteComponent"
+                            processInfo = {props.projectObject.processes["wasteComponent"]}
+                            {...props}/>
+                    )
+                } else {
                     return (
                         <ProcessComponent
                             key = {item.id_}
                             processInfo = {item}
                             {...props}/>
                     )
-                })
-            }
+                }
+            })}
             </>
         )
         dispatch(appActions.addNEditionsArrows())

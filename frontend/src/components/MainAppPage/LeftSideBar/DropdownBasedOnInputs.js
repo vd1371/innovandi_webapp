@@ -6,7 +6,7 @@ export default function DropdownBasedOnInputs(props){
     const nEditions = useSelector(state=>state.app.nEditions)
     const nEditionsForDropDownSelector = useSelector(state=>state.app.nEditionsForDropDownSelector)
     const editableComponent = useSelector(state=>state.click.editableComponent)
-    const inputNames = props.projectObject.getInputNames(props.id_)
+    const inputNames = ["N/A"].concat(props.projectObject.getInputNames(props.id_))
     const [value, setValue] = useState(props.valueRef)
 
     const changeStatus = (e) => {
@@ -31,7 +31,5 @@ export default function DropdownBasedOnInputs(props){
 
             {(editableComponent !== "process") && <td>{props.valueRef}</td>}
         </>
-
-        
     );
 }

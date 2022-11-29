@@ -22,8 +22,29 @@ export default function AppTopPane(props){
         dispatch(clickActions.setNewComponentAdded(true))
         if (!newComponentAdded){
             props.projectObject.addProcess()
-            dispatch(appActions.updateNProcesses(props.projectObject.processes.length))
+            dispatch(appActions.updateNProcesses(Object.keys(props.projectObject.processes).length+1))
         }
+    }
+
+    const handleSaveProject = () => {
+        props.projectObject.saveToLocalStorage()
+        dispatch(clickActions.setClickNotification("Project Saved."))
+    }
+
+    const handleDeleteProject = () => {
+        props.projectObject.flushProject()
+        dispatch(appActions.updateNProcesses(Object.keys(props.projectObject).length)) // To re-render the processes
+        dispatch(clickActions.setClickNotification("Project Deleted."))
+    }
+
+    const handleZoomIn = () => {
+        props.projectObject.addScaleLevel(0.1)
+        dispatch(appActions.addNEditions())
+    }
+    
+    const handleZoomOut = () => {
+        props.projectObject.addScaleLevel(-0.1)
+        dispatch(appActions.addNEditions())
     }
 
     const handleContents = () => {
@@ -34,13 +55,13 @@ export default function AppTopPane(props){
                 <button
                     type="button"
                     className="fa-search-plus fa-solid toppane-button"
-                    onClick={()=>dispatch(appActions.modifyScalelevel(0.05))}>
+                    onClick={handleZoomIn}>
                 </button>
 
                 <button
                     type="button"
                     className="fa-search-minus fa-solid toppane-button"
-                    onClick={()=>dispatch(appActions.modifyScalelevel(-0.05))}>
+                    onClick={handleZoomOut}>
                 </button>
                 
                 <EditButton
@@ -51,6 +72,22 @@ export default function AppTopPane(props){
                     type="button"
                     className = "fa-plus fa-solid toppane-button"
                     onClick={handleAddProcess}>
+                </button>
+
+                <div className="filler"></div>
+
+                <button
+                    type="button"
+                    className = "fa-solid toppane-button"
+                    onClick={handleSaveProject}>
+                    Save
+                </button>
+
+                <button
+                    type="button"
+                    className = "fa-solid toppane-button"
+                    onClick={handleDeleteProject}>
+                    Del
                 </button>
             </>
         )

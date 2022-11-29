@@ -9,6 +9,7 @@ export default function ArrowPoint(props){
 
     const arrowStartingPoint = useSelector(state => state.click.arrowStartingPoint)
     const arrowStartingProcess = useSelector(state => state.click.arrowStartingProcess)
+    const nEditionsArrows = useSelector(state => state.app.addNEditionsArrows)
     const refPoint = useRef()
     const dispatch = useDispatch()
 
@@ -32,7 +33,8 @@ export default function ArrowPoint(props){
             </span>
         )
     }, [arrowStartingPoint,
-        arrowStartingProcess])
+        arrowStartingProcess,
+        nEditionsArrows])
 
     const handleClick = () => {
         if (!props.processInfo.isNew){
@@ -50,9 +52,10 @@ export default function ArrowPoint(props){
                 arrowStartingPoint &&
                 arrowStartingPoint !== props.pointId){
                 dispatch(clickActions.setClickNotification(
-                    "Only one arrow can be added between two processes"))
+                    "You must comply with the rules of flows."))
             }
             dispatch(clickActions.setArrowPointInfo([props.processInfo.id_, props.pointId]))
+            dispatch(appActions.addNEditionsArrows())
         }
         
     }

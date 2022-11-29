@@ -9,7 +9,7 @@
     color: red;
 }
 
-#notification-pane .filler{
+#app-top-pane .filler{
     flex-grow: 0.2 !important;
 }
 

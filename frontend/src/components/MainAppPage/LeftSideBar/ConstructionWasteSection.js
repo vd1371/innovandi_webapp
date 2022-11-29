@@ -2,34 +2,33 @@ import React, { useState, useEffect, useContext} from "react";
 import EditableCellTwoKeys from "./EditableCellTwoKeys";
 import EditButton from "../EditButton";
 import AddButton from "./AddButton";
+import DeleteRowButton from "./DeleteRowButton";
 
 import {useSelector, useDispatch} from "react-redux";
 import { clickActions } from "../../../store/click-slice";
-import uuid from "react-uuid";
+import { appActions } from "../../../store/app-slice";
 
 export default function ConstructionWasteSection(props){
 
-    const activeComponent = useSelector(state=>state.click.activeComponent)
     const editableComponent = useSelector(state=>state.click.editableComponent)
     const activeSection = useSelector(state=>state.click.activeSection)
+    const nEditions =  useSelector(state=>state.app.nEditions)
     const dispatch = useDispatch()
 
-    const [nWastes, setNWastes] = useState(0)
     const [contents, setContents] = useState()
 
     useEffect (() => {
         handleContents()
-    }, [editableComponent, nWastes, activeSection])
+    }, [editableComponent, activeSection, nEditions])
 
     const handleAddWaste = () => {
-        let obj = props.projectObject.constructionWasteComposition
-        if (Object.keys(obj).length < 10) {
-            props.projectObject.addWaste()
-            setNWastes(Object.keys(obj).length)
-        } else {
-            dispatch(clickActions.setClickNotification(
-                    "Currently, maximum number of types of wastes is 10"))
-        }
+        props.projectObject.addWaste()
+        dispatch(appActions.addNEditions())
+    }
+
+    const handleDeleteWaste = (key_1) => {
+        props.projectObject.deleteWaste(key_1)
+        dispatch(appActions.addNEditions())
     }
 
     const setWasteInfo = (key_1, key_2, newValue) => {
@@ -49,16 +48,17 @@ export default function ConstructionWasteSection(props){
                     handleClick = {()=>dispatch(clickActions.setEditableComponent("waste"))}/>
             </div>
 
-            {(activeSection === "waste") &&
+            {(activeSection === "waste" || true) &&
             <div className="table-container">
                 <table>
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Percentage (%)</th>
+                            {(editableComponent == "waste") && <th>Del.</th>}
                         </tr>
                     </thead>
-                    <tbody key = {uuid()}>
+                    <tbody key = {"wasteTable"}>
                         {
                         Object.entries(props
                                         .projectObject
@@ -66,21 +66,28 @@ export default function ConstructionWasteSection(props){
                                         .map(([key, item]) => {
                         
                             return (
-                                <tr key = {uuid()}>
+                                <tr key = {"wasteRow" + key}>
                                     <EditableCellTwoKeys
-                                        key = {uuid()}
+                                        key = {"wasteName" + key}
                                         valueRef = {item.name}
                                         handleNewValue = {setWasteInfo}
                                         key_1 = {key}
                                         key_2 = "name"
                                         className = "left-column"
                                         belongsTo = "waste"/>
+
                                     <EditableCellTwoKeys
-                                        key = {uuid()}
+                                        key = {"wasteValue" + key}
                                         valueRef = {item.value}
                                         handleNewValue = {setWasteInfo}
                                         key_1 = {key}
                                         key_2 = {"value"}
+                                        belongsTo = "waste" />
+
+                                    <DeleteRowButton
+                                        key = {"wasteDeleteKey" + key}
+                                        key_1 = {key}
+                                        handleDelete = {handleDeleteWaste}
                                         belongsTo = "waste" />
                                 </tr>
                             )

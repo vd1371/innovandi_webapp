@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useContext} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
-export default function DropdownBasedOnInputs(props){
+export default function DropdownBasedOnMaterials(props){
 
     const nEditions = useSelector(state=>state.app.nEditions)
     const nEditionsForDropDownSelector = useSelector(state=>state.app.nEditionsForDropDownSelector)
     const editableComponent = useSelector(state=>state.click.editableComponent)
-    const listOfItems = props.projectObject.getWasteNames()
+    const listOfItems = ["N/A"].concat(props.projectObject.getWasteNames())
     const [value, setValue] = useState(props.valueRef)
 
     const changeStatus = (e) => {
-        setValue(e.target.value);
+        setValue(e.target.value)
         props.handleNewValue(props.key_1, props.key_2, e.target.value)
     }
 
