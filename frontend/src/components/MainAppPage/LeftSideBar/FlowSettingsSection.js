@@ -141,7 +141,9 @@ export default function FlowSettingsSection(props){
     }
     
     return (
-        <div id='flow-settings-section'>
+        <div
+            className="settings-wrapper" 
+            id='flow-settings-section'>
             {contents}
         </div>
     )

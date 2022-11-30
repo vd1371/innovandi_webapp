@@ -28,7 +28,9 @@ class projectClass {
             scaleLevel: 1,
         }
         this.generalInfo = {
-            processesTypes : ['Machines', 'Feeder', 'Crusher', 'Sieve']
+            processesTypes : ['Excavator', 'Loader', 'Feeder',
+                                'Crusher', 'Seperator', 'ConveyorBelt',
+                                'Sieve', 'AirClassifier']
         }
     }
     // ---------------------------- Render Settings ------------------------//
@@ -73,7 +75,7 @@ class projectClass {
         this.processes[processId] = new processClass(processId)
     }
 
-    //-------------------------------- Process --------------------------------//
+    //-------------------- Process -------------------//
     setProcessInfo(processId, key, newValue){
         this.processes[processId].setInfo(key, newValue)
     }
@@ -91,7 +93,7 @@ class projectClass {
         this.processes[processId].setIsNewFalse()
     }
     
-    //-------------------------------- Inputs --------------------------------//
+    //----------------------- Inputs -------------------//
     addInputToProcess(processId){
         this.processes[processId].addInput()
     }
@@ -108,7 +110,7 @@ class projectClass {
         return this.processes[processId].getInputNames()
     }
 
-    //------------------------------ Emissions ------------------------------//
+    //--------------------- Emissions ----------------//
     addEmissionToProcess(processId){
         this.processes[processId].addEmission()
     }
@@ -119,6 +121,19 @@ class projectClass {
 
     deleteEmissionOfProcess(id, key_1){
         this.processes[id].deleteEmission(key_1)
+    }
+
+    //--------------------- Crushing Formulas ----------------//
+    addCrushingFormulaToProcess(processId){
+        this.processes[processId].addCurshingFormula()
+    }
+
+    setCrushingFormulaOfProcess(processId, key_1, key_2, value){
+        this.processes[processId].setCrushingFormula(key_1, key_2, value)
+    }
+
+    deleteCrushingFormulaOfProcess(id, key_1){
+        this.processes[id].deleteCrushingFormula(key_1)
     }
 
     //--------------------------- Flows ---------------------------------//

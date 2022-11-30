@@ -1,12 +1,16 @@
 
 #left-sidebar{
     position: relative;
-    display: flex;
-    flex-direction: column !important;
     height: 100%;
     width: 400px !important;
     background-color: rgb(245,245,245);
     border: 1px gray solid;
+    overflow-y: auto;
+}
+
+.settings-wrapper{
+    height: fit-content;
+    min-height: 5vh;
 }
 
 .top-pane-settings{
@@ -44,10 +48,6 @@ input {
 }
 
 #project-settings-section{
-    width: auto;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: inline-block;
     padding: 5px !important;
     background-color: rgb(245,245,245);
     border-bottom: 1px gray solid;
@@ -60,10 +60,11 @@ input {
 }
 
 #flow-settings-section{
+    position: relative;
     background-color: rgb(245,245,245);
     padding: 5px;
     border-bottom: 1px gray solid;
-    flex-grow: 1;
+    /* flex-grow: 1; */
 }
 
 #construction-waste-section{

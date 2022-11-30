@@ -67,8 +67,6 @@ export default function ProcessComponent(props){
                 defaultPosition={{
                     x: props.processInfo.htmlInfo.positionX,
                     y: props.processInfo.htmlInfo.positionY}}
-                // bounds = "parent"
-                // offsetParent={props.parentRef}
                 nodeRef={nodeRef}
                 onDrag = {updateXarrow}
                 onStop = {handleStop}
@@ -80,9 +78,7 @@ export default function ProcessComponent(props){
                     ref = {nodeRef}
                     >
 
-                    <div
-                        className="process-wrapper"
-                        >
+                    <div className="process-wrapper">
 
                         {(editableComponent === 'app') && 
                         <button 

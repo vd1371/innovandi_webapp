@@ -36,7 +36,7 @@ export default function ProjectSettingsSection(props){
                 </div>
 
 
-                { (activeSection === "project" || true) &&
+                { (activeSection === "project") &&
                 <div 
                     className="table-container">
                     <table>
@@ -78,7 +78,9 @@ export default function ProjectSettingsSection(props){
     }
     
     return (
-        <div id='project-settings-section'>
+        <div
+            id='project-settings-section'
+            className="settings-wrapper">
             {contents}
         </div>
     )

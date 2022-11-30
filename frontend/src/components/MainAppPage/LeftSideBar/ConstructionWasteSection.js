@@ -48,7 +48,7 @@ export default function ConstructionWasteSection(props){
                     handleClick = {()=>dispatch(clickActions.setEditableComponent("waste"))}/>
             </div>
 
-            {(activeSection === "waste" || true) &&
+            {(activeSection === "waste") &&
             <div className="table-container">
                 <table>
                     <thead>
@@ -110,7 +110,9 @@ export default function ConstructionWasteSection(props){
     }
     
     return (
-        <div id='construction-waste-section'>
+        <div
+            className="settings-wrapper"
+            id='construction-waste-section'>
             {contents}
         </div>
     )

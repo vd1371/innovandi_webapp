@@ -1,5 +1,7 @@
 import React from "react";
 
+import _getMaxId from "./_getMaxId";
+
 class processClass{
 
     constructor(id_,){
@@ -15,9 +17,11 @@ class processClass{
         this.emissions = {
             1 : {"name": "N/A", "basedOn": "N/A", "rate": 0}
         },
-        this.crushingFormula = {}
+        this.crushingFormula = {
+            1: {"percentage": 0, "ofMaterial": "N/A", "convertsTo": "N/A"}
+        }
     }
-
+    // --------- General --------- //
     setIsNewFalse(){
         this.isNew = false
     }
@@ -26,10 +30,11 @@ class processClass{
         this[key] = newValue
     }
 
+    // --------- Input --------- //
     addInput(){
         let id_ = "input" + (_getMaxId(this.inputs) + 1)
-        this[id_] = {"name": "Inputs N/A",
-                    "rate": 0}
+        this.inputs[id_] = {"name": "Inputs N/A",
+                            "rate": 0}
     }
 
     deleteInput(key_1){
@@ -51,7 +56,8 @@ class processClass{
             return {}
         }
     }
-
+    
+    // --------- Emission --------- //
     addEmission(){
         let id_ = "emission" + (_getMaxId(this.emissions) + 1)
         this.emissions[id_] = {"name": "N/A",
@@ -65,6 +71,22 @@ class processClass{
 
     deleteEmission(key_1){
         delete this.emissions[key_1]
+    }
+
+    // --------- General --------- //
+    addCurshingFormula(){
+        let id_ = "crushingFormula" + (_getMaxId(this.crushingFormula) + 1)
+        this.crushingFormula[id_] = {"percentage": 0,
+                                    "ofMaterial": "N/A",
+                                    "convertsTo": "N/A"}
+    }
+
+    setCrushingFormula(key_1, key_2, value){
+        this.crushingFormula[key_1][key_2] = value
+    }
+
+    deleteCrushingFormula(key_1){
+        delete this.crushingFormula[key_1]
     }
 }
 

@@ -34,6 +34,7 @@ export default function ProcessSettingsSection(props){
     //---------------------------- Process Info ----------------------------//
     const setProcessInfo = (newValue, cellProps) => {
         props.projectObject.setProcessInfo(activeComponent, cellProps.key_, newValue)
+        dispatch(appActions.addNEditions())
     }
     
     //-------------------------------- Inputs --------------------------------//
@@ -60,7 +61,7 @@ export default function ProcessSettingsSection(props){
         dispatch(appActions.addNEditions())
     }
 
-    const setEmissionInfo = (newValue, selectorProps) => {
+    const handleSetEmissionInfo = (newValue, selectorProps) => {
         props.projectObject.setEmissionInfoOfProcess(activeComponent,
                                             selectorProps.key_1,
                                             selectorProps.key_2,
@@ -69,6 +70,24 @@ export default function ProcessSettingsSection(props){
 
     const handleDeleteEmission = (key_1) => {
         props.projectObject.deleteEmissionOfProcess(activeComponent, key_1)
+        dispatch(appActions.addNEditions())
+    }
+
+    //------------------------------ Formulas ------------------------------//
+    const handleAddCrushingFormula = () => {
+        props.projectObject.addCrushingFormulaToProcess(activeComponent)
+        dispatch(appActions.addNEditions())
+    }
+
+    const handleSetCrushingFormula = (newValue, selectorProps) => {
+        props.projectObject.setCrushingFormulaOfProcess(activeComponent,
+                                            selectorProps.key_1,
+                                            selectorProps.key_2,
+                                            newValue)
+    }
+
+    const handleDeleteCrushingFormula = (key_1) => {
+        props.projectObject.deleteCrushingFormulaOfProcess(activeComponent, key_1)
         dispatch(appActions.addNEditions())
     }
 
@@ -115,10 +134,79 @@ export default function ProcessSettingsSection(props){
                         </tr>
                     </tbody>
                 </table>
+                <br></br>
 
+                {/* -------  Crushing Formula section ------- */}
+                {(processInfo.processType === 'Crusher') &&
 
+                <>
+                <div className="top-pane-settings table-info">
+                    <p>Crushing Formula</p>
+                    <div className="filler"></div>
+                    <AddButton handler={handleAddCrushingFormula}/>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Percentage</th>
+                            <th>Of Material</th>
+                            <th>Converst To</th>
+                            {(editableComponent == "process") && <th>Del.</th>}
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {
+                    Object.entries(processInfo.crushingFormula).map(([key, item]) => {
+                    
+                        return (
+                            <tr key = {"formulaRow" + key}>
+                            <EditableCell
+                                key = {"formulaPecentageCell" + key}
+                                valueRef = {item.percentage}
+                                handleNewValue = {handleSetCrushingFormula}
+                                key_1 = {key}
+                                key_2 = "percentage"
+                                className = "left-column"
+                                belongsTo = "process" />
+
+                            <DropdownSelector
+                                key = {"formulaOfMaterialCell" + key}
+                                valueRef = {item.ofMaterial}
+                                handleNewValue = {handleSetCrushingFormula}
+                                key_1 = {key}
+                                key_2 = "basedOn"
+                                belongsTo = "process"
+                                listOfValues = {props.projectObject.getWasteNames()}
+                                />
+
+                            <DropdownSelector
+                                key = {"formulaConvertsToCell" + key}
+                                valueRef = {item.convertsTo}
+                                handleNewValue = {handleSetCrushingFormula}
+                                key_1 = {key}
+                                key_2 = "basedOn"
+                                belongsTo = "process"
+                                listOfValues = {props.projectObject.getWasteNames()}
+                                />
+
+                            <DeleteRowButton
+                                key = {"formulaDeleteKey" + key}
+                                key_1 = {key}
+                                handleDelete = {handleDeleteEmission}
+                                belongsTo = "process"
+                                />
+                            </tr>
+                        )
+                    })}
+                    </tbody>
+                </table>
+                <br></br>
+                </>
+                }
                 
                 
+                {/* -----------------  Inputs ----------------- */}
                 <div className="top-pane-settings table-info">
                     <p>Inputs</p>
                     <div className="filler"></div>
@@ -162,7 +250,9 @@ export default function ProcessSettingsSection(props){
                     }
                     </tbody>
                 </table>
-
+                <br></br>
+                
+                {/* -----------------  Emissions ----------------- */}
                 <div className="top-pane-settings table-info">
                     <p>Emissions and Outputs</p>
                     <div className="filler"></div>
@@ -187,7 +277,7 @@ export default function ProcessSettingsSection(props){
                                 <EditableCell
                                     key = {"emissionCellName" + key}
                                     valueRef = {item.name}
-                                    handleNewValue = {setEmissionInfo}
+                                    handleNewValue = {handleSetEmissionInfo}
                                     key_1 = {key}
                                     key_2 = "name"
                                     className = "left-column"
@@ -196,7 +286,7 @@ export default function ProcessSettingsSection(props){
                                 <DropdownSelector
                                     key = {"emissionCellBasedOnSelector" + key}
                                     valueRef = {item.basedOn}
-                                    handleNewValue = {setEmissionInfo}
+                                    handleNewValue = {handleSetEmissionInfo}
                                     key_1 = {key}
                                     key_2 = "basedOn"
                                     belongsTo = "process"
@@ -206,7 +296,7 @@ export default function ProcessSettingsSection(props){
                                 <EditableCell
                                     key = {"emissionCellRate" + key}
                                     valueRef = {item.rate}
-                                    handleNewValue = {setEmissionInfo}
+                                    handleNewValue = {handleSetEmissionInfo}
                                     key_1 = {key}
                                     key_2 = "rate"
                                     belongsTo = "process" />
@@ -224,7 +314,7 @@ export default function ProcessSettingsSection(props){
                     }
                     </tbody>
                 </table>
-
+                <br></br>
 
                 </>
                 }
@@ -238,7 +328,9 @@ export default function ProcessSettingsSection(props){
     }
     
     return (
-        <div id='process-settings-section'>
+        <div
+            className="settings-wrapper"
+            id='process-settings-section'>
             {contents}
         </div>
     )
