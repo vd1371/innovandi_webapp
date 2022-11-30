@@ -22,7 +22,7 @@ export default function AppTopPane(props){
         dispatch(clickActions.setNewComponentAdded(true))
         if (!newComponentAdded){
             props.projectObject.addProcess()
-            dispatch(appActions.updateNProcesses(Object.keys(props.projectObject.processes).length+1))
+            dispatch(appActions.updateNProcesses(Object.keys(props.projectObject.processes).length))
         }
     }
 
@@ -33,7 +33,7 @@ export default function AppTopPane(props){
 
     const handleDeleteProject = () => {
         props.projectObject.flushProject()
-        dispatch(appActions.updateNProcesses(Object.keys(props.projectObject).length)) // To re-render the processes
+        dispatch(appActions.updateNProcesses(Object.keys(props.projectObject.processes).length)) // To re-render the processes
         dispatch(clickActions.setClickNotification("Project Deleted."))
     }
 

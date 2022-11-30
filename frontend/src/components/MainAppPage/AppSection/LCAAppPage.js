@@ -19,12 +19,15 @@ export default function LCAAppPage(props){
     const dispatch = useDispatch()
     const updateXarrow = useXarrow()
 
+    const parentRef = useRef()
+
     const projectObject = useRef()
     const allArrowPointsRefs = useRef({})
     const [contents, setContents] = useState()
 
     useEffect(() => {
         projectObject.current = new projectClass()
+        // projectObject.current.flushProject()
         if (localStorage.getItem("tmpProject")){
             projectObject.current.loadFromLocalStorage()
             dispatch(appActions.updateNProcesses(Object.keys(projectObject.current).length))
@@ -38,10 +41,14 @@ export default function LCAAppPage(props){
                 <AppNotification />
                 <div id="mainapp-container">
                     <LeftSidebar projectObject = {projectObject.current}/>
-                    <div id = "the-app">
+                    <div id="the-app-wrapper">
                         <AppTopPane projectObject = {projectObject.current}/>
-                        <Processes projectObject = {projectObject.current}
-                                    allArrowPointsRefs = {allArrowPointsRefs.current}/>
+                        <div id = "the-app">
+
+                            <Processes projectObject = {projectObject.current}
+                                        allArrowPointsRefs = {allArrowPointsRefs.current}
+                                        parentRef = {parentRef.current}/>
+                        </div>
                         <Arrows projectObject = {projectObject.current}
                                 allArrowPointsRefs = {allArrowPointsRefs.current}/>
                     </div>

@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useContext, useRef} from "react";
-import EditableCellOneKey from "./EditableCellOneKey";
-import EditableCellTwoKeys from "./EditableCellTwoKeys";
+import EditableCell from "./EditableCell";
 import EditButton from "../EditButton";
 import AddButton from "./AddButton";
 
 import {useSelector, useDispatch} from "react-redux";
 import { clickActions } from "../../../store/click-slice";
 import { appActions } from "../../../store/app-slice";
-import DropdownBasedOnMaterials from "./DropdownBasedOnMaterials";
 import DeleteRowButton from "./DeleteRowButton"
+import DropdownSelector from "./DropdownSelector";
 
 export default function FlowSettingsSection(props){
 
@@ -37,12 +36,15 @@ export default function FlowSettingsSection(props){
         dispatch(appActions.addNEditions())
     }
 
-    const setOutputInfo = (key_1, key_2, newValue) => {
-        props.projectObject.setFlowOutputs(activeComponent, key_1, key_2, newValue)
+    const setOutputInfo = (newValue, selectorProps) => {
+        props.projectObject.setFlowOutput(activeComponent,
+                                            selectorProps.key_1,
+                                            selectorProps.key_2,
+                                            newValue)
     }
 
     const handleDeleteRow = (key_1) => {
-        props.projectObject.deleteFlowOutputs(activeComponent, key_1)
+        props.projectObject.deleteFlowOutput(activeComponent, key_1)
         dispatch(appActions.addNEditions())
     }
 
@@ -82,8 +84,19 @@ export default function FlowSettingsSection(props){
                         Object.entries(flowInfo.outputs).map(([key, item]) => {
                             return (
                                 <tr key = {"flowSettingsRow" + key}>
+
+                                <DropdownSelector
+                                    key = {"flowSettingMaterialCell" + key}
+                                    valueRef = {item.material}
+                                    handleNewValue = {setOutputInfo}
+                                    key_1 = {key}
+                                    key_2 = "material"
+                                    belongsTo = "flow"
+                                    listOfValues = {props.projectObject.getWasteNames()}
                                 
-                                <DropdownBasedOnMaterials
+                                />
+                                
+                                {/* <DropdownBasedOnMaterials
                                     key = {"flowSettingMaterialCell" + key}
                                     valueRef = {item.material}
                                     handleNewValue = {setOutputInfo}
@@ -91,7 +104,8 @@ export default function FlowSettingsSection(props){
                                     key_2 = "material"
                                     belongsTo = "flow"
                                     projectObject = {props.projectObject}
-                                />
+                                /> */}
+
                                 <EditableCellTwoKeys
                                     key = {"flowSettingsRatioCell" + key}
                                     valueRef = {item.ratio}

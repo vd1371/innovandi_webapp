@@ -1,4 +1,6 @@
 import React from "react";
+import flowClass from "./flowClass";
+import processClass from "./processClass";
 
 import _getMaxId from "./_getMaxId";
 import _isValidFlow from "./_isValidFlow";
@@ -14,7 +16,7 @@ class projectClass {
             workingHours: 0,
             workingDaysPerYear: 0
         }
-        this.constructionWasteComposition = {
+        this.wasteComposition = {
             1: {
                 "name": "Waste Unknown",
                 "value": 0,
@@ -24,6 +26,9 @@ class projectClass {
         this.flows= {}
         this.renderSettings = {
             scaleLevel: 1,
+        }
+        this.generalInfo = {
+            processesTypes : ['Machines', 'Feeder', 'Crusher', 'Sieve']
         }
     }
     // ---------------------------- Render Settings ------------------------//
@@ -36,61 +41,41 @@ class projectClass {
     }
 
     // --------------------------------- Waste -----------------------------//
-    _defaultWasteProcess() {
-        const processes = {}
-        processes["wasteComponent"] = {
-            id_: "wasteComponent",
-            processName: "wasteComponent",
-            isNew: false,
-            outboundFlows: []
-        }
-        return processes
-    }
-
     addWaste () {
-        let obj = this.constructionWasteComposition
-        let id_ = "waste" + (_getMaxId(obj) + 1)
-        obj[id_] = {
-            'name': 'N/A',
-            'value': 0
+        let id_ = "waste" + (_getMaxId(this.wasteComposition) + 1)
+        this.wasteComposition[id_] = {
+                                'name': 'N/A',
+                                'value': 0
         }
     }
 
     deleteWaste(id){
-        delete this.constructionWasteComposition[id]
+        delete this.wasteComposition[id]
     }
 
     getWasteNames(){
         const wasteNames = []
-        let obj = this.constructionWasteComposition
-        for (const k in obj){
-            wasteNames.push(obj[k]['name'])
+        for (const k in this.wasteComposition){
+            wasteNames.push(this.wasteComposition[k]['name'])
         }
         return wasteNames
     }
 
     // ------------------------------- Processes ---------------------------//
+    _defaultWasteProcess() {
+        const processes = {}
+        processes["wasteComponent"] = new processClass("wasteComponent")
+        return processes
+    }
+
     addProcess() {
-        let id_ = "process" + (_getMaxId(this.processes) + 1)
-        this.processes[id_] = {
-            id_: id_,
-            processName: "MyAwesomeProcess",
-            isNew: true,
-            outboundFlows: [],
-            inboundFlows: [],
-            inputs: {},
-            htmlInfo: {positionX : 10,
-                        positionY: 10},
-            emissions: {
-                1 : {"name": "N/A", "basedOn": "N/A", "rate": 0}
-            }
-        }
+        let processId = "process" + (_getMaxId(this.processes) + 1)
+        this.processes[processId] = new processClass(processId)
     }
 
     //-------------------------------- Process --------------------------------//
-    setProcessInfo(id, key, newValue){
-        let obj = this.getProcessInfoOf(id)
-        obj[key] = newValue
+    setProcessInfo(processId, key, newValue){
+        this.processes[processId].setInfo(key, newValue)
     }
 
     removeProcess(processId) {
@@ -102,62 +87,38 @@ class projectClass {
         }
     }
 
-    setIsNewFalseOfProcess(id){
-        this.processes[id]["isNew"] = false
-    }
-
-    getProcessInfoOf(id) {
-        return this.processes[id]
+    setIsNewFalseOfProcess(processId){
+        this.processes[processId].setIsNewFalse()
     }
     
     //-------------------------------- Inputs --------------------------------//
-    addInput(id){
-        let obj = this.getProcessInfoOf(id).inputs
-        let id_ = "input" + (_getMaxId(obj) + 1)
-        obj[id_] = {"name": "Inputs N/A",
-                    "rate": 0}
+    addInputToProcess(processId){
+        this.processes[processId].addInput()
     }
 
-    deleteInputs (id, key_1){
-        let obj = this.getProcessInfoOf(id).inputs
-        delete obj[key_1]
+    deleteInputOfProcess (processId, key_1){
+        this.processes[processId].deleteInput(key_1)
     }
 
-    setInputsInfo(id, key_1, key_2, value){
-        let obj = this.getProcessInfoOf(id).inputs
-        obj[key_1][key_2] = value
+    setInputInfo(processId, key_1, key_2, newValue){
+        this.processes[processId].setInputInfo(key_1, key_2, newValue)
     }
 
-    getInputNames(id) {
-        const inputNames = []
-        const processInfo = this.getProcessInfoOf(id)
-        if (processInfo){
-            for (const k in processInfo.inputs){
-                inputNames.push(processInfo.inputs[k]['name'])
-            }
-            return inputNames
-        } else {
-            return {}
-        }
+    getInputNamesOfProcess(processId) {
+        return this.processes[processId].getInputNames()
     }
 
     //------------------------------ Emissions ------------------------------//
-    addEmission(id){
-        let obj = this.getProcessInfoOf(id).emissions
-        let id_ = "emission" + (_getMaxId(obj) + 1)
-        obj[id_] = {"name": "N/A",
-                    "basedOn": "N/A",
-                    "rate": 0}
+    addEmissionToProcess(processId){
+        this.processes[processId].addEmission()
     }
 
-    setEmissionInfo(id, key_1, key_2, value){
-        let obj = this.getProcessInfoOf(id).emissions
-        obj[key_1][key_2] = value
+    setEmissionInfoOfProcess(processId, key_1, key_2, value){
+        this.processes[processId].setEmission(key_1, key_2, value)
     }
 
-    deleteEmission(id, key_1){
-        let obj = this.getProcessInfoOf(id).emissions
-        delete obj[key_1]
+    deleteEmissionOfProcess(id, key_1){
+        this.processes[id].deleteEmission(key_1)
     }
 
     //--------------------------- Flows ---------------------------------//
@@ -166,12 +127,7 @@ class projectClass {
                                 id_start, id_end,
                                 processStart, processEnd)
         if (valid){
-            const newFlow = {
-                start: id_start,
-                end: id_end,
-                outputs: {}
-            }
-            this.flows[id_start + "->" + id_end] = newFlow
+            this.flows[id_start + "->" + id_end] = new flowClass(id_start, id_end)
         }
         return valid
     }
@@ -181,19 +137,15 @@ class projectClass {
     }
 
     addFlowOutput (flowId){
-        let obj = this.flows[flowId].outputs
-        let id_ = "output" + (_getMaxId(obj) + 1)
-        obj[id_] = {"material": "N/A",
-                    "ratio": 0}
+        this.flows[flowId].addOutput()
     }
 
-    setFlowOutputs (flowId, key_1, key_2, value){
-        console.log(this.flows[flowId])
-        this.flows[flowId].outputs[key_1][key_2] = value
+    setFlowOutput (flowId, key_1, key_2, value){
+        this.flows[flowId].setOutput(key_1, key_2, value)
     }
 
-    deleteFlowOutputs (flowId, key_1){
-        delete this.flows[flowId].outputs[key_1]
+    deleteFlowOutput (flowId, key_1){
+        this.flows[flowId].deleteOutput(key_1)
     }
 
 
@@ -201,7 +153,7 @@ class projectClass {
     toJSON (){
         let data = {
             projectInfo: this.projectInfo,
-            constructionWasteComposition: this.constructionWasteComposition,
+            wasteComposition: this.wasteComposition,
             processes: this.processes,
             flows: this.flows
         }
@@ -210,9 +162,18 @@ class projectClass {
 
     fromJSON (data){
         data = JSON.parse(data)
-        Object.entries(data).map(([key, item]) =>{
-            this[key] = item
-        })
+        Object.assign(data.projectInfo, this.projectInfo)
+        Object.assign(data.wasteComposition, this.wasteComposition)
+
+        for (const k in data.processes){
+            this.processes[k] = new processClass(k)
+            Object.assign(this.processes[k], data.processes[k])
+        }
+
+        for (const k in data.flows){
+            this.flows[k] = new flowClass(k)
+            Object.assign(this.flows[k], data.flows[k])
+        }
     }
 
     saveToLocalStorage(){

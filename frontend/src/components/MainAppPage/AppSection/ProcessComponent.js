@@ -9,6 +9,8 @@ import ArrowPoint from "./ArrowPoint";
 import Draggable, {DraggableCore} from "react-draggable";
 import Xarrow, {useXarrow, Xwrapper} from 'react-xarrows';
 
+import uuid from "react-uuid";
+
 const coordinationsOfDots = [
     [30, -5], [100, -5], [170, -5],
     [30, 95], [100, 95], [170, 95],
@@ -65,6 +67,9 @@ export default function ProcessComponent(props){
                 defaultPosition={{
                     x: props.processInfo.htmlInfo.positionX,
                     y: props.processInfo.htmlInfo.positionY}}
+                // bounds = "parent"
+                // offsetParent={props.parentRef}
+                nodeRef={nodeRef}
                 onDrag = {updateXarrow}
                 onStop = {handleStop}
                 >
@@ -72,11 +77,12 @@ export default function ProcessComponent(props){
                 <div
                     className="process-container"
                     id = {props.processInfo.id_}
-                    ref = {nodeRef}>
+                    ref = {nodeRef}
+                    >
 
                     <div
-                        className="process-wrapper" 
-                        style = {{"transform": "scale(" + props.projectObject.renderSettings.scaleLevel + ")"}}>
+                        className="process-wrapper"
+                        >
 
                         {(editableComponent === 'app') && 
                         <button 

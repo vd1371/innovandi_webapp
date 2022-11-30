@@ -1,9 +1,3 @@
-#all-processes-container{
-    /* position: absolute; */
-    width: 100% !important;
-    height: 100%;
-    overflow-y: scroll;
-}
 
 .process-container{
     position: absolute;

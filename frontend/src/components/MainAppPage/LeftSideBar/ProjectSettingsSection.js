@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext} from "react";
-import EditableCellOneKey from "./EditableCellOneKey";
+import EditableCell from "./EditableCell";
 import EditButton from "../EditButton";
 
 import {useSelector, useDispatch} from "react-redux";
@@ -17,8 +17,8 @@ export default function ProjectSettingsSection(props){
         handleContents()
     }, [activeComponent, activeSection, editableComponent])
 
-    const setProjectInfo = (key, newValue) => {
-        props.projectObject.projectInfo[key] = newValue
+    const setProjectInfo = (newValue, cellProps) => {
+        props.projectObject.projectInfo[cellProps.key_] = newValue
     }
 
     const handleContents = () => {
@@ -43,7 +43,7 @@ export default function ProjectSettingsSection(props){
                         <tbody>
                             <tr>
                                 <td className="left-column">Project Name</td>
-                                <EditableCellOneKey
+                                <EditableCell
                                     valueRef = {props.projectObject.projectInfo.projectName}
                                     handleNewValue = {setProjectInfo}
                                     key_ = 'projectName'
@@ -52,7 +52,7 @@ export default function ProjectSettingsSection(props){
 
                             <tr>
                                 <td className="left-column">Working Hours</td>
-                                <EditableCellOneKey
+                                <EditableCell
                                     valueRef = {props.projectObject.projectInfo.workingHours}
                                     handleNewValue = {setProjectInfo}
                                     key_ = 'workingHours'
@@ -61,7 +61,7 @@ export default function ProjectSettingsSection(props){
 
                             <tr>
                                 <td className="left-column">Days Per Year</td>
-                                <EditableCellOneKey
+                                <EditableCell
                                     valueRef = {props.projectObject.projectInfo.workingDaysPerYear}
                                     handleNewValue = {setProjectInfo}
                                     key_ = 'workingDaysPerYear'

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext, useRef} from "react";
-import EditableCellOneKey from "./EditableCellOneKey";
-import EditableCellTwoKeys from "./EditableCellTwoKeys";
+import EditableCell from "./EditableCell";
 import EditButton from "../EditButton";
 import AddButton from "./AddButton";
 import DeleteRowButton from "./DeleteRowButton";
@@ -8,7 +7,7 @@ import DeleteRowButton from "./DeleteRowButton";
 import {useSelector, useDispatch} from "react-redux";
 import { clickActions } from "../../../store/click-slice";
 import { appActions } from "../../../store/app-slice";
-import DropdownBasedOnInputs from "./DropdownBasedOnInputs";
+import DropdownSelector from "./DropdownSelector";
 
 
 export default function ProcessSettingsSection(props){
@@ -33,44 +32,50 @@ export default function ProcessSettingsSection(props){
         dispatch(appActions.addNEditions())
     }
     //---------------------------- Process Info ----------------------------//
-    const setProcessInfo = (key, newValue) => {
-        props.projectObject.setProcessInfo(activeComponent, key, newValue)
+    const setProcessInfo = (newValue, cellProps) => {
+        props.projectObject.setProcessInfo(activeComponent, cellProps.key_, newValue)
     }
     
     //-------------------------------- Inputs --------------------------------//
     const handleAddInputs = () => {
-        props.projectObject.addInput(activeComponent)
+        props.projectObject.addInputToProcess(activeComponent)
         dispatch(appActions.addNEditions())
     }
     
     const handleDeleteInput = (key_1) => {
-        props.projectObject.deleteInputs(activeComponent, key_1)
+        props.projectObject.deleteInputOfProcess(activeComponent, key_1)
         dispatch(appActions.addNEditions())
     }
 
-    const setInputsInfo = (key_1, key_2, newValue) => {
-        props.projectObject.setInputsInfo(activeComponent, key_1, key_2, newValue)
+    const setInputInfo = (newValue, cellProps) => {
+        props.projectObject.setInputInfo(activeComponent,
+                                            cellProps.key_1,
+                                            cellProps.key_2,
+                                            newValue)
     }
 
     //------------------------------ Emissions ------------------------------//
     const handleAddEmissions = () => {
-        props.projectObject.addEmission(activeComponent)
+        props.projectObject.addEmissionToProcess(activeComponent)
         dispatch(appActions.addNEditions())
     }
 
-    const setEmissionInfo = (key_1, key_2, newValue) => {
-        props.projectObject.setEmissionInfo(activeComponent, key_1, key_2, newValue)
+    const setEmissionInfo = (newValue, selectorProps) => {
+        props.projectObject.setEmissionInfoOfProcess(activeComponent,
+                                            selectorProps.key_1,
+                                            selectorProps.key_2,
+                                            newValue)
     }
 
     const handleDeleteEmission = (key_1) => {
-        props.projectObject.deleteEmission(activeComponent, key_1)
+        props.projectObject.deleteEmissionOfProcess(activeComponent, key_1)
         dispatch(appActions.addNEditions())
     }
 
     //------------------------------ Contents ------------------------------//
     const handleContents = () => {
         
-        let processInfo = props.projectObject.getProcessInfoOf(activeComponent)
+        let processInfo = props.projectObject.processes[activeComponent]
 
         return (
             <>
@@ -91,20 +96,32 @@ export default function ProcessSettingsSection(props){
                     <tbody>
                         <tr>
                             <td className="left-column">Process Name</td>
-                            <EditableCellOneKey
+                            <EditableCell
                                 valueRef = {processInfo.processName}
                                 handleNewValue = {setProcessInfo}
                                 key_ = 'processName'
                                 belongsTo = "process"/>
                         </tr>
+                        <tr>
+                            <td className="left-column">Process Type</td>
+                            <DropdownSelector
+                                    key = {"processTypeSelector"}
+                                    valueRef = {processInfo.processType}
+                                    handleNewValue = {setProcessInfo}
+                                    key_ = 'processType'
+                                    belongsTo = "process"
+                                    listOfValues = {props.projectObject.generalInfo.processesTypes}
+                                    />
+                        </tr>
                     </tbody>
                 </table>
+
+
                 
                 
                 <div className="top-pane-settings table-info">
                     <p>Inputs</p>
                     <div className="filler"></div>
-                    {/* <AddButton handler={handleAddInputs}/> */}
                     <AddButton handler={handleAddInputs}/>
                 </div>
 
@@ -115,19 +132,19 @@ export default function ProcessSettingsSection(props){
                         
                             return (
                                 <tr key = {"inputRow" + key}>
-                                <EditableCellTwoKeys
+                                <EditableCell
                                     key = {"inputCellName" + key}
                                     valueRef = {item.name}
-                                    handleNewValue = {setInputsInfo}
+                                    handleNewValue = {setInputInfo}
                                     key_1 = {key}
                                     key_2 = "name"
                                     className = "left-column"
                                     belongsTo = "process" />
 
-                                <EditableCellTwoKeys
+                                <EditableCell
                                     key = {"inputCellRate" + key}
                                     valueRef = {item.rate}
-                                    handleNewValue = {setInputsInfo}
+                                    handleNewValue = {setInputInfo}
                                     key_1 = {key}
                                     key_2 = "rate"
                                     belongsTo = "process" />
@@ -167,7 +184,7 @@ export default function ProcessSettingsSection(props){
                         
                             return (
                                 <tr key = {"emissionRow" + key}>
-                                <EditableCellTwoKeys
+                                <EditableCell
                                     key = {"emissionCellName" + key}
                                     valueRef = {item.name}
                                     handleNewValue = {setEmissionInfo}
@@ -175,17 +192,18 @@ export default function ProcessSettingsSection(props){
                                     key_2 = "name"
                                     className = "left-column"
                                     belongsTo = "process" />
-                                <DropdownBasedOnInputs
-                                    key = {"emissionCellBasedOn" + key}
+
+                                <DropdownSelector
+                                    key = {"emissionCellBasedOnSelector" + key}
                                     valueRef = {item.basedOn}
                                     handleNewValue = {setEmissionInfo}
                                     key_1 = {key}
                                     key_2 = "basedOn"
                                     belongsTo = "process"
-                                    projectObject = {props.projectObject}
-                                    id_ = {processInfo.id_}
+                                    listOfValues = {props.projectObject.getInputNamesOfProcess(processInfo.id_)}
                                     />
-                                <EditableCellTwoKeys
+
+                                <EditableCell
                                     key = {"emissionCellRate" + key}
                                     valueRef = {item.rate}
                                     handleNewValue = {setEmissionInfo}

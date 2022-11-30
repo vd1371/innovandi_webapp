@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext} from "react";
-import EditableCellTwoKeys from "./EditableCellTwoKeys";
+import EditableCell from "./EditableCell";
 import EditButton from "../EditButton";
 import AddButton from "./AddButton";
 import DeleteRowButton from "./DeleteRowButton";
@@ -31,8 +31,8 @@ export default function ConstructionWasteSection(props){
         dispatch(appActions.addNEditions())
     }
 
-    const setWasteInfo = (key_1, key_2, newValue) => {
-        props.projectObject.constructionWasteComposition[key_1][key_2] = newValue
+    const setWasteInfo = (newValue, cellProps) => {
+        props.projectObject.wasteComposition[cellProps.key_1][cellProps.key_2] = newValue
     }
 
     const handleContents = () => {
@@ -62,12 +62,12 @@ export default function ConstructionWasteSection(props){
                         {
                         Object.entries(props
                                         .projectObject
-                                        .constructionWasteComposition)
+                                        .wasteComposition)
                                         .map(([key, item]) => {
                         
                             return (
                                 <tr key = {"wasteRow" + key}>
-                                    <EditableCellTwoKeys
+                                    <EditableCell
                                         key = {"wasteName" + key}
                                         valueRef = {item.name}
                                         handleNewValue = {setWasteInfo}
@@ -76,7 +76,7 @@ export default function ConstructionWasteSection(props){
                                         className = "left-column"
                                         belongsTo = "waste"/>
 
-                                    <EditableCellTwoKeys
+                                    <EditableCell
                                         key = {"wasteValue" + key}
                                         valueRef = {item.value}
                                         handleNewValue = {setWasteInfo}

@@ -23,7 +23,11 @@ export default function Processes(props){
 
     useEffect(() => {
         setContents(
-            <>
+            <div
+                id = "all-processes-container"
+                style = {{"transform": "scale(" + props.projectObject.renderSettings.scaleLevel + ")"}}
+                ref={props.parentRef}>
+            
             {Object.entries(props.projectObject.processes).map(([key, item]) => {
                 if (key.includes("wasteComponent")){
                     return (
@@ -41,14 +45,14 @@ export default function Processes(props){
                     )
                 }
             })}
-            </>
+            </div>
         )
         dispatch(appActions.addNEditionsArrows())
     }, [nProcesses, nEditions])
     
     return (
-        <div id="all-processes-container">
+        <>
             {contents}
-        </div>
+        </>
     )
 }
