@@ -4,12 +4,13 @@ import {useSelector, useDispatch} from "react-redux";
 
 import LeftSidebar from "../LeftSideBar/LeftSideBar";
 import Processes from "./Processes";
-import AppTopPane from "./AppTopPane";
+import AppTopPane from "../AppTopPane/AppTopPane";
 import Arrows from "./Arrows"
 import AppNotification from "./AppNotification";
 import projectClass from "../../../projectObject/projectClass";
 import { appActions } from "../../../store/app-slice";
 import {useXarrow} from 'react-xarrows';
+import AppIsLoading from "./AppIsLoading";
 
 export default function LCAAppPage(props){
 
@@ -44,10 +45,10 @@ export default function LCAAppPage(props){
                     <div id="the-app-wrapper">
                         <AppTopPane projectObject = {projectObject.current}/>
                         <div id = "the-app">
-
                             <Processes projectObject = {projectObject.current}
                                         allArrowPointsRefs = {allArrowPointsRefs.current}
                                         parentRef = {parentRef.current}/>
+                            <AppIsLoading />
                         </div>
                         <Arrows projectObject = {projectObject.current}
                                 allArrowPointsRefs = {allArrowPointsRefs.current}/>

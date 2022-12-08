@@ -5,10 +5,6 @@ import {
     Route
 } from "react-router-dom";
 
-import useWindowDimensions from "./UseWindowsDimensions";
-
-import ScreenIsSmallPage from "./ScreenIsSmallPage";
-import PageNotFound from "./PageNotFound";
 import LandingPage from "./LandingPage/LandingPage";
 import SignInPage from "./SignInPage/SignInPage";
 import ChangePasswordPage from "./SignInPage/ChangePasswordPage";
@@ -38,7 +34,6 @@ export default function HomePage(props) {
             window.localStorage.setItem("isLoggedIn", false)
             }
         });
-    
     }, []);
 
     return (

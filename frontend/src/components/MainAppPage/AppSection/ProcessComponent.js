@@ -10,11 +10,12 @@ import Draggable, {DraggableCore} from "react-draggable";
 import Xarrow, {useXarrow, Xwrapper} from 'react-xarrows';
 
 import uuid from "react-uuid";
+import ProcessIcon from "./ProcessIcon";
 
 const coordinationsOfDots = [
-    [30, -5], [100, -5], [170, -5],
-    [30, 95], [100, 95], [170, 95],
-    [-5, 45], [205, 45]
+    [20, -5], [70, -5], [120, -5],
+    [20, 65], [70, 65], [120, 65],
+    [-5, 30], [145, 30]
 ]
 
 export default function ProcessComponent(props){
@@ -89,23 +90,25 @@ export default function ProcessComponent(props){
                         <button 
                             className= {`process-button ${(props.processInfo.isNew)? "fa-fade": null}`}
                             onClick={handleClick}>
+                            <ProcessIcon processType = {props.processInfo.processType} />
                             {props.processInfo.processName}
                         </button>
-
-                        {
-                        coordinationsOfDots.map((coord, index) => {
-                            let tmpId = props.processInfo.id_ + "-dot" + index
-                            return (
-                                <ArrowPoint
-                                    key = {tmpId}
-                                    pointId = {tmpId}
-                                    coord = {coord}
-                                    processInfo = {props.processInfo}
-                                    {...props}/>
-                            )
-                        })
-                        }
+                    
                     </div>
+
+                    {
+                    coordinationsOfDots.map((coord, index) => {
+                        let tmpId = props.processInfo.id_ + "-dot" + index
+                        return (
+                            <ArrowPoint
+                                key = {tmpId}
+                                pointId = {tmpId}
+                                coord = {coord}
+                                processInfo = {props.processInfo}
+                                {...props}/>
+                        )
+                    })
+                    }
 
                 </div>
             </Draggable>

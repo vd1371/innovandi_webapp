@@ -92,21 +92,10 @@ export default function FlowSettingsSection(props){
                                     key_1 = {key}
                                     key_2 = "material"
                                     belongsTo = "flow"
-                                    listOfValues = {props.projectObject.getWasteNames()}
-                                
+                                    listOfValues = {["All"].concat(props.projectObject.getWasteNames())}
                                 />
-                                
-                                {/* <DropdownBasedOnMaterials
-                                    key = {"flowSettingMaterialCell" + key}
-                                    valueRef = {item.material}
-                                    handleNewValue = {setOutputInfo}
-                                    key_1 = {key}
-                                    key_2 = "material"
-                                    belongsTo = "flow"
-                                    projectObject = {props.projectObject}
-                                /> */}
 
-                                <EditableCellTwoKeys
+                                <EditableCell
                                     key = {"flowSettingsRatioCell" + key}
                                     valueRef = {item.ratio}
                                     handleNewValue = {setOutputInfo}

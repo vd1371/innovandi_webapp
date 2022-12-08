@@ -4,9 +4,13 @@
     display: flex;
     flex-direction: column;
     justify-content: center !important;
-    width: 210px;
+    width: 150px;
     height: fit-content !important;
+}
 
+.process-wrapper{
+    display: flex;
+    flex-direction: row !important;
 }
 
 .waste-container{
@@ -14,13 +18,11 @@
     justify-content: center !important;
     block-size: fit-content;
     margin-top: 1vh;
-    background-color: red;
     width: 100% !important;
-
 }
 
 .process-button{
-    color: gray;
+    color: rgb(105,105,105);
     border: 2px dashed gray;
     border-radius: 10px;
     display: flex !important;
@@ -28,8 +30,10 @@
     align-items: center !important;
     justify-content: center !important;
     
-    width: 210px;
-    height: 100px;
+    width: 150px;
+    height: 70px;
+
+    background-color: rgba(220,220,220, 1);
 }
 
 .waste-button{
@@ -61,24 +65,18 @@
     font-weight: bolder;
     background-color: red;
     font-size: 10px !important;
-
-    /* position: absolute;
-    top: 0 !important;
-    left: -10px !important; */
 }
-
-
 
 .dot {
     position: absolute;
     height: 10px !important;
     width: 10px !important;
     background-color: #bbb;
-    border: 1px solid black;
     border-radius: 50%;
-    display: inline-block;
+    opacity: 0.5;
 }
 
 .dot:hover{
-    border-color: white;
+    border: 1px solid black;
+    opacity: 1;
 }

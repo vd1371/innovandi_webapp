@@ -29,8 +29,9 @@ class projectClass {
         }
         this.generalInfo = {
             processesTypes : ['Excavator', 'Loader', 'Feeder',
-                                'Crusher', 'Seperator', 'ConveyorBelt',
-                                'Sieve', 'AirClassifier']
+                                'Crusher', 'Separator', 'ConveyorBelt',
+                                'Sieve', 'AirClassifier', "Dump",
+                                "HandPicking"]
         }
     }
     // ---------------------------- Render Settings ------------------------//
@@ -170,15 +171,19 @@ class projectClass {
             projectInfo: this.projectInfo,
             wasteComposition: this.wasteComposition,
             processes: this.processes,
-            flows: this.flows
+            flows: this.flows,
+            renderSettings: this.renderSettings,
+
         }
         return JSON.stringify(data)
     }
 
     fromJSON (data){
         data = JSON.parse(data)
-        Object.assign(data.projectInfo, this.projectInfo)
-        Object.assign(data.wasteComposition, this.wasteComposition)
+
+        Object.assign(this.projectInfo, data.projectInfo)
+        Object.assign(this.wasteComposition, data.wasteComposition)
+        Object.assign(this.renderSettings, data.renderSettings)
 
         for (const k in data.processes){
             this.processes[k] = new processClass(k)

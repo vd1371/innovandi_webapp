@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext} from "react";
 import ProjectSettingsSection from "./ProjectSettingsSection";
-import ProcessSettingsSection from "./ProcessSettingsSection";
+import ProcessSettingsSection from "./ProcessSettingsSection/ProcessSettingsSection";
 import ConstructionWasteSection from "./ConstructionWasteSection";
 import FlowSettingsSection from "./FlowSettingsSection";
 

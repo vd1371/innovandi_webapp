@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import Xarrow from 'react-xarrows';
-import ProcessSettingsSection from "../LeftSideBar/ProcessSettingsSection";
 
 
 import {useSelector, useDispatch} from "react-redux";
@@ -18,22 +17,6 @@ export default function ArrowComponent(props){
 
     const dispatch = useDispatch()
 
-    useEffect (() => {
-        setContents(
-            <span
-                onClick = {handleClick}
-                className = {(editableComponent === "app")? "fa-fade" : null}>
-                <Xarrow
-                    start={props.start}
-                    end={props.end}
-                    headSize = {4}
-                    strokeWidth = {(activeComponent === props.arrowId)? 5 : 3}
-                    color = { (editableComponent === "app")? "red": "#C19A6B"}
-                />
-            </span>
-        )
-    }, [editableComponent, nEditions, activeComponent, nEditionsArrows])
-
     const handleClick = () => {
 
         if (editableComponent === "app") {
@@ -46,8 +29,16 @@ export default function ArrowComponent(props){
     }
 
     return (
-        <>
-            {contents}
-        </>
+        <span
+            onClick = {handleClick}
+            className = {(editableComponent === "app")? "fa-fade" : null}>
+            <Xarrow
+                start={props.start}
+                end={props.end}
+                headSize = {4}
+                strokeWidth = {(activeComponent === props.arrowId)? 4 : 2}
+                color = { (editableComponent === "app")? "red": "#C19A6B"}
+            />
+        </span>
     )
 }

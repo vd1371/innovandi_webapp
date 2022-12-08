@@ -7,9 +7,10 @@ import { appActions } from "../../../store/app-slice";
 import ArrowPoint from "./ArrowPoint";
 
 import Xarrow, {useXarrow, Xwrapper} from 'react-xarrows';
+import ProcessIcon from "./ProcessIcon";
 
 const coordinationsOfDots = [
-    [100, 95]
+    [70, 65]
 ]
 
 export default function WasteComponent(props){
@@ -38,7 +39,7 @@ export default function WasteComponent(props){
                     <button
                         className="process-button waste-button"
                         onClick={handleClick}>
-                        {wasteComponentId}
+                        <ProcessIcon processType={"ConstructionWaste"} />
                     </button>
 
                     {

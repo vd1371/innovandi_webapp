@@ -9,13 +9,14 @@ export default function ProjectSettingsSection(props){
 
     const activeComponent = useSelector(state=>state.click.activeComponent)
     const editableComponent = useSelector(state=>state.click.editableComponent)
+    const nEditions = useSelector(state=>state.app.nEditions)
     const activeSection = useSelector(state=>state.click.activeSection)
     const dispatch = useDispatch()
     const [contents, setContents] = useState()
 
     useEffect (() => {
         handleContents()
-    }, [activeComponent, activeSection, editableComponent])
+    }, [activeComponent, activeSection, editableComponent, nEditions])
 
     const setProjectInfo = (newValue, cellProps) => {
         props.projectObject.projectInfo[cellProps.key_] = newValue
