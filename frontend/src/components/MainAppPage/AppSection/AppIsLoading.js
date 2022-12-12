@@ -26,7 +26,6 @@ export default function AppIsLoading(props){
     const handleClick = () => {
         dispatch(appActions.setAppLoadingShow(false))
         dispatch(appActions.addNEditions())
-        updateXarrow()
     }
 
     if (!appLoadingShow){

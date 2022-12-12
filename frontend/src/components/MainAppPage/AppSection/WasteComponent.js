@@ -27,7 +27,6 @@ export default function WasteComponent(props){
 
     const handleClick = () => {
         dispatch(clickActions.setActiveSection("waste"))
-        updateXarrow()
     }
 
     const handleContents = () => {

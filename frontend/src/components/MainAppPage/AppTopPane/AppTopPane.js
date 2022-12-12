@@ -11,6 +11,7 @@ export default function AppTopPane(props){
 
     const activeComponent = useSelector(state=>state.click.activeComponent)
     const editableComponent = useSelector(state=>state.click.editableComponent)
+    const nEditions = useSelector(state=>state.app.nEditions)
     const activeSection = useSelector(state=>state.click.activeSection)
     const newComponentAdded = useSelector(state=>state.click.newComponentAdded)
 
@@ -36,8 +37,9 @@ export default function AppTopPane(props){
 
     const handleDeleteProject = () => {
         props.projectObject.flushProject()
-        dispatch(appActions.updateNProcesses(0)) // To re-render the processes
+        dispatch(appActions.addNEditions())
         dispatch(clickActions.setClickNotification("Project Deleted."))
+        window.location.href = "/app"
     }
 
     const handleZoomIn = () => {
