@@ -31,12 +31,12 @@ export default function ArrowComponent(props){
     return (
         <span
             onClick = {handleClick}
-            className = {(editableComponent === "app")? "fa-fade" : null}>
+            className = {`${(editableComponent === "app")? "fa-fade" : null}`}>
             <Xarrow
                 start={props.start}
                 end={props.end}
                 headSize = {4}
-                strokeWidth = {(activeComponent === props.arrowId)? 4 : 2}
+                strokeWidth = {(activeComponent === props.arrowId)? 5 : 3}
                 color = { (editableComponent === "app")? "red": "#C19A6B"}
             />
         </span>

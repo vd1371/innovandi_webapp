@@ -56,7 +56,6 @@ export default function LCAAppPage(props){
                 </div>
             </>
         )
-        // updateXarrow()
     }, [nProcesses, nEditions])
     
     return (

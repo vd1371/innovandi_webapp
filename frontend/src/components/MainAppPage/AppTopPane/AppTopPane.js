@@ -18,10 +18,6 @@ export default function AppTopPane(props){
     const dispatch = useDispatch()
     const [contents, setContents] = useState()
 
-    useEffect (() => {
-        setContents(handleContents())
-    }, [editableComponent, newComponentAdded])
-
     const handleAddProcess = () => {
         dispatch(clickActions.setNewComponentAdded(true))
         if (!newComponentAdded){
@@ -52,58 +48,59 @@ export default function AppTopPane(props){
         dispatch(appActions.addNEditions())
     }
 
-    const handleContents = () => {
-        return (
-            <>  
-                <button type="button" className="fa-play fa-solid toppane-button"></button>
-                <button type="button" className="fa-stop fa-solid toppane-button"></button>
-                <button
-                    type="button"
-                    className="fa-search-plus fa-solid toppane-button"
-                    onClick={handleZoomIn}>
-                </button>
-
-                <button
-                    type="button"
-                    className="fa-search-minus fa-solid toppane-button"
-                    onClick={handleZoomOut}>
-                </button>
-                
-                <EditButton
-                    targetComponent={'app'}
-                    handleClick = {()=>dispatch(clickActions.setEditableComponent("app"))}/>
-
-                <button
-                    type="button"
-                    className = "fa-plus fa-solid toppane-button"
-                    onClick={handleAddProcess}>
-                </button>
-
-                <div className="filler"></div>
-
-                <button
-                    type="button"
-                    className = "fa-solid toppane-button"
-                    onClick={handleSaveProject}>
-                    Save
-                </button>
-
-                <button
-                    type="button"
-                    className = "fa-solid toppane-button"
-                    onClick={handleDeleteProject}>
-                    Del
-                </button>
-
-                <DownloadProject {...props}/>
-                <LoadProject {...props} />
-            </>
-        )
+    const handleRunAnalysis = () => {
+        props.projectObject.runLCAAnalysis()
+        dispatch(appActions.addNEditions())
     }
 
     return (
         <div id="app-top-pane">
-            {contents}
+            <button
+                type="button"
+                className="fa-play fa-solid toppane-button"
+                onClick={handleRunAnalysis}>
+            </button>
+            <button type="button" className="fa-stop fa-solid toppane-button"></button>
+            <button
+                type="button"
+                className="fa-search-plus fa-solid toppane-button"
+                onClick={handleZoomIn}>
+            </button>
+
+            <button
+                type="button"
+                className="fa-search-minus fa-solid toppane-button"
+                onClick={handleZoomOut}>
+            </button>
+            
+            <EditButton
+                targetComponent={'app'}
+                handleClick = {()=>dispatch(clickActions.setEditableComponent("app"))}/>
+
+            <button
+                type="button"
+                className = "fa-plus fa-solid toppane-button"
+                onClick={handleAddProcess}>
+            </button>
+
+            <div className="filler"></div>
+
+            <button
+                type="button"
+                className = "fa-solid toppane-button"
+                onClick={handleSaveProject}>
+                Save
+            </button>
+
+            <button
+                type="button"
+                className = "fa-solid toppane-button"
+                onClick={handleDeleteProject}>
+                Del
+            </button>
+
+            <DownloadProject {...props}/>
+            <LoadProject {...props} />
         </div>
         
     )

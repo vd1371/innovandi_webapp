@@ -62,14 +62,16 @@ export default function ProcSettEmissions(props){
                     
                         return (
                             <tr key = {"emissionRow" + key}>
-                            <EditableCell
+
+                            <DropdownSelector
                                 key = {"emissionCellName" + key}
                                 valueRef = {item.name}
                                 handleNewValue = {handleSetEmissionInfo}
                                 key_1 = {key}
                                 key_2 = "name"
-                                className = "left-column"
-                                belongsTo = "process" />
+                                belongsTo = "process"
+                                listOfValues = {props.projectObject.generalInfo.emissionTypes}
+                                />
 
                             <DropdownSelector
                                 key = {"emissionCellBasedOnSelector" + key}

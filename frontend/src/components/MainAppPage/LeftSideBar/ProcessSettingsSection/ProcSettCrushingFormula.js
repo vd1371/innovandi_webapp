@@ -53,9 +53,9 @@ export default function ProcSettCrushingFormula(props){
             <table>
                 <thead>
                     <tr>
-                        <th>Percentage</th>
+                        <th>Ratio</th>
                         <th>Of Material</th>
-                        <th>Converst To</th>
+                        <th>Converts To</th>
                         {(editableComponent == "process") && <th>Del.</th>}
                     </tr>
                 </thead>
@@ -67,10 +67,10 @@ export default function ProcSettCrushingFormula(props){
                         <tr key = {"formulaRow" + key}>
                         <EditableCell
                             key = {"formulaPecentageCell" + key}
-                            valueRef = {item.percentage}
+                            valueRef = {item.ratio}
                             handleNewValue = {handleSetCrushingFormula}
                             key_1 = {key}
-                            key_2 = "percentage"
+                            key_2 = "ratio"
                             className = "left-column"
                             belongsTo = "process" />
 
@@ -79,7 +79,7 @@ export default function ProcSettCrushingFormula(props){
                             valueRef = {item.ofMaterial}
                             handleNewValue = {handleSetCrushingFormula}
                             key_1 = {key}
-                            key_2 = "basedOn"
+                            key_2 = "ofMaterial"
                             belongsTo = "process"
                             listOfValues = {props.projectObject.getWasteNames()}
                             />
@@ -89,7 +89,7 @@ export default function ProcSettCrushingFormula(props){
                             valueRef = {item.convertsTo}
                             handleNewValue = {handleSetCrushingFormula}
                             key_1 = {key}
-                            key_2 = "basedOn"
+                            key_2 = "convertsTo"
                             belongsTo = "process"
                             listOfValues = {props.projectObject.getWasteNames()}
                             />

@@ -11,14 +11,15 @@ class processClass{
         this.isNew = (id_ === "wasteComponent"? false: true),
         this.outboundFlows = [],
         this.inboundFlows = [],
-        this.inputs = {},
+        this.inputs = {
+            1: {"name": "Inputs N/A", "rate": 0}},
         this.htmlInfo = {positionX : -350,
                     positionY: 0},
         this.emissions = {
             1 : {"name": "N/A", "basedOn": "N/A", "rate": 0}
         },
         this.crushingFormula = {
-            1: {"percentage": 0, "ofMaterial": "N/A", "convertsTo": "N/A"}
+            1: {"ratio": 0, "ofMaterial": "N/A", "convertsTo": "N/A"}
         }
     }
     // --------- General --------- //
@@ -42,7 +43,7 @@ class processClass{
     }
 
     setInputInfo(key_1, key_2, newValue){
-        this[key_1][key_2] = newValue
+        this.inputs[key_1][key_2] = newValue
     }
 
     getInputNames() {
@@ -76,7 +77,7 @@ class processClass{
     // --------- General --------- //
     addCurshingFormula(){
         let id_ = "crushingFormula" + (_getMaxId(this.crushingFormula) + 1)
-        this.crushingFormula[id_] = {"percentage": 0,
+        this.crushingFormula[id_] = {"ratio": 0,
                                     "ofMaterial": "N/A",
                                     "convertsTo": "N/A"}
     }

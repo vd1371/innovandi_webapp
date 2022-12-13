@@ -1,213 +1,81 @@
 import React from "react";
-import flowClass from "./flowClass";
-import processClass from "./processClass";
 
-import _getMaxId from "./_getMaxId";
-import _isValidFlow from "./_isValidFlow";
+import _addWaste from "./wasteRelatedFunctions/_addWaste";
+import _getWasteNames from "./wasteRelatedFunctions/_getWasteNames";
+
+import _addProcess from "./processRelatedFunctions/_addProcess"
+import _removeProcess from "./processRelatedFunctions/_removeProcess";
+import _addFlow from "./flowRelatedFunctions/_addFlow";
+import _toJSON from "./saveLoadRelatedFunctions/_toJSON";
+import _fromJSON from "./saveLoadRelatedFunctions/_fromJSON";
+import _initializeProject from "./projectRelatedFunctions/_initializeProject";
+import _runLCAAnalysis from "./LCAAnalysisFunctions/_runLCAAnalysis";
 
 class projectClass {
 
-    constructor(){
-        this.init()
-    }
-    init(){
-        this.projectInfo = {
-            projectName: "MyAwesomeProject",
-            workingHours: 0,
-            workingDaysPerYear: 0
-        }
-        this.wasteComposition = {
-            1: {
-                "name": "Waste Unknown",
-                "value": 0,
-            }  
-        }
-        this.processes = this._defaultWasteProcess()
-        this.flows= {}
-        this.renderSettings = {
-            scaleLevel: 1,
-        }
-        this.generalInfo = {
-            processesTypes : ['Excavator', 'Loader', 'Feeder',
-                                'Crusher', 'Separator', 'ConveyorBelt',
-                                'Sieve', 'AirClassifier', "Dump",
-                                "HandPicking"]
-        }
-    }
+    constructor(){_initializeProject(this)}
+    
     // ---------------------------- Render Settings ------------------------//
-    addScaleLevel (val){
-        this.renderSettings.scaleLevel += val
-    }
-
-    resetScaleLevel (){
-        this.renderSettings.scaleLevel = 1
-    }
+    addScaleLevel (val){this.renderSettings.scaleLevel += val}
+    resetScaleLevel (){this.renderSettings.scaleLevel = 1}
 
     // --------------------------------- Waste -----------------------------//
-    addWaste () {
-        let id_ = "waste" + (_getMaxId(this.wasteComposition) + 1)
-        this.wasteComposition[id_] = {
-                                'name': 'N/A',
-                                'value': 0
-        }
-    }
-
-    deleteWaste(id){
-        delete this.wasteComposition[id]
-    }
-
-    getWasteNames(){
-        const wasteNames = []
-        for (const k in this.wasteComposition){
-            wasteNames.push(this.wasteComposition[k]['name'])
-        }
-        return wasteNames
-    }
+    addWaste () {_addWaste(this)}
+    deleteWaste(id){delete this.wasteComposition[id]}
+    getWasteNames(){return _getWasteNames(this)}
 
     // ------------------------------- Processes ---------------------------//
-    _defaultWasteProcess() {
-        const processes = {}
-        processes["wasteComponent"] = new processClass("wasteComponent")
-        return processes
-    }
-
-    addProcess() {
-        let processId = "process" + (_getMaxId(this.processes) + 1)
-        this.processes[processId] = new processClass(processId)
-    }
+    addProcess() {_addProcess(this)}
+    removeProcess(id) {_removeProcess(id, this)}
 
     //-------------------- Process -------------------//
-    setProcessInfo(processId, key, newValue){
-        this.processes[processId].setInfo(key, newValue)
-    }
-
-    removeProcess(processId) {
-        delete this.processes[processId]
-        for (const flowId in this.flows){
-            if (flowId.includes(processId)){
-                this.deleteFlow(flowId)
-            }
-        }
-    }
-
-    setIsNewFalseOfProcess(processId){
-        this.processes[processId].setIsNewFalse()
-    }
+    setProcessInfo(id, key, newValue){this.processes[id].setInfo(key, newValue)}
+    setIsNewFalseOfProcess(id){this.processes[id].setIsNewFalse()}
     
     //----------------------- Inputs -------------------//
-    addInputToProcess(processId){
-        this.processes[processId].addInput()
+    addInputToProcess(id){this.processes[id].addInput()}
+    deleteInputOfProcess (id, key_1){this.processes[id].deleteInput(key_1)}
+    setInputInfo(id, key_1, key_2, newValue){
+        this.processes[id].setInputInfo(key_1, key_2, newValue)
     }
-
-    deleteInputOfProcess (processId, key_1){
-        this.processes[processId].deleteInput(key_1)
-    }
-
-    setInputInfo(processId, key_1, key_2, newValue){
-        this.processes[processId].setInputInfo(key_1, key_2, newValue)
-    }
-
-    getInputNamesOfProcess(processId) {
-        return this.processes[processId].getInputNames()
-    }
+    getInputNamesOfProcess(id) {return this.processes[id].getInputNames()}
 
     //--------------------- Emissions ----------------//
-    addEmissionToProcess(processId){
-        this.processes[processId].addEmission()
+    addEmissionToProcess(id){this.processes[id].addEmission()}
+    setEmissionInfoOfProcess(id, key_1, key_2, value){
+        this.processes[id].setEmission(key_1, key_2, value)
     }
-
-    setEmissionInfoOfProcess(processId, key_1, key_2, value){
-        this.processes[processId].setEmission(key_1, key_2, value)
-    }
-
-    deleteEmissionOfProcess(id, key_1){
-        this.processes[id].deleteEmission(key_1)
-    }
+    deleteEmissionOfProcess(id, key_1){this.processes[id].deleteEmission(key_1)}
 
     //--------------------- Crushing Formulas ----------------//
-    addCrushingFormulaToProcess(processId){
-        this.processes[processId].addCurshingFormula()
+    addCrushingFormulaToProcess(id){this.processes[id].addCurshingFormula()}
+    setCrushingFormulaOfProcess(id, key_1, key_2, value){
+        this.processes[id].setCrushingFormula(key_1, key_2, value)
     }
-
-    setCrushingFormulaOfProcess(processId, key_1, key_2, value){
-        this.processes[processId].setCrushingFormula(key_1, key_2, value)
-    }
-
     deleteCrushingFormulaOfProcess(id, key_1){
         this.processes[id].deleteCrushingFormula(key_1)
     }
 
     //--------------------------- Flows ---------------------------------//
-    addFlow (id_start, id_end, processStart, processEnd){
-        let valid = _isValidFlow(this.flows,
-                                id_start, id_end,
-                                processStart, processEnd)
-        if (valid){
-            this.flows[id_start + "->" + id_end] = new flowClass(id_start, id_end)
-        }
-        return valid
-    }
-
-    deleteFlow (flowId){
-        delete this.flows[flowId]
-    }
-
-    addFlowOutput (flowId){
-        this.flows[flowId].addOutput()
-    }
-
-    setFlowOutput (flowId, key_1, key_2, value){
-        this.flows[flowId].setOutput(key_1, key_2, value)
-    }
-
-    deleteFlowOutput (flowId, key_1){
-        this.flows[flowId].deleteOutput(key_1)
-    }
+    addFlow (...args){return _addFlow(this, ...args)}
+    deleteFlow (flowId){delete this.flows[flowId]}
+    addFlowOutput (flowId){this.flows[flowId].addOutput()}
+    setFlowOutput (flowId, ...args){this.flows[flowId].setOutput(...args)}
+    deleteFlowOutput (flowId, key_1){this.flows[flowId].deleteOutput(key_1)}
 
 
     //-------------------------- Save and load -----------------------------//
-    toJSON (){
-        let data = {
-            projectInfo: this.projectInfo,
-            wasteComposition: this.wasteComposition,
-            processes: this.processes,
-            flows: this.flows,
-            renderSettings: this.renderSettings,
-
-        }
-        return JSON.stringify(data)
-    }
-
-    fromJSON (data){
-        data = JSON.parse(data)
-
-        Object.assign(this.projectInfo, data.projectInfo)
-        Object.assign(this.wasteComposition, data.wasteComposition)
-        Object.assign(this.renderSettings, data.renderSettings)
-
-        for (const k in data.processes){
-            this.processes[k] = new processClass(k)
-            Object.assign(this.processes[k], data.processes[k])
-        }
-
-        for (const k in data.flows){
-            this.flows[k] = new flowClass(k)
-            Object.assign(this.flows[k], data.flows[k])
-        }
-    }
-
-    saveToLocalStorage(){
-        localStorage.setItem("tmpProject", this.toJSON())
-    }
-
-    loadFromLocalStorage(){
-        this.fromJSON(localStorage.getItem("tmpProject"))
-    }
-
+    toJSON (){return _toJSON(this)}
+    fromJSON (data){_fromJSON(this, data)}
+    saveToLocalStorage(){localStorage.setItem("tmpProject", this.toJSON())}
+    loadFromLocalStorage(){this.fromJSON(localStorage.getItem("tmpProject"))}
     flushProject (){
         localStorage.removeItem("tmpProject")
-        this.init()
+        _initializeProject(this)
     }
+
+    //-------------------------- LCA Analysis -----------------------------//
+    runLCAAnalysis (){return _runLCAAnalysis(this) }
 
 }
 

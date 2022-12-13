@@ -27,6 +27,10 @@ export default function ProcSettInfo(props){
             <table>
                 <tbody>
                     <tr>
+                        <td className="left-column">processId</td>
+                        <td className="left-column">{processInfo.id_}</td>
+                    </tr>
+                    <tr>
                         <td className="left-column">Process Name</td>
                         <EditableCell
                             valueRef = {processInfo.processName}

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, useRef} from "react";
 import EditableCell from "../EditableCell";
 import AddButton from "../AddButton";
 import DeleteRowButton from "../DeleteRowButton";
+import DropdownSelector from "../DropdownSelector";
 
 import {useSelector, useDispatch} from "react-redux";
 import { appActions } from "../../../../store/app-slice";
@@ -46,20 +47,28 @@ export default function ProcSettInputs(props){
             </div>
 
             <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Vol/Hr</th>
+                        {(editableComponent == "process") && <th>Del.</th>}
+                    </tr>
+                </thead>
                 <tbody>
                 {
                     Object.entries(processInfo.inputs).map(([key, item]) => {
-                    
                         return (
                             <tr key = {"inputRow" + key}>
-                            <EditableCell
+                            <DropdownSelector
                                 key = {"inputCellName" + key}
                                 valueRef = {item.name}
                                 handleNewValue = {setInputInfo}
                                 key_1 = {key}
                                 key_2 = "name"
                                 className = "left-column"
-                                belongsTo = "process" />
+                                belongsTo = "process" 
+                                listOfValues = {props.projectObject.generalInfo.inputTypes}
+                                />
 
                             <EditableCell
                                 key = {"inputCellRate" + key}
