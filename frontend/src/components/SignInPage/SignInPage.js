@@ -50,14 +50,14 @@ export default function SignInPage(){
         setJustifyActive(value);
         };
 
-    const handleSigninClick = () => {
-        handleSignin(setMessage)
+    const handleSigninClick = (e) => {
+        handleSignin(setMessage, e)
         dispatch(authActions.signin())
         navigate("/")
     }
 
-    const handleRegisterClick = () => {
-        handleRegister(setMessage)
+    const handleRegisterClick = (e) => {
+        handleRegister(setMessage, e)
         dispatch(authActions.signin())
         navigate("/")
     }
@@ -184,11 +184,15 @@ export default function SignInPage(){
                     <br></br>
                     <div className='d-flex justify-content-between mx-auto'>
                         <form action="?" method="POST">
+                        
+                        <script type="text/javascript" src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
                         <ReCAPTCHA
                             sitekey={recaptcha_site_key}
                             ref={recaptchaRef}
                             // onChange={onChange}
                         />
+                        <script type="text/javascript" src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+
                         </form>
                     </div>
 

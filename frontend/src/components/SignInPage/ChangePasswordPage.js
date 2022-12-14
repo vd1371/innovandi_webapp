@@ -15,7 +15,7 @@ export default function ChangePasswordPage(){
     const [message, setMessage] = useState('So Happy to See You Here');
     const [isSent, setIsSent] = useState(false)
 
-    const handlePasswordChange = () => {
+    const handlePasswordChange = (event) => {
         
         const data = document.getElementById("registration-form")
         const form_data = new FormData(event.target);

@@ -3,7 +3,7 @@ import React from "react";
 import {signInWithEmailAndPassword } from "firebase/auth";
 import auth from './firebaseAuth';
 
-export default function handleSignin (setMessage) {
+export default function handleSignin (setMessage, event) {
 
     const data = document.getElementById("registration-form")
     const form_data = new FormData(event.target);

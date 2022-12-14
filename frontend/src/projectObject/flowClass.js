@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable no-unused-expressions */
 import _getMaxId from "./_getMaxId";
 
 class flowClass{

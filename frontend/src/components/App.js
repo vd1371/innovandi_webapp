@@ -11,9 +11,8 @@ import {Xwrapper} from 'react-xarrows';
 export default function App(){
     
     const { height, width } = useWindowDimensions();
-    
+
     return (
-        <>
         <Provider store = {store}>
             <React.StrictMode>
                 <Xwrapper>
@@ -22,7 +21,6 @@ export default function App(){
                 </Xwrapper>
             </React.StrictMode>
         </Provider>
-        </>
     )
 }
 

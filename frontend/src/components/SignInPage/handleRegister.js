@@ -5,7 +5,7 @@ import IsRecpatchaChecked from './IsRecaptchaChecked';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import auth from './firebaseAuth';
 
-export default function handleRegister (setMessage) {
+export default function handleRegister (setMessage, event) {
 
     const data = document.getElementById("registration-form")
     const form_data = new FormData(event.target);

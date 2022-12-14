@@ -4,14 +4,6 @@ import ProcessSettingsSection from "./ProcessSettingsSection/ProcessSettingsSect
 import ConstructionWasteSection from "./ConstructionWasteSection";
 import FlowSettingsSection from "./FlowSettingsSection";
 
-import {
-    Accordion,
-    Box,
-    AccordionSummary,
-    AccordionDetails,
-    Typography,
-  } from "@material-ui/core";
-
 export default function LeftSidebar(props){
 
     return (
