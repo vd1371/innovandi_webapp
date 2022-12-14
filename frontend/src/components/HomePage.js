@@ -9,6 +9,8 @@ import LandingPage from "./LandingPage/LandingPage";
 import SignInPage from "./SignInPage/SignInPage";
 import ChangePasswordPage from "./SignInPage/ChangePasswordPage";
 import LCAAppPage from "./MainAppPage/AppSection/LCAAppPage";
+import ResultsPage from "./MainAppPage/AppSection/Results";
+
 import PrivateRoute from "./PrivateRoute";
 import Navbar from "./Navbar/Navbar";
 import auth from "./SignInPage/firebaseAuth";

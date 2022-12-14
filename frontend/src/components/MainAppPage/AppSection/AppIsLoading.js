@@ -35,11 +35,11 @@ export default function AppIsLoading(props){
     return (
         <div id = "app-is-loading">
             {appLoadingWaiting &&
-            <h2>App Is Loading</h2>
+            <h2>Loading</h2>
             }
 
             {!appLoadingWaiting &&
-            <h2>Loading Completed</h2>
+            <h2>Done</h2>
             }
 
         <br></br>

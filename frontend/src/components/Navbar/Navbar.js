@@ -9,18 +9,18 @@ import {
 } from './NavbarElements';
 
 import NavbarSigninButton from "./NavbarSigninButton";
+import NavbarAppButton from "./NavbarAppButton"
 
 export default function Navbar(){
-
 
   return (
     <Nav>
       <Bars></Bars>
-      <NavMenu>
-        <NavLink to='/'>
-          Home
-        </NavLink>
-      </NavMenu>
+      <NavBtn>
+        <NavBtnLink to='/'>Home</NavBtnLink>
+      </NavBtn>
+      <NavbarAppButton />
+      <div className="filler"></div>
       <NavbarSigninButton />
     </Nav>
   )

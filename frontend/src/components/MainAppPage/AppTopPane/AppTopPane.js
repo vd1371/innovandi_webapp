@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useRef} from "react";
-import EditButton from "../EditButton";
+import React, { useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import { clickActions } from "../../../store/click-slice";
 import { appActions } from "../../../store/app-slice";
 
+import EditButton from "../EditButton";
 import DownloadProject from "./DownloadProject";
 import LoadProject from "./LoadProject";
+import ResultsNavigateButton from "./ResultsNavigateButton";
 
 export default function AppTopPane(props){
 
@@ -15,8 +18,8 @@ export default function AppTopPane(props){
     const activeSection = useSelector(state=>state.click.activeSection)
     const newComponentAdded = useSelector(state=>state.click.newComponentAdded)
 
+    const navigate = useNavigate();
     const dispatch = useDispatch()
-    const [contents, setContents] = useState()
 
     const handleAddProcess = () => {
         dispatch(clickActions.setNewComponentAdded(true))
@@ -53,6 +56,10 @@ export default function AppTopPane(props){
         dispatch(appActions.addNEditions())
     }
 
+    const handleNavigateToResults = () => {
+        navigate("/results")
+    }
+
     return (
         <div id="app-top-pane">
             <button
@@ -60,7 +67,6 @@ export default function AppTopPane(props){
                 className="fa-play fa-solid toppane-button"
                 onClick={handleRunAnalysis}>
             </button>
-            <button type="button" className="fa-stop fa-solid toppane-button"></button>
             <button
                 type="button"
                 className="fa-search-plus fa-solid toppane-button"
@@ -101,6 +107,7 @@ export default function AppTopPane(props){
 
             <DownloadProject {...props}/>
             <LoadProject {...props} />
+            <ResultsNavigateButton />
         </div>
         
     )

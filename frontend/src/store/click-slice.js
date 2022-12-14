@@ -11,6 +11,7 @@ const clickSlice = createSlice({
         newComponentAdded: false,
         arrowStartingProcess: null,
         arrowStartingPoint: null,
+        showResults: false,
     },
     reducers: {
         setActiveSection(state, action){
@@ -63,6 +64,10 @@ const clickSlice = createSlice({
                 state.arrowStartingProcess = null
                 state.arrowStartingPoint = null
             }
+        },
+
+        switchShowResults(state){
+            state.showResults = !state.showResults
         },
     }
 

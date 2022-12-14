@@ -8,17 +8,18 @@ import AppTopPane from "../AppTopPane/AppTopPane";
 import Arrows from "./Arrows"
 import AppNotification from "./AppNotification";
 import projectClass from "../../../projectObject/projectClass";
-import { appActions } from "../../../store/app-slice";
-import {useXarrow} from 'react-xarrows';
 import AppIsLoading from "./AppIsLoading";
+import Results from "./Results";
+
+import { appActions } from "../../../store/app-slice";
 
 export default function LCAAppPage(props){
 
     const nProcesses = useSelector(state=>state.app.nProcesses)
     const nEditions = useSelector(state=>state.app.nEditions)
-    const nEditionsArrows = useSelector(state=>state.app.nEditionsArrows)
+    const showResults = useSelector(state=>state.click.showResults)
+    const appLoadingShow = useSelector(state=>state.app.appLoadingShow)
     const dispatch = useDispatch()
-    const updateXarrow = useXarrow()
 
     const parentRef = useRef()
 
@@ -44,14 +45,25 @@ export default function LCAAppPage(props){
                     <LeftSidebar projectObject = {projectObject.current}/>
                     <div id="the-app-wrapper">
                         <AppTopPane projectObject = {projectObject.current}/>
+
+                        {!showResults &&
+                        <>
                         <div id = "the-app">
-                            <Processes projectObject = {projectObject.current}
-                                        allArrowPointsRefs = {allArrowPointsRefs.current}
-                                        parentRef = {parentRef.current}/>
+                            <Processes
+                                projectObject = {projectObject.current}
+                                allArrowPointsRefs = {allArrowPointsRefs.current}
+                                parentRef = {parentRef.current}/>
                             <AppIsLoading />
                         </div>
-                        <Arrows projectObject = {projectObject.current}
-                                allArrowPointsRefs = {allArrowPointsRefs.current}/>
+                        {!appLoadingShow &&
+                        <Arrows
+                            projectObject = {projectObject.current}
+                            allArrowPointsRefs = {allArrowPointsRefs.current}/>}
+                        </>}
+                        
+                        {showResults &&
+                        <Results projectObject = {projectObject.current}/>}
+
                     </div>
                 </div>
             </>
