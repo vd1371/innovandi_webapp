@@ -2,6 +2,8 @@ import React from "react"
 
 export default function SecondSection(){
 
+    const img_address = process.env.PUBLIC_URL + "/images/concrete-for-about-section.jpg"
+
     return (
         <div className="section" id = 'second-section'>
 
@@ -28,7 +30,7 @@ export default function SecondSection(){
 
                     </div>
                     <div className="col col-sm-4">
-                        <img id="about-img" src="../static/images/concrete-for-about-section.jpg"></img>
+                        <img id="about-img" src={img_address}></img>
                     </div>
                 </div>
             </div>

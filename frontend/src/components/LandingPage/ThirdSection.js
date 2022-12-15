@@ -2,6 +2,9 @@ import React from "react"
 
 export default function ThirdSection(){
 
+    
+    const base_address = process.env.PUBLIC_URL + "/images/"
+
     return (
         <div className = 'section' id = 'third-section'>
             <hr id="third-section-top-divider"></hr>
@@ -15,7 +18,7 @@ export default function ThirdSection(){
                     <div className="row">
                         <div className="col-lg-4 col-md-6 p-4">
                             <div className="team-logo-container">
-                                <img className="img-fluid d-block mb-3 mx-auto rounded-circle" width="175" src="../static/images/PolyU.png"></img>
+                                <img className="img-fluid d-block mb-3 mx-auto rounded-circle" width="175" src={base_address + "PolyU.png"}></img>
                             </div>
                             
                             <div className="team-location-container">
@@ -33,7 +36,7 @@ export default function ThirdSection(){
 
                         <div className="col-lg-4 col-md-6 p-4">
                             <div className="team-logo-container">
-                                <img className="img-fluid d-block mb-3 mx-auto" width="175" src="../static/images/USP.png"></img>
+                                <img className="img-fluid d-block mb-3 mx-auto" width="175" src={base_address + "USP.png"}></img>
                             </div>
                             <div className="team-location-container">
                                 <h4> <b >University of Sao Paulo</b> </h4>
@@ -49,7 +52,7 @@ export default function ThirdSection(){
 
                         <div className="col-lg-4 p-4">
                             <div className="team-logo-container">
-                                <img className="img-fluid d-block mb-3 mx-auto" width="175" src="../static/images/ETH.png"></img>
+                                <img className="img-fluid d-block mb-3 mx-auto" width="175" src={base_address + "ETH.png"}></img>
                             </div>
                             <div className="team-location-container">
                                 <h4> <b>ETH Zurich</b> </h4>
@@ -70,7 +73,7 @@ export default function ThirdSection(){
                     <div className="row">
                         <div className="col-lg-4 col-md-6 p-4">
                             <div className="team-logo-container">
-                                <img className="img-fluid d-block mb-3 mx-auto rounded-circle" width="175" src="../static/images/TJU.png"></img>
+                                <img className="img-fluid d-block mb-3 mx-auto rounded-circle" width="175" src={base_address + "TJU.png"}></img>
                             </div>
                             
                             <div className="team-location-container">
@@ -90,7 +93,7 @@ export default function ThirdSection(){
 
                         <div className="col-lg-4 col-md-6 p-4">
                             <div className="team-logo-container">
-                                <img className="img-fluid d-block mb-3 mx-auto rounded-circle" width="175" src="../static/images/IIT.png"></img>
+                                <img className="img-fluid d-block mb-3 mx-auto rounded-circle" width="175" src={base_address + "IIT.png"}></img>
                             </div>
                             <div className="team-location-container">
                                 <h4> <b>Indian Institute of Technology Madras</b> </h4>
@@ -107,7 +110,7 @@ export default function ThirdSection(){
 
                         <div className="col-lg-4 p-4">
                             <div className="team-logo-container">
-                                <img className="img-fluid d-block mb-3 mx-auto rounded-circle" width="150" src="../static/images/GCCA.jpeg"></img>
+                                <img className="img-fluid d-block mb-3 mx-auto rounded-circle" width="150" src={base_address + "GCCA.jpeg"}></img>
                             </div>
                             <div className="team-location-container">
                                 <h4> <b>Global Cement and Concrete Association</b> </h4>
