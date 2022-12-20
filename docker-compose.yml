@@ -12,6 +12,7 @@ services:
       context: ./frontend
     volumes:
       - frontend_build:/frontend/build
+    stdin_open: true
   
   nginx:
     image: nginx:latest
