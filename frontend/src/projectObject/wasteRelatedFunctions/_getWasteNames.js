@@ -1,4 +1,3 @@
-import _getMaxId from "../_getMaxId"
 
 export default function _getWasteNames(obj) {
     const wasteNames = []

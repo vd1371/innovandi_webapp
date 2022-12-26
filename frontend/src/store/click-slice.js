@@ -20,8 +20,8 @@ const clickSlice = createSlice({
                 state.activeSection = action.payload
                 state.clickNotification = null
             } else {
-                state.clickNotification = "Set Active Section: Seems like you \
-                                    have an unsaved edit. Please save first."
+                state.clickNotification = 
+                    "Set Active Section: Seems like you have an unsaved edit. Please save first."
             }
         },
         setEditableComponent(state, action){
@@ -31,8 +31,8 @@ const clickSlice = createSlice({
                 state.editableComponent = null
                 state.clickNotification = null
             } else if (state.editableComponent !== action.payload){
-                state.clickNotification = "Set Active Component: Seems like you\
-                                     have an unsaved edit. Please save first."
+                state.clickNotification =
+                    "Set Active Component: Seems like you have an unsaved edit. Please save first."
             }
         },
         clearClickNotification(state){
@@ -46,8 +46,8 @@ const clickSlice = createSlice({
         },
         setNewComponentAdded(state, action){
             if (state.newComponentAdded && action.payload){
-                state.clickNotification = "An unused process is already added.\
-                                            Please use that first"
+                state.clickNotification = 
+                    "An unused process is already added. Please use that first"
             } else {
                 state.newComponentAdded = action.payload
             }

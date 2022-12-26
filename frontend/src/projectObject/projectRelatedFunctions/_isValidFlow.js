@@ -1,4 +1,3 @@
-import React from "react";
 
 export default function _isValidFlow (flows, id_start, id_end, processStart, processEnd) {
     // A flow must not end at the wasteComponent

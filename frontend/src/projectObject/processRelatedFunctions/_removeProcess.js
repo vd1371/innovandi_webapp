@@ -1,5 +1,3 @@
-import _getMaxId from "../_getMaxId"
-
 export default function _removeProcess(obj, processId) {
     delete obj.processes[processId]
     for (const flowId in obj.flows){

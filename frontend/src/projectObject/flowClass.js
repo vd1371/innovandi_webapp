@@ -4,8 +4,8 @@ import _getMaxId from "./_getMaxId";
 class flowClass{
 
     constructor (id_start, id_end){
-        this.start = id_start,
-        this.end = id_end,
+        this.start = id_start
+        this.end = id_end
         this.outputs = {1: {"material": "All",
                             "ratio": 1}}
     }

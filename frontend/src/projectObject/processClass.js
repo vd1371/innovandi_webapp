@@ -4,19 +4,19 @@ import _getMaxId from "./_getMaxId";
 class processClass{
 
     constructor(id_){
-        this.id_= id_,
-        this.processName = "MyAwesomeProcess",
-        this.processType = "Unknown",
-        this.isNew = (id_ === "wasteComponent"? false: true),
-        this.outboundFlows = [],
-        this.inboundFlows = [],
+        this.id_= id_
+        this.processName = "MyAwesomeProcess"
+        this.processType = "Unknown"
+        this.isNew = (id_ === "wasteComponent"? false: true)
+        this.outboundFlows = []
+        this.inboundFlows = []
         this.inputs = {
-            1: {"name": "Inputs N/A", "rate": 0}},
+            1: {"name": "Inputs N/A", "rate": 0}}
         this.htmlInfo = {positionX : -350,
-                    positionY: 0},
+                    positionY: 0}
         this.emissions = {
             1 : {"name": "N/A", "basedOn": "N/A", "rate": 0}
-        },
+        }
         this.crushingFormula = {
             1: {"ratio": 0, "ofMaterial": "N/A", "convertsTo": "N/A"}
         }

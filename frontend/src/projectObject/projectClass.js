@@ -1,5 +1,3 @@
-import React from "react";
-
 import _addWaste from "./wasteRelatedFunctions/_addWaste";
 import _getWasteNames from "./wasteRelatedFunctions/_getWasteNames";
 
