@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext, useRef} from "react";
-import EditableCell from "../../../../components/LeftSideBar/EditableCell";
+import EditableCell from "features/LCCA/components/EditableCell";
 
 import {useSelector, useDispatch} from "react-redux";
-import { appActions } from "../../../../store/app-slice";
-import DropdownSelector from "../../../../components/LeftSideBar/DropdownSelector";
+import { appActions } from "store/app-slice";
+import DropdownSelector from "features/LCCA/components/DropdownSelector";
 
 export default function ProcSettInfo(props){
 

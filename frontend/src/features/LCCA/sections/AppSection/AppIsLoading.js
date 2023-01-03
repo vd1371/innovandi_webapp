@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import Xarrow, {useXarrow, Xwrapper} from 'react-xarrows';
-import { appActions } from "../../../store/app-slice";
+import { appActions } from "store/app-slice";
 
 export default function AppIsLoading(props){
 

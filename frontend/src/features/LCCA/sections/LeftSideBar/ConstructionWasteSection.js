@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext} from "react";
 
 import {useSelector, useDispatch} from "react-redux";
-import { clickActions } from "../../../store/click-slice";
-import { appActions } from "../../../store/app-slice";
+import { clickActions } from "store/click-slice";
+import { appActions } from "store/app-slice";
 
 
-import EditableCell from "../../../components/LeftSideBar/EditableCell";
-import EditButton from "../../../components/EditButton";
-import AddButton from "../../../components/LeftSideBar/AddButton";
-import DeleteRowButton from "../../../components/LeftSideBar/DeleteRowButton";
+import EditableCell from "features/LCCA/components/EditableCell";
+import EditButton from "features/LCCA/components/EditButton";
+import AddButton from "features/LCCA/components/AddButton";
+import DeleteRowButton from "features/LCCA/components/DeleteRowButton";
 
 export default function ConstructionWasteSection(props){
 

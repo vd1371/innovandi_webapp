@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useRef} from "react";
+import {useRef} from "react"
+
 import { useDispatch } from "react-redux";
-import { appActions } from "../../../store/app-slice";
+import { appActions } from "store/app-slice";
 
 export default function LoadProject(props){
 
     const dispatch = useDispatch()
 
-    const hiddenFileInput = React.useRef(null);
+    const hiddenFileInput = useRef(null);
   
     // Programatically click the hidden file input element
     // when the Button component is clicked

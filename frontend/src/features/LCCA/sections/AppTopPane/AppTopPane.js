@@ -1,10 +1,10 @@
 import {useSelector, useDispatch} from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { clickActions } from "../../../store/click-slice";
-import { appActions } from "../../../store/app-slice";
+import { clickActions } from "store/click-slice";
+import { appActions } from "store/app-slice";
 
-import EditButton from "../../../components/EditButton";
+import EditButton from "features/LCCA/components/EditButton";
 import DownloadProject from "./DownloadProject";
 import LoadProject from "./LoadProject";
 import ResultsNavigateButton from "./ResultsNavigateButton";

@@ -2,16 +2,17 @@ import React, {useState, useEffect, useRef} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 
-import LeftSidebar from "../LeftSideBar/LeftSideBar";
-import Processes from "./Processes";
-import AppTopPane from "../AppTopPane/AppTopPane";
-import Arrows from "./Arrows"
-import AppNotification from "./AppNotification";
-import projectClass from "../../../projectObject/projectClass";
-import AppIsLoading from "./AppIsLoading";
-import Results from "./Results";
+import {LeftSidebar} from "../features/LCCA"
+import {AppIsLoading} from "../features/LCCA"
+import {Processes} from "../features/LCCA"
+import {AppTopPane} from "../features/LCCA"
+import {Arrows} from "../features/LCCA"
+import {Results} from "../features/LCCA"
+import {AppNotification} from "../features/LCCA"
 
-import { appActions } from "../../../store/app-slice";
+import projectClass from "../projectObject/projectClass";
+
+import { appActions } from "../store/app-slice";
 
 export default function LCAAppPage(props){
 

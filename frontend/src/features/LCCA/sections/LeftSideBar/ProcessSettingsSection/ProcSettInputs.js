@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext, useRef} from "react";
-import EditableCell from "../../../../components/LeftSideBar/EditableCell";
-import AddButton from "../../../../components/LeftSideBar/AddButton";
-import DeleteRowButton from "../../../../components/LeftSideBar/DeleteRowButton";
-import DropdownSelector from "../../../../components/LeftSideBar/DropdownSelector";
+import EditableCell from "features/LCCA/components/EditableCell";
+import AddButton from "features/LCCA/components/AddButton";
+import DeleteRowButton from "features/LCCA/components/DeleteRowButton";
+import DropdownSelector from "features/LCCA/components/DropdownSelector";
 
 import {useSelector, useDispatch} from "react-redux";
-import { appActions } from "../../../../store/app-slice";
+import { appActions } from "store/app-slice";
 
 
 export default function ProcSettInputs(props){

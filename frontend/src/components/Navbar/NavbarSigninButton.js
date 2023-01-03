@@ -2,14 +2,14 @@ import React from "react";
 import { Navigate, useNavigate } from 'react-router-dom';
 
 import {useSelector, useDispatch} from "react-redux";
-import { authActions } from "../store/auth-slice";
+import { authActions } from "../../store/auth-slice";
 
 import {
   NavBtn,
   NavBtnLink,
 } from './NavbarElements';
 
-import handleSignout from "../features/authentication/handleSignout";
+import handleSignout from "../../features/authentication/handleSignout";
 
 export default function NavbarSigninButton(){
 

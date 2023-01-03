@@ -2,11 +2,11 @@ import React, { useState, useEffect, useContext, useRef} from "react";
 import uuid from "react-uuid";
 import ProcessComponent from "./ProcessComponent";
 
-import { clickActions } from "../../../store/click-slice";
+import { clickActions } from "store/click-slice";
 
 import {useSelector, useDispatch} from "react-redux";
 import Xarrow, {useXarrow, Xwrapper} from 'react-xarrows';
-import { appActions } from "../../../store/app-slice";
+import { appActions } from "store/app-slice";
 import WasteComponent from "./WasteComponent";
 
 export default function Processes(props){

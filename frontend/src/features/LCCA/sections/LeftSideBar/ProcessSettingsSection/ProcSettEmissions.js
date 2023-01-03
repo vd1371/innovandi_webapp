@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext, useRef} from "react";
-import EditableCell from "../../../../components/LeftSideBar/EditableCell";
-import AddButton from "../../../../components/LeftSideBar/AddButton";
-import DeleteRowButton from "../../../../components/LeftSideBar/DeleteRowButton";
+import EditableCell from "../../../components/EditableCell";
+import AddButton from "../../../components/AddButton";
+import DeleteRowButton from "../../../components/DeleteRowButton";
 
 import {useSelector, useDispatch} from "react-redux";
-import { appActions } from "../../../../store/app-slice";
-import DropdownSelector from "../../../../components/LeftSideBar/DropdownSelector";
+import { appActions } from "store/app-slice";
+import DropdownSelector from "../../../components/DropdownSelector";
 
 export default function ProcSettEmissions(props){
 

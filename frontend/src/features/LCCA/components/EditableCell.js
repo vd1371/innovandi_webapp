@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext} from "react";
 
 import {useSelector, useDispatch} from "react-redux";
-import { appActions } from "../../store/app-slice";
+import { appActions } from "../../../store/app-slice";
 
 export default function EditableCell(props){
 

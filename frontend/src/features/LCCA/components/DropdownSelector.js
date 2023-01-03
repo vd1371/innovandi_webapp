@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext} from "react";
+import { useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
-import { appActions } from "../../store/app-slice";
+import { appActions } from "store/app-slice";
 
 import uuid from "react-uuid"
 

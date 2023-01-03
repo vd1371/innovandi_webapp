@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { appActions } from "../../../store/app-slice";
-import { clickActions } from "../../../store/click-slice";
+import { appActions } from "store/app-slice";
+import { clickActions } from "store/click-slice";
 
 export default function ResultsNavigateButton(props){
 

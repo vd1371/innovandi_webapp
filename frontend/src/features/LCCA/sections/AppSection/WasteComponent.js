@@ -1,9 +1,8 @@
 
-import React, { useState, useEffect, useRef} from "react";
+import React, { useState, useEffect} from "react";
 
-import {useSelector, useDispatch} from "react-redux";
-import { clickActions } from "../../../store/click-slice";
-import { appActions } from "../../../store/app-slice";
+import {useDispatch} from "react-redux";
+import { clickActions } from "store/click-slice";
 import ArrowPoint from "./ArrowPoint";
 
 import Xarrow, {useXarrow, Xwrapper} from 'react-xarrows';

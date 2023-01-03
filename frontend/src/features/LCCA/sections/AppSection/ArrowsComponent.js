@@ -3,8 +3,8 @@ import Xarrow from 'react-xarrows';
 
 
 import {useSelector, useDispatch} from "react-redux";
-import { clickActions } from "../../../store/click-slice";
-import { appActions } from "../../../store/app-slice";
+import { clickActions } from "store/click-slice";
+import { appActions } from "store/app-slice";
 
 export default function ArrowComponent(props){
     

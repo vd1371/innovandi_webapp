@@ -1,8 +1,8 @@
-import EditableCell from "../../../components/LeftSideBar/EditableCell";
-import EditButton from "../../../components/EditButton";
+import EditableCell from "../../components/EditableCell";
+import EditButton from "../../components/EditButton"
 
 import {useSelector, useDispatch} from "react-redux";
-import { clickActions } from "../../../store/click-slice";
+import { clickActions } from "store/click-slice";
 
 export default function ProjectSettingsSection(props){
 

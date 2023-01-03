@@ -4,10 +4,10 @@ import {
   Bars,
   NavBtn,
   NavBtnLink,
-} from '../components/NavbarElements';
+} from '../components/Navbar/NavbarElements';
 
-import NavbarSigninButton from "../components/NavbarSigninButton";
-import NavbarAppButton from "../components/NavbarAppButton"
+import NavbarSigninButton from "../components/Navbar/NavbarSigninButton";
+import NavbarAppButton from "../components/Navbar/NavbarAppButton"
 
 export default function Navbar(){
 

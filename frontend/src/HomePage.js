@@ -8,7 +8,7 @@ import {
 import LandingPage from "./pages/LandingPage/LandingPage";
 import SignInPage from "./pages/SignInPage";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
-import LCAAppPage from "./pages/MainAppPage/AppSection/LCAAppPage";
+import LCAAppPage from "./pages/LCAAppPage";
 
 import PrivateRoute from "./utils/PrivateRoute";
 import Navbar from "./layouts/Navbar";

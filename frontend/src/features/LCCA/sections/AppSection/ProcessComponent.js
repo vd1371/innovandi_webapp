@@ -2,8 +2,8 @@
 import React, { useState, useEffect, useRef} from "react";
 
 import {useSelector, useDispatch} from "react-redux";
-import { clickActions } from "../../../store/click-slice";
-import { appActions } from "../../../store/app-slice";
+import { clickActions } from "store/click-slice";
+import { appActions } from "store/app-slice";
 import ArrowPoint from "./ArrowPoint";
 
 import Draggable, {DraggableCore} from "react-draggable";

@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useContext, useRef} from "react";
-import EditableCell from "../../../../components/LeftSideBar/EditableCell";
-import AddButton from "../../../../components/LeftSideBar/AddButton";
-import DeleteRowButton from "../../../../components/LeftSideBar/DeleteRowButton";
+import EditableCell from "features/LCCA/components/EditableCell";
+import AddButton from "features/LCCA/components/AddButton";
+import DeleteRowButton from "features/LCCA/components/DeleteRowButton";
 
 import {useSelector, useDispatch} from "react-redux";
-import { clickActions } from "../../../../store/click-slice";
-import { appActions } from "../../../../store/app-slice";
-import DropdownSelector from "../../../../components/LeftSideBar/DropdownSelector";
+import { clickActions } from "store/click-slice";
+import { appActions } from "store/app-slice";
+import DropdownSelector from "features/LCCA/components/DropdownSelector";
 
 export default function ProcSettCrushingFormula(props){
 
