@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ArrowComponent from "./ArrowsComponent";
+import ArrowComponent from "../sections/AppSection/ArrowsComponent";
 
 import {useSelector, useDispatch} from "react-redux";
 

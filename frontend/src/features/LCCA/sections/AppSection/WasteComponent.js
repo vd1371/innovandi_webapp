@@ -3,7 +3,7 @@ import React, { useState, useEffect} from "react";
 
 import {useDispatch} from "react-redux";
 import { clickActions } from "store/click-slice";
-import ArrowPoint from "./ArrowPoint";
+import ArrowPoint from "../../components/ArrowPoint";
 
 import Xarrow, {useXarrow, Xwrapper} from 'react-xarrows';
 import ProcessIcon from "./ProcessIcon";

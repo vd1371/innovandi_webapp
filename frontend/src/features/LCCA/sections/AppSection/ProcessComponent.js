@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import { clickActions } from "store/click-slice";
 import { appActions } from "store/app-slice";
-import ArrowPoint from "./ArrowPoint";
+import ArrowPoint from "../../components/ArrowPoint";
 
 import Draggable, {DraggableCore} from "react-draggable";
 import Xarrow, {useXarrow, Xwrapper} from 'react-xarrows';

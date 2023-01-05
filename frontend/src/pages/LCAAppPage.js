@@ -63,7 +63,9 @@ export default function LCAAppPage(props){
                         </>}
                         
                         {showResults &&
-                        <Results projectObject = {projectObject.current}/>}
+                        <div id = "results-container">
+                            <Results projectObject = {projectObject.current}/>
+                        </div>}
 
                     </div>
                 </div>
