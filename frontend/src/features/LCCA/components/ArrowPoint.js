@@ -52,7 +52,8 @@ export default function ArrowPoint(props){
                 arrowStartingPoint &&
                 arrowStartingPoint !== props.pointId){
                 dispatch(clickActions.setClickNotification(
-                    "You must comply with the rules of flows."))
+                    "You must comply with the rules of flows."
+                ))
             }
             dispatch(clickActions.setArrowPointInfo([props.processInfo.id_, props.pointId]))
             dispatch(appActions.addNEditionsArrows())

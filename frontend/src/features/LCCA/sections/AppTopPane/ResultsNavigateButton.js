@@ -10,6 +10,9 @@ export default function ResultsNavigateButton(props){
 
     const handleClick = () => {
         if (showResults){
+            if (props.projectObject.results !== undefined){
+                delete props.projectObject.results
+            }
             dispatch(appActions.setAppLoading(true))
         }
         dispatch(clickActions.switchShowResults())

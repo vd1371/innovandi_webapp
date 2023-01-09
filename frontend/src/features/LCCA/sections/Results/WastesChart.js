@@ -28,7 +28,9 @@ export default function WastesChart(props){
         <div className='all-plots-container'>
             {Object.entries(wastesForPlotting).map(([key, item]) => {
                 return (
-                    <div className='one-plot-container'>
+                    <div
+                        key = {"waste-plot-" + key} 
+                        className='one-plot-container'>
                         <Plot
                             data={[
                             {type: 'bar',

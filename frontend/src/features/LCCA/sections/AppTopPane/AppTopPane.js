@@ -55,10 +55,6 @@ export default function AppTopPane(props){
         dispatch(appActions.addNEditions())
     }
 
-    const handleNavigateToResults = () => {
-        navigate("/results")
-    }
-
     return (
         <div id="app-top-pane">
             <button
@@ -106,7 +102,7 @@ export default function AppTopPane(props){
 
             <DownloadProject {...props}/>
             <LoadProject {...props} />
-            <ResultsNavigateButton />
+            <ResultsNavigateButton {...props}/>
         </div>
         
     )

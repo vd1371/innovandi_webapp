@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from "react";
 import {useSelector, useDispatch} from "react-redux";
+import { clickActions } from "store/click-slice";
 
 import EmissionsBarChart from "./EmissionsBarChart";
 
@@ -15,6 +16,8 @@ import {
 }
 from 'mdb-react-ui-kit';
 import WastesChart from "./WastesChart";
+import ReportsTables from "./ReportsTables";
+import NoResultsMesssage from "./NoResultsMessage";
 
 export default function Results(props){
 
@@ -30,8 +33,14 @@ export default function Results(props){
         }
         setJustifyActive(value);
         };
-    
+
     return (
+        <>
+        {props.projectObject.results === undefined &&
+            <NoResultsMesssage />
+        }
+        
+        {props.projectObject.results !== undefined &&
         <>
         <MDBTabs pills justify className='mb-3 d-flex flex-row justify-content-between'>
             <MDBTabsItem>
@@ -62,11 +71,12 @@ export default function Results(props){
             </MDBTabsPane>
 
             <MDBTabsPane show={justifyActive === 'tab3'}>
-                <h1 className="text-light">Reports will be shown here</h1>
+                <ReportsTables {...props} />
             </MDBTabsPane>
 
         </MDBTabsContent>
-
+        </>
+        }
         </>
     )
 }
